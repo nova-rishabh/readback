@@ -1,27 +1,50 @@
 {
-  "name": "readback-tmp",
+  "name": "readback",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "seed": "tsx scripts/seed.ts",
+    "seed:image": "tsx scripts/make-demo-image.ts"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.22",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "ai": "^4.3.19",
+    "clsx": "^2.1.1",
+    "diff": "^9.0.0",
+    "lucide-react": "^1.61.0",
+    "mammoth": "^1.13.0",
+    "next": "15.5.28",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.28"
+    "sharp": "^0.35.5",
+    "unpdf": "^1.9.1",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/diff": "^8.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.28",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.0.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }
