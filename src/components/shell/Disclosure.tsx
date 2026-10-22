@@ -9,7 +9,7 @@ export function DisclosureFull() {
     },
     {
       title: `Sent to Google Gemini (${MODEL})`,
-      body: "Draft text and image, after emails, Indian phone numbers, PAN, Aadhaar and embargoed product names are replaced with tokens such as ⟦EMAIL_1⟧. Gemini plays six readers, checks beliefs against your Fact Ledger, and proposes span-level rewrites. Text embeddings use text-embedding-004.",
+      body: "Draft text and image, after emails, Indian phone numbers, PAN, Aadhaar and embargoed product names are replaced with tokens such as ⟦EMAIL_1⟧. Gemini plays six readers, checks beliefs against your Fact Ledger, and proposes span-level rewrites. Text embeddings use gemini-embedding-001 (768 dims).",
     },
     {
       title: "Stored in Supabase",

@@ -1,14 +1,19 @@
-// Gemini model handles, mock-mode flag, and the two guarded entry points to the network:
-// callObject (masked structured generation, 25s timeout, one retry) and embedTexts.
+// Gemini access: quota-aware model rotation (module-scope cooldowns), mock flag, and the two guarded entry
+// points to the network: callObject (masked structured generation) and embedTexts (embedMany).
+import { AsyncLocalStorage } from "node:async_hooks";
 import { google } from "@ai-sdk/google";
 import { embedMany, generateObject } from "ai";
 import type { z } from "zod";
 import { maskAll, unmaskDeep } from "./mask";
 import { mockEmbed } from "./mock";
 
-export const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-2.5-flash";
-export const EMBED_MODEL = "text-embedding-004";
-export const TIMEOUT_MS = 25_000;
+const DEFAULT_MODELS = ["gemini-3.8-flash", "gemini-3.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
+export const MODELS: string[] = process.env.GEMINI_MODELS
+  ? process.env.GEMINI_MODELS.split(",").map((s) => s.trim()).filter(Boolean)
+  : [...new Set([process.env.GEMINI_MODEL, ...DEFAULT_MODELS].filter((m): m is string => !!m))];
+export const MODEL_NAME = MODELS[0];
+export const EMBED_MODEL = "gemini-embedding-001"; // truncated to 768 dims to match facts.embedding
+export const TIMEOUT_MS = 40_000;
 export const isMock = () => process.env.READBACK_MOCK_AI === "1" || !process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 
 export interface Img {
@@ -16,16 +21,53 @@ export interface Img {
   mime: string;
 }
 
-export async function withRetry<T>(fn: () => Promise<T>, retries = 1): Promise<T> {
-  let err: unknown;
-  for (let i = 0; i <= retries; i++) {
-    try {
-      return await fn();
-    } catch (e) {
-      err = e;
-    }
+/** Thrown when every model in the rotation is cooling down after a 429. */
+export class QuotaError extends Error {
+  constructor(
+    public retryAfterSeconds: number,
+    public reason: "quota" | "overloaded" = "quota",
+  ) {
+    super(`Gemini ${reason === "quota" ? "quota exhausted" : "overloaded"} on all models; retry in ${retryAfterSeconds}s`);
+    this.name = "QuotaError";
   }
-  throw err;
+}
+
+// ---- per-check tracking (which models answered, how many calls) ----
+export interface Tracker {
+  models: Set<string>;
+  calls: number;
+  deadline?: number; // epoch ms; past it, calls stop waiting out cooldowns
+}
+const als = new AsyncLocalStorage<Tracker>();
+export const withTracker = <T>(t: Tracker, fn: () => Promise<T>) => als.run(t, fn);
+
+// ---- rotation state: lives in module scope so it survives across requests on a warm server ----
+const cooldown = new Map<string, number>(); // model -> epoch ms when usable again
+const quotaHit = new Set<string>(); // models whose cooldown came from a 429 rather than a 503
+let rr = 0;
+
+const statusOf = (e: unknown) => (e as { statusCode?: number })?.statusCode ?? 0;
+function retrySeconds(e: unknown): number {
+  const raw = `${(e as Error)?.message ?? ""} ${(e as { responseBody?: string })?.responseBody ?? ""}`;
+  const m = raw.match(/retry in ([\d.]+)\s*s/i) ?? raw.match(/"retryDelay"\s*:\s*"([\d.]+)s"/i);
+  return m ? Math.ceil(parseFloat(m[1])) : 60;
+}
+
+function available(): string[] {
+  const now = Date.now();
+  const live = MODELS.filter((m) => (cooldown.get(m) ?? 0) <= now);
+  if (!live.length) {
+    const soonest = Math.min(...MODELS.map((m) => cooldown.get(m) ?? 0));
+    const reason = MODELS.some((m) => quotaHit.has(m)) ? "quota" : "overloaded";
+    throw new QuotaError(Math.max(1, Math.ceil((soonest - now) / 1000)), reason);
+  }
+  const start = rr++ % live.length; // spread load: each call starts one model further along
+  return [...live.slice(start), ...live.slice(0, start)];
+}
+
+export function resetQuotaState() {
+  cooldown.clear();
+  quotaHit.clear();
 }
 
 /** Every prompt is masked before it leaves; the structured result is unmasked on the way back. */
@@ -42,31 +84,71 @@ export async function callObject<T>(o: {
     { type: "text" as const, text: out[1] },
     ...(o.image ? [{ type: "image" as const, image: o.image.data, mimeType: o.image.mime }] : []),
   ];
-  return withRetry(async () => {
-    const { object } = await generateObject({
-      model: google(MODEL_NAME),
-      schema: o.schema,
-      system: out[0],
-      messages: [{ role: "user", content }],
-      temperature: o.temperature ?? 0.2,
-      maxRetries: 0,
-      abortSignal: AbortSignal.timeout(TIMEOUT_MS),
-    });
-    return unmaskDeep(object, tokens);
-  });
+  const track = als.getStore();
+  let retried = false;
+  let waited = 0;
+  for (;;) {
+    let models: string[];
+    try {
+      models = available();
+    } catch (e) {
+      // short cooldowns (503 spikes, per-minute quota) are worth waiting out once the rotation is exhausted
+      if (!(e instanceof QuotaError)) throw e;
+      const late = track?.deadline !== undefined && Date.now() + e.retryAfterSeconds * 1000 > track.deadline;
+      if (e.retryAfterSeconds > 20 || waited >= 45 || late) throw e;
+      await new Promise((r) => setTimeout(r, e.retryAfterSeconds * 1000));
+      waited += e.retryAfterSeconds;
+      continue;
+    }
+    for (const model of models) {
+      try {
+        const t = Date.now();
+        const { object } = await generateObject({
+          model: google(model),
+          schema: o.schema,
+          system: out[0],
+          messages: [{ role: "user", content }],
+          temperature: o.temperature ?? 0.2,
+          maxRetries: 0,
+          abortSignal: AbortSignal.timeout(TIMEOUT_MS),
+        });
+        if (track) (track.calls++, track.models.add(model));
+        quotaHit.delete(model);
+        if (process.env.READBACK_DEBUG) console.error(`[gemini] ${model} ok ${Date.now() - t}ms`);
+        return unmaskDeep(object, tokens);
+      } catch (e) {
+        if (process.env.READBACK_DEBUG) console.error(`[gemini] ${model} fail ${statusOf(e)} ${(e as Error).message?.slice(0, 120)}`);
+        const s = statusOf(e);
+        if (s === 429) (cooldown.set(model, Date.now() + retrySeconds(e) * 1000), quotaHit.add(model));
+        else if (s === 503) cooldown.set(model, Date.now() + 15_000);
+        else if (s === 404) cooldown.set(model, Date.now() + 3_600_000);
+        else {
+          if (retried) throw e;
+          retried = true; // invalid output or timeout: one more pass
+        }
+        if (![429, 503, 404].includes(s)) break;
+      }
+    }
+  }
 }
 
 export async function embedTexts(texts: string[], embargo: string[] = []): Promise<number[][]> {
   if (!texts.length) return [];
   if (isMock()) return texts.map(mockEmbed);
   const { out } = maskAll(texts, embargo);
-  const { embeddings } = await withRetry(() =>
-    embedMany({
-      model: google.textEmbeddingModel(EMBED_MODEL),
-      values: out,
-      maxRetries: 0,
-      abortSignal: AbortSignal.timeout(TIMEOUT_MS),
-    }),
-  );
-  return embeddings;
+  let err: unknown;
+  for (let i = 0; i < 2; i++) {
+    try {
+      const { embeddings } = await embedMany({
+        model: google.textEmbeddingModel(EMBED_MODEL, { outputDimensionality: 768 }),
+        values: out,
+        maxRetries: 0,
+        abortSignal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      return embeddings;
+    } catch (e) {
+      err = e;
+    }
+  }
+  throw err;
 }

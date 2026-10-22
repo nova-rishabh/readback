@@ -168,3 +168,96 @@ export async function fixAndGate(a: FixArgs): Promise<Suggestion | null> {
   if (!reread) reread = { passed: false, unsupported_before: a.flagged.length, unsupported_after: a.flagged.length, new_unsupported: 0, intent_kept: 0, of: a.panel.length };
   return { replacement: fix.replacement, rationale: fix.rationale, reread };
 }
+
+// ---------- batched variant: one fix call + one re-read for every target (free-tier quota) ----------
+
+export interface FixTarget {
+  id: string;
+  span: Span;
+  kind: "claim" | "tone";
+  belief: string | null;
+  reason: string;
+}
+
+async function proposeFixes(ts: FixTarget[], a: Omit<FixArgs, "span" | "kind" | "belief" | "reason">) {
+  const out = new Map<string, { replacement: string; rationale: string }>();
+  if (isMock()) {
+    for (const t of ts) {
+      const f = await mockFix(t.kind === "tone" ? null : t.belief, t.span.text);
+      if (f) out.set(t.id, f);
+    }
+    return out;
+  }
+  const facts = a.brand.facts.filter((f) => f.status === "active").map(describeFact).join("\n");
+  try {
+    const o = await callObject({
+      schema: z.object({ fixes: z.array(z.object({ id: z.string(), replacement: z.string(), rationale: z.string() })) }),
+      system: `You are a careful copy editor for ${a.brand.name}. For each listed span you write a replacement for that span only, so the draft becomes truthful while changing as little as possible.`,
+      prompt: [
+        `DRAFT:\n"""\n${a.draft}\n"""`,
+        `SPANS TO REWRITE:\n${ts
+          .map((t) => `- id "${t.id}": "${t.span.text}". ${t.kind === "claim" ? `Readers believe "${t.belief}". ${t.reason}` : `Tone reads as pushy against the brand voice (${a.brand.voice_traits.join(", ")}); keep the call to action, remove the pressure.`}`)
+          .join("\n")}`,
+        `DECLARED INTENT (must still come across): ${a.intent}`,
+        `LOCKED PHRASES (never alter, never contradict): ${a.locked.length ? a.locked.map((p) => `"${p}"`).join(", ") : "none"}`,
+        `APPROVED FACTS (use their wording and numbers where possible):\n${facts || "none"}`,
+        "Rules: one entry per id; the replacement substitutes only that span, in the same language and register, about the same length. Preserve the creator's purpose. Add no claims beyond the approved facts. A measured result may end with * so a disclaimer can attach.",
+        'Example: "Visible glow in 7 days" -> "71% saw more radiant skin in 4 weeks*" (from fact "71% saw more radiant skin at week 4").',
+      ].join("\n\n"),
+      embargo: a.embargo,
+    });
+    for (const f of o.fixes) if (f.replacement.trim()) out.set(f.id, f);
+  } catch {
+    /* no fixes: findings stay without suggestions */
+  }
+  return out;
+}
+
+/**
+ * Propose span fixes for all targets in one call, splice every non-overlapping fix into ONE combined draft and
+ * re-read it once. Each fix passes only if its own flagged belief no longer holds, no new unsupported belief
+ * appears, most readers keep the declared intent and locked phrases survive.
+ */
+export async function fixAllAndGate(
+  ts: FixTarget[],
+  a: Omit<FixArgs, "span" | "kind" | "belief" | "reason">,
+): Promise<Map<string, Suggestion>> {
+  const result = new Map<string, Suggestion>();
+  const fixes = await proposeFixes(ts, a);
+  const usable = ts.filter((t) => fixes.has(t.id) && fixes.get(t.id)!.replacement !== t.span.text).sort((x, y) => y.span.start - x.span.start);
+  // splice from the end so earlier offsets stay valid; overlapping spans are left out of the combined draft
+  let combined = a.draft;
+  let floor = Infinity;
+  const inDraft = new Set<string>();
+  for (const t of usable) {
+    if (t.span.end > floor) continue;
+    combined = splice(combined, t.span, fixes.get(t.id)!.replacement);
+    floor = t.span.start;
+    inDraft.add(t.id);
+  }
+  const of = a.panel.length;
+  const fail = { passed: false, unsupported_before: a.flagged.length, unsupported_after: a.flagged.length, new_unsupported: 0, intent_kept: 0, of };
+  let rs: RereadReader[] | null = null;
+  if (inDraft.size) {
+    try {
+      rs = await rereadPanel({ ...a, span: ts[0].span, kind: "claim", belief: null, reason: "" }, combined);
+    } catch {
+      rs = null; // unverified fixes are never presented as safe
+    }
+  }
+  const lockedOk = lockedIntact(a.draft, combined, a.locked);
+  const min = Math.min(2, Math.max(1, rs?.length ?? 1));
+  for (const t of usable) {
+    const fix = fixes.get(t.id)!;
+    let reread: NonNullable<Suggestion["reread"]> = fail;
+    if (rs && inDraft.has(t.id)) {
+      const all = scoreReread(rs, a.flagged.length, { lockedOk, tone: false, voice: a.brand.voice_traits });
+      const k = t.belief ? a.flagged.indexOf(t.belief) : -1;
+      const stillHeld = k >= 0 && rs.filter((r) => r.beliefs.some((b) => b.verdict !== "ok" && b.matches_flagged === k)).length >= min;
+      const toneOk = t.kind !== "tone" || !toneConflict(rs.map((r) => r.tone), a.brand.voice_traits).majority;
+      reread = { ...all, passed: lockedOk && !stillHeld && toneOk && all.new_unsupported === 0 && all.intent_kept * 2 > all.of };
+    }
+    result.set(t.id, { replacement: fix.replacement, rationale: fix.rationale, reread });
+  }
+  return result;
+}

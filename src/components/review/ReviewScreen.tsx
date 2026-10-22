@@ -79,6 +79,10 @@ export function ReviewScreen(props: {
       url.searchParams.delete("run");
       window.history.replaceState(null, "", url.pathname + url.search);
     }
+    // Strict Mode unmounts once in dev and the stream hook aborts on unmount; allow the remount to start it again.
+    return () => {
+      autoRan.current = false;
+    };
   }, [props.autoRun, run]);
 
   const live = state.status !== "idle";

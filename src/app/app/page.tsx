@@ -71,12 +71,13 @@ export default async function Inbox({ searchParams }: { searchParams: Promise<{ 
             </thead>
             <tbody>
               {rows.map((s) => (
-                <tr key={s.id} className="group border-b border-rule hover:bg-sheet">
+                <tr key={s.id} className="group relative cursor-pointer border-b border-rule hover:bg-sheet">
                   <td className="py-2.5 pr-3 font-mono text-[12.5px] text-muted">#{s.number}</td>
                   <td className="py-2.5 pr-3">
+                    {/* stretched link: the whole row opens the review, while keyboard users still tab to one link */}
                     <Link
                       href={`/app/s/${s.id}`}
-                      className="font-medium underline decoration-transparent underline-offset-4 group-hover:decoration-rule-strong"
+                      className="font-medium underline decoration-transparent underline-offset-4 group-hover:decoration-rule-strong after:absolute after:inset-0 after:content-['']"
                     >
                       {s.title}
                     </Link>

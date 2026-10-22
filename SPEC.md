@@ -12,7 +12,7 @@ Shared types live in `src/lib/types.ts`. **Do not change them without being aske
 - Next.js 15 App Router, TypeScript strict, Tailwind v4, no shadcn CLI (write the small primitives by hand in `src/components/ui/`)
 - Supabase: Postgres, Auth, Storage (private bucket `assets`), pgvector
 - Vercel AI SDK v4 (`ai@4`, `@ai-sdk/google@1`), zod v3
-- Gemini: `GEMINI_MODEL` env, default `gemini-2.5-flash`; embeddings `text-embedding-004` (768 dims)
+- Gemini: `GEMINI_MODEL` env, default `gemini-2.5-flash`; embeddings `gemini-embedding-001 (768 dims)` (768 dims)
 - sharp (pixels), diff (word diffs), vitest
 - pnpm
 

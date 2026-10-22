@@ -46,3 +46,21 @@ export async function confirmVisual(image: Img, element: string): Promise<boolea
     return false;
   }
 }
+
+/** Batched yes/no for every distinct visual element in one call; returns the ones actually visible. */
+export async function confirmVisuals(image: Img, elements: string[]): Promise<Set<string>> {
+  if (!elements.length) return new Set();
+  if (isMock()) return new Set(elements.filter(mockConfirmVisual));
+  try {
+    const o = await callObject({
+      schema: z.object({ answers: z.array(z.object({ index: z.number(), present: z.boolean() })) }),
+      system: "You verify image contents. Answer strictly through the schema, one entry per listed element.",
+      prompt: `Is each of these visible in the image?\n${elements.map((e, i) => `${i}. ${e}`).join("\n")}`,
+      image,
+      temperature: 0,
+    });
+    return new Set(o.answers.filter((a) => a.present && elements[a.index]).map((a) => elements[a.index]));
+  } catch {
+    return new Set();
+  }
+}
