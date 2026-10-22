@@ -1,103 +1,131 @@
-import Image from "next/image";
+import Link from "next/link";
+import { getSessionUser } from "@/lib/db/queries";
+import { RoleEntries, EmailSignIn } from "@/components/shell/RoleEntry";
+import { DisclosureFull } from "@/components/shell/Disclosure";
+import { BeliefMeter } from "@/components/review/BeliefMeter";
+import { roleLabel } from "@/components/format";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+async function currentUser() {
+  try {
+    return await getSessionUser();
+  } catch {
+    return null;
+  }
+}
+
+function Mark({ n, sev, kind, children }: { n: number; sev: "high" | "medium"; kind: string; children: React.ReactNode }) {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <span className={`proof-mark ${kind}`} data-sev={sev} style={{ cursor: "default" }}>
+      {children}
+      <sup aria-hidden className="ml-0.5 font-sans text-[11px] font-semibold not-italic" style={{ color: sev === "high" ? "var(--color-proof)" : "var(--color-ochre)" }}>
+        {n}
+      </sup>
+    </span>
+  );
+}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+const NOTES = [
+  {
+    n: 1,
+    label: "[AI]",
+    meter: 4,
+    text: "4 of 6 readers believed a dermatologist recommends this serum. The ledger only holds F-03, “Dermatologist-tested”.",
+  },
+  {
+    n: 2,
+    label: "[AI]",
+    meter: 5,
+    text: "5 of 6 readers believed results are guaranteed within a week. No fact in the ledger backs a 7-day claim.",
+  },
+  {
+    n: 3,
+    label: "[RULE]",
+    meter: null,
+    text: "“zero chemicals” is on Velura’s banned-terms list. Suggested: “92% naturally derived ingredients” (F-12).",
+  },
+];
+
+export default async function Landing() {
+  const user = await currentUser();
+  return (
+    <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
+      <header className="flex h-16 items-center justify-between border-b border-rule">
+        <span className="font-display text-[22px] font-medium tracking-[-0.01em]">Readback</span>
+        {user && (
+          <Link href="/app" className="text-[14px] underline decoration-rule-strong underline-offset-4 hover:decoration-ink">
+            Continue as {user.name} ({roleLabel[user.role].toLowerCase()})
+          </Link>
+        )}
+      </header>
+
+      <main>
+        <section className="grid gap-10 py-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14 lg:py-20">
+          <div>
+            <h1 className="font-display text-[40px] leading-[1.08] tracking-[-0.015em] lg:text-[48px]">
+              Readback marks up a marketing draft before it ships: brand rules checked to the clause, and six simulated
+              readers telling you what they came away believing.
+            </h1>
+            <p className="mt-6 max-w-[52ch] text-[15.5px] leading-relaxed text-muted">
+              Built for the Velura demo brand, an Indian skincare label. Every belief is traced to the words or image
+              that caused it and checked against the brand&rsquo;s Fact Ledger before anyone sees it.
+            </p>
+          </div>
+
+          <figure aria-label="Example: draft #142 marked up by Readback" className="rounded-md border border-rule bg-sheet">
+            <figcaption className="flex items-baseline justify-between border-b border-rule px-5 py-3 text-[13px] text-muted">
+              <span>
+                Velura draft <span className="font-mono text-ink">#142</span>, Instagram, v1
+              </span>
+              <span>3 of 7 findings shown</span>
+            </figcaption>
+            <div className="grid gap-6 p-5 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+              <p className="font-display text-[26px] leading-[1.6]">
+                <Mark n={1} sev="high" kind="mark-wavy">Dermatologist-loved</Mark> Vitamin C serum.{" "}
+                <Mark n={2} sev="high" kind="mark-wavy">Visible glow in 7 days</Mark>. 100% natural,{" "}
+                <Mark n={3} sev="medium" kind="mark-double">zero chemicals</Mark>. Shop now
+              </p>
+              <ol className="flex flex-col gap-4 border-t border-rule pt-4 md:border-t-0 md:border-l md:pt-0 md:pl-5">
+                {NOTES.map((note) => (
+                  <li key={note.n} className="grid grid-cols-[18px_1fr] gap-x-2 text-[13.5px] leading-snug">
+                    <span className="font-semibold tabular-nums">{note.n}</span>
+                    <div>
+                      <div className="mb-1 flex items-center gap-2">
+                        <span className="font-mono text-[11px] text-muted">{note.label}</span>
+                        {note.meter !== null && <BeliefMeter k={note.meter} of={6} compact />}
+                      </div>
+                      {note.text}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </figure>
+        </section>
+
+        <section aria-labelledby="enter-h" className="pb-14">
+          <h2 id="enter-h" className="font-display text-[24px] leading-tight">
+            Open the Velura workspace
+          </h2>
+          <p className="mt-1 mb-5 text-[14px] text-muted">
+            Four seeded accounts, one click each. Each role sees and can do different things, enforced by row-level security.
+          </p>
+          <RoleEntries />
+          <details className="mt-6 max-w-[720px] text-[14px]">
+            <summary className="cursor-pointer text-muted underline decoration-rule-strong underline-offset-4 hover:text-ink">
+              Sign in with an email and password instead
+            </summary>
+            <div className="mt-4">
+              <EmailSignIn />
+            </div>
+          </details>
+        </section>
+
+        <div className="pb-16">
+          <DisclosureFull />
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }

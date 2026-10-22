@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Proof desk tokens. Paper, ink, thin rules, and four marking colours. */
+@theme {
+  --color-paper: #f7f4ee;
+  --color-sheet: #fffdf8;
+  --color-ink: #1b1a17;
+  --color-rule: #e3ddd1;
+  --color-rule-strong: #cfc7b8;
+  --color-muted: #6b655b;
+
+  --color-proof: #b3261e;
+  --color-proof-tint: #f7e4e1;
+  --color-ochre: #9a6700;
+  --color-ochre-tint: #f6ecd6;
+  --color-steel: #3d5a80;
+  --color-steel-tint: #e3e9f1;
+  --color-moss: #2f6b3f;
+  --color-moss-tint: #e1ede3;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+
+  --shadow-*: initial;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-inter-tight), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "tnum";
+  -webkit-font-smoothing: antialiased;
 }
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: #e9dfc9;
+}
+
+/* Proof marks in the draft: tint + category underline style + severity colour. */
+.proof-mark {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  text-decoration-skip-ink: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+.proof-mark[data-sev="high"] { text-decoration-color: var(--color-proof); background: color-mix(in srgb, var(--color-proof-tint) 70%, transparent); }
+.proof-mark[data-sev="medium"] { text-decoration-color: var(--color-ochre); background: color-mix(in srgb, var(--color-ochre-tint) 70%, transparent); }
+.proof-mark[data-sev="low"] { text-decoration-color: var(--color-steel); background: color-mix(in srgb, var(--color-steel-tint) 70%, transparent); }
+.proof-mark[data-active="true"][data-sev="high"] { background: var(--color-proof-tint); outline: 1px solid var(--color-proof); }
+.proof-mark[data-active="true"][data-sev="medium"] { background: var(--color-ochre-tint); outline: 1px solid var(--color-ochre); }
+.proof-mark[data-active="true"][data-sev="low"] { background: var(--color-steel-tint); outline: 1px solid var(--color-steel); }
+.proof-mark[data-resolved="true"] { background: transparent; text-decoration-style: solid; text-decoration-color: var(--color-rule-strong); }
+
+.mark-wavy { text-decoration-style: wavy; }
+.mark-double { text-decoration-style: double; text-decoration-thickness: 3px; }
+.mark-dashed { text-decoration-style: dashed; }
+.mark-dotted { text-decoration-style: dotted; text-decoration-thickness: 2px; }
+.mark-solid { text-decoration-style: solid; text-decoration-thickness: 2px; }
+
+.diff-add { background: var(--color-moss-tint); text-decoration: underline; text-decoration-color: var(--color-moss); text-underline-offset: 3px; }
+.diff-del { color: var(--color-proof); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+@keyframes rb-arrive {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: none; }
+}
+.rb-arrive { animation: rb-arrive 260ms ease-out both; }

@@ -1,0 +1,63 @@
+import { NextResponse } from "next/server";
+import { createSubmission, getSessionUser } from "@/lib/db/queries";
+import type { Channel, Lang } from "@/lib/types";
+
+export const runtime = "nodejs";
+
+const CHANNELS: Channel[] = ["instagram", "website", "amazon", "nykaa", "whatsapp", "email", "other"];
+const LANGS: Lang[] = ["en", "hi", "hinglish"];
+const MAX_IMAGE = 8 * 1024 * 1024;
+
+/**
+ * Multipart draft submission. A route handler rather than a server action so
+ * images above the 1 MB server-action body limit still go through.
+ */
+export async function POST(req: Request) {
+  const user = await getSessionUser().catch(() => null);
+  if (!user) return NextResponse.json({ error: "Sign in first." }, { status: 401 });
+
+  let form: FormData;
+  try {
+    form = await req.formData();
+  } catch {
+    return NextResponse.json({ error: "The form could not be read." }, { status: 400 });
+  }
+
+  const title = String(form.get("title") ?? "").trim();
+  const body = String(form.get("body") ?? "").trim();
+  const intent = String(form.get("intent") ?? "").trim();
+  const channel = String(form.get("channel") ?? "") as Channel;
+  const lang = String(form.get("lang") ?? "") as Lang;
+  const lockedPhrases = String(form.get("locked") ?? "")
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const altRaw = String(form.get("alt") ?? "").trim();
+
+  const errors: Record<string, string> = {};
+  if (!title) errors.title = "Give the draft a title your reviewer will recognise.";
+  if (!body) errors.body = "Paste the copy you want checked.";
+  if (!intent) errors.intent = "Say in one line what a reader should take away.";
+  if (!CHANNELS.includes(channel)) errors.channel = "Pick a channel.";
+  if (!LANGS.includes(lang)) errors.lang = "Pick a language.";
+  for (const p of lockedPhrases) {
+    if (!body.toLowerCase().includes(p.toLowerCase())) errors.locked = `Locked phrase “${p}” does not appear in the copy.`;
+  }
+
+  let image: { data: Buffer; mime: string; alt: string | null } | undefined;
+  const file = form.get("image");
+  if (file && typeof file !== "string" && file.size > 0) {
+    if (!file.type.startsWith("image/")) errors.image = "Upload a PNG, JPEG or WebP image.";
+    else if (file.size > MAX_IMAGE) errors.image = "Images must be 8 MB or smaller.";
+    else image = { data: Buffer.from(await file.arrayBuffer()), mime: file.type, alt: altRaw || null };
+  }
+
+  if (Object.keys(errors).length) return NextResponse.json({ errors }, { status: 422 });
+
+  try {
+    const ids = await createSubmission({ title, channel, lang, intent, body, lockedPhrases, image });
+    return NextResponse.json(ids);
+  } catch (e) {
+    return NextResponse.json({ error: e instanceof Error ? e.message : "Could not save the draft." }, { status: 500 });
+  }
+}
