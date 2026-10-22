@@ -1,0 +1,1590 @@
+[
+  {
+    "id": "ASCI-001",
+    "advertiser": "Orient Electric Limited",
+    "product": "Aero O2 Oxygen Enriching Fan",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "\"90% Oxygen Recovery in 8 Hours\", “99.99% Microbe Neutralisation”, “75% Less Toxic Gases”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Fan maker's oxygen-recovery, microbe-neutralisation and toxic-gas-reduction claims lacked adequate substantiation and were held misleading by exaggeration; the earlier Upheld decision stood on review.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-6-15-1-C.54521",
+    "date": "2026-10"
+  },
+  {
+    "id": "ASCI-002",
+    "advertiser": "Airth Research Private Limited",
+    "product": "Airth AC Filter",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“Removes Harmful Particles - Covid-19, Bacteria, Pollen, PM 2.5, PM 10”, “AIRTH Filter for Split AC upgrades your AC into a HEPA purifier that removes 99% of PM2.5, allergens, and germs”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Claims that the AC filter removes Covid-19, bacteria and 99% of PM2.5 were not adequately backed by evidence and were found exaggerated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-5-21-6-C.54479",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-003",
+    "advertiser": "Urban Air Labs Private Limited",
+    "product": "Ubreathe",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“World's No. 1 Smart Nature-Based Air Purifier is now affordable, get yours now!” and “Captures up to 99.97% of pollutants, particles as small as 0.3 microns “”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'World's No. 1' and 99.97% pollutant-capture claims for an air purifier were not supported by market or test evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-5-18-6-C.54389",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-004",
+    "advertiser": "Havells India Limited",
+    "product": "Lloyd Single Door Refrigerator",
+    "category": "electronics",
+    "medium": "other",
+    "claim_text": "“India’s 1st Anti-Frost Single Door Refrigerator”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "The advertiser did not respond, so the 'India's 1st Anti-Frost' refrigerator claim was treated as unsubstantiated and exaggerated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-8-2-C.55400",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-005",
+    "advertiser": "Havells India Limited",
+    "product": "Lloyd Stylus Lite Air Conditioner",
+    "category": "electronics",
+    "medium": "other",
+    "claim_text": "“India's First Designer AC”, and “Exclusive at Vijay Sales only*”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "The 'India's First Designer AC' claim was upheld against the advertiser, and the council found no evidence that the celebrities featured had done due diligence on the claims.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-6-25-1-C.55151",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-006",
+    "advertiser": "OPPO Mobiles India Private Limited",
+    "product": "OPPO F27 Pro Plus 5G",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“DAMAGE-PROOF 360° ARMOUR BODY”, \"Pitch Roller Proof\", “….Phone was in the washing machine”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Durability claims for a phone ('damage-proof', washing-machine imagery) were upheld, with the council also noting missing celebrity due-diligence evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-12-10-1-C.50665",
+    "date": "2026-01"
+  },
+  {
+    "id": "ASCI-007",
+    "advertiser": "Kent Ro Systems Limited",
+    "product": "Kent RO Water Purifiers",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“Longer filter life means compromising on purity”, “to increase filter’s life, its pores are made larger” and that this leads to impurities in water, and consequently water is not “fully pure”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "A water-purifier maker's claims that longer filter life compromises purity were unsubstantiated and denigrated competing purifiers.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-11-10-2-C.48937",
+    "date": "2025-12"
+  },
+  {
+    "id": "ASCI-008",
+    "advertiser": "Flyon Batteries",
+    "product": "FLYON BATTERIES",
+    "category": "other",
+    "medium": "tv",
+    "claim_text": "“Extra life, extra power and is for double life and double profit”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Battery maker's 'extra life, extra power, double life' claims had no supporting test data and no stated basis of comparison.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-5-7-6-C.41768",
+    "date": "2025-05"
+  },
+  {
+    "id": "ASCI-009",
+    "advertiser": "Ariston Thermo India Private Limited",
+    "product": "Racold India Water Heater",
+    "category": "electronics",
+    "medium": "other",
+    "claim_text": "“Marksmen Daily - Most Trusted Brands of India - 5th EDITION – 2025-2026”",
+    "outcome": "upheld",
+    "grounds": [
+      "exaggeration"
+    ],
+    "ruling_summary": "A 'most trusted brand' award claim for water heaters lacked the survey methodology and awarding-body details required by the awards/rankings guidelines.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-31-1-C.44613",
+    "date": "2025-10"
+  },
+  {
+    "id": "ASCI-010",
+    "advertiser": "Avangii Labs Private Limited",
+    "product": "Nutrispray Anti Age spray",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Your Skin, But 7 Years Younger, Bring Back Youthful Skin” (with before-and-after visual)",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "'7 years younger' skin claim and before/after visual were unsupported by clinical evidence and judged misleading by exaggeration.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-8-3-6-C.56321",
+    "date": "2026-08"
+  },
+  {
+    "id": "ASCI-011",
+    "advertiser": "Bhandaree Consumer Products Private Limited",
+    "product": "Lashika Anti Wrinkle Cream",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Visibly reduces fine lines and wrinkles, Boosts collagen & skin elasticity” and “New Improved” [pack claim]",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Anti-wrinkle cream claims about reducing lines and boosting collagen were not substantiated, and 'New Improved' did not say what had changed.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-6-29-6-C.55349",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-012",
+    "advertiser": "Ionic Professional Private Limited",
+    "product": "& Done Rebuilding Serum",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Repair YEARS of hair damage in just 3 minutes — not just maintain it! and Fix Damaged Hair in 3 Minutes”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Claims that a hair serum repairs years of damage in three minutes were found inadequately substantiated and exaggerated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-3-6-C.55480",
+    "date": "2026-08"
+  },
+  {
+    "id": "ASCI-013",
+    "advertiser": "Personal Touch Pharmaceuticals Private Limited",
+    "product": "Personal Touch Sunscreen",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Reverse signs of aging”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A sunscreen's 'reverse signs of aging' claim had no clinical evidence, and the advertiser did not respond.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-3-6-C.55486",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-014",
+    "advertiser": "KeyCi",
+    "product": "KeyCi NiaBrite Skin Brightening Face Serum",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“India's no. 1 skin-brightening serum with liposomal technology”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'India's no. 1' serum claim had no comparative market data and the source and date were not shown.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-6-5-C.55553",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-015",
+    "advertiser": "Era Botanics Private Limited",
+    "product": "Conscious Chemist Hair Care Anti-Hairfall Shampoo",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“10,000 New Strands in 30 Days”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "A wash-off shampoo claiming '10,000 new strands in 30 days' had no clinical proof of that regrowth.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-17-6-C.55987",
+    "date": "2026-08"
+  },
+  {
+    "id": "ASCI-016",
+    "advertiser": "Slick Organics Private Limited",
+    "product": "Arata Anti-Hair Fall Intensive Shampoo",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“7.4X Hair Fall Reduction”, “4.5x reduction in Telogen Phase”, “3.6x boost in hair growth factors”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Shampoo's '3.6X boost in hair growth factors' claim was judged inadequately substantiated and exaggerated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-17-2-C.55819",
+    "date": "2026-08"
+  },
+  {
+    "id": "ASCI-017",
+    "advertiser": "Onesto Labs Private Limited",
+    "product": "Bare Anatomy - Advanced Hair Growth Serum Roll-On",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“214% Hair Growth in 10 Days*”, “Dermatologist Tested”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "'214% hair growth in 10 days' and 'dermatologist tested' were held inadequately substantiated, the latter implying efficacy support.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-5-15-1-C.54341",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-018",
+    "advertiser": "YMI Ghar Soaps Private Limited",
+    "product": "Kojic Soap",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Treats all our dark spots, pigmentation & uneven skin tone within a week”, and visuals of the pre and post usage",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "A face-wash's one-week pigmentation claim and before/after visuals were unsubstantiated; the advertiser gave no response.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-5-19-2-C.54321",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-019",
+    "advertiser": "Sea Beauty",
+    "product": "Sea Beauty Tan Polish Face & Body",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "\"Remove 10 Years Old Tan”, “Brightens Skin and Reduces Dark spots\"",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "A tan-removal claim and before/after skin visuals lacked evidence and were found misleading by exaggeration.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-6-22-6-C.55228",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-020",
+    "advertiser": "Jiore Skincare Studio",
+    "product": "Jiore Skincare TSUYOI Yellow Peel",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Visible difference in 5 Days”, “Permanent Skin Whitening”, “Clears Tan.”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "'Permanent skin whitening' and 'visible difference in 5 days' for a peel were unsupported, as were the before/after visuals.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-5-14-6-C.54311",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-021",
+    "advertiser": "Wipro Enterprises Private Limited",
+    "product": "Yardley London English Blossom Deodorant Roll-On",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Yardley's deodorant roll-ons provide 48-hour sweat protection”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A 48-hour sweat-protection claim for a deodorant roll-on was found inadequately substantiated by the submitted study.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-4-20-6-C.53787",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-022",
+    "advertiser": "IZING Healthcare Private Limited",
+    "product": "Aqua Ace Lip Balm",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Aqua Ace Lip Balm gives 24-hour hydration + UV protection in one swipe”, \"Get hydrated lips in 7 days*”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "24-hour hydration, UV protection and '7 days' lip results were not backed by test reports.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-12-18-6-C.51382",
+    "date": "2026-01"
+  },
+  {
+    "id": "ASCI-023",
+    "advertiser": "Foxtale Consumer Private Limited",
+    "product": "Foxtale Deleted Items Niacinamide Clarifying Serum",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Delete marks and pigmentation in 14 days* [*Based on the consumer study conducted with 36 volunteers] (Celebrity – Harshvardhan Rane)\"”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A 14-day pigmentation-deletion claim from a small consumer study was upheld, and no celebrity due diligence was shown.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-12-4-6-C.50869",
+    "date": "2026-02"
+  },
+  {
+    "id": "ASCI-024",
+    "advertiser": "Anveya Living Private Limited",
+    "product": "Thrive Co. Hair Prime Serum",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“1. Say goodbye to premature greys … anti-greying serum! 2. Reverse grey hair in 60 days … Hair Prime Serum. 3. This powerful anti-grey hair serum for … natural color and prevent hair greying”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Claims that a serum reverses grey hair in 60 days were inadequately substantiated and exaggerated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-10-13-6-C.48600",
+    "date": "2025-11"
+  },
+  {
+    "id": "ASCI-025",
+    "advertiser": "Mosaic Wellness Private Limited",
+    "product": "Be Bodywise Serum Roll On",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“India’s First Hair Growth Serum Roll-On with 2% Aminexil, 3% Rosemary, 3% Redensyl & 2% Anagain, Boosts Hair Growth by 5X, Reduces Hair Fall and See Visible Results in Just 3 Months!”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "'Boosts hair growth by 5X' and 'visible results in 3 months' claims for a roll-on serum were not substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-12-29-6-C.51594",
+    "date": "2026-02"
+  },
+  {
+    "id": "ASCI-026",
+    "advertiser": "Nykaa E-Retail Limited",
+    "product": "Nykaa Creamy Matte Lipstick",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“1 sold every minute”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A lipstick's '1 sold every minute' claim had no supporting sales data.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-12-29-6-C.51596",
+    "date": "2026-01"
+  },
+  {
+    "id": "ASCI-027",
+    "advertiser": "Wellspring Consumer Private Limited",
+    "product": "World of Asaya – asaya Advanced Spot Targeting Serum",
+    "category": "skincare",
+    "medium": "tv",
+    "claim_text": "“Clinically proven to reduce dark spots in 2 Weeks”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'Clinically proven to reduce dark spots in 2 weeks' was held inadequately supported by the study provided.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-24-6-C.44658",
+    "date": "2025-08"
+  },
+  {
+    "id": "ASCI-028",
+    "advertiser": "Lotus Herbals Private Limited",
+    "product": "Lotus Derma Botanics Blemish Free Face Wash",
+    "category": "skincare",
+    "medium": "tv",
+    "claim_text": "“Enriched with clinical actives and botanical extracts, anti-oxidant rich berries and kojic acid that reduces dark spots and acne marks in 4 weeks”, “90% users noticed reduced acne marks in 4 Weeks*” - Disclaimer (*Based on an extensive consumer research)",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Acne-mark reduction claims in four weeks, and before/after visuals implying complete clearance, were not clinically substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-1-22-6-C.52089",
+    "date": "2026-02"
+  },
+  {
+    "id": "ASCI-029",
+    "advertiser": "Karnataka Soaps & Detergents Limited",
+    "product": "Mysore Sandal Soap",
+    "category": "skincare",
+    "medium": "print",
+    "claim_text": "“The only soap with 100% pure natural sandalwood oil”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'The only soap with 100% pure natural sandalwood oil' was unsubstantiated as the advertiser did not respond.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-4-30-2-C.53882",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-030",
+    "advertiser": "Metabolix Fitness Private Limited",
+    "product": "Metabolix Glo Marine Collagen Peptides",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“10X Active Collagen Formula”, “Restores Skin elasticity and glow”, and “Reduction in Fine Lines & Wrinkles”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Collagen-supplement claims about restoring skin elasticity and reducing wrinkles had no efficacy evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-15-6-C.55928",
+    "date": "2026-10"
+  },
+  {
+    "id": "ASCI-031",
+    "advertiser": "Namhya Foods Private Limited",
+    "product": "Namhya Lungs Cleanse Tea",
+    "category": "food",
+    "medium": "digital",
+    "claim_text": "“Proven Results Within 90 Days” and “Lungs Cleanse Tea Designed For Urban & Environmental Wellness, Smoke-Filled Settings, Environmental Stressors, Urban Air Pollution, Dusty Environments” and “Trusted & Loved By 5 Million Customers”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Tea marketed with 'proven results within 90 days' and a '5 million customers' trust claim lacked supporting evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-9-4-5-C.57249",
+    "date": "2026-09"
+  },
+  {
+    "id": "ASCI-032",
+    "advertiser": "BigMuscles Nutrition Private Limited",
+    "product": "BigMuscles Nutrition protein products",
+    "category": "food",
+    "medium": "digital",
+    "claim_text": "“100% Clean Natural Ingredients”, “Isme jo protein hai vo bana hai 100% cow milk se jo direct source hua hai farm across Europe”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A protein brand's '100% clean natural ingredients' and cow-milk-sourcing claims were not substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-6-2-1-C.54104",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-033",
+    "advertiser": "Navrelia Foods Private Limited",
+    "product": "Navrelia Ruby Roti Mix",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“Ruby Roti- India's most diabetic friendly roti” and “Overweight management and for better lifestyle with high protein and low GI.”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'India's most diabetic friendly roti' and weight-management claims for a roti mix were not backed by clinical evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-1-13-6-C.51881",
+    "date": "2026-01"
+  },
+  {
+    "id": "ASCI-034",
+    "advertiser": "Gem Edible Oils Private Limited",
+    "product": "Gems Gold Sunflower Oil",
+    "category": "food",
+    "medium": "other",
+    "claim_text": "“Only Gem's Gold Sunflower Oil is physically refined without using any chemicals”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'Only Gem's Gold is physically refined without any chemicals' was an unsubstantiated exclusivity claim.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-9-10-1-C.47128",
+    "date": "2025-09"
+  },
+  {
+    "id": "ASCI-035",
+    "advertiser": "Kaleesuwari Refinery Private Limited",
+    "product": "Gold Winner Sunflower Oil",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“Just like gold winner is clear and light tasty and healthy with all good things together”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication",
+      "statutory"
+    ],
+    "ruling_summary": "A sunflower oil ad's 'tasty and healthy' claim was found inadequately substantiated under the F&B guidelines.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-2-27-6-C.52823",
+    "date": "2026-04"
+  },
+  {
+    "id": "ASCI-036",
+    "advertiser": "Mukharochak Snacks and Confectioners Private Limited",
+    "product": "Mukharochak range of products",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“Healthy snacks forever”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "statutory"
+    ],
+    "ruling_summary": "'Healthy snacks forever' for a snack range had no claim-support data and was held exaggerated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-1-14-6-C.51925",
+    "date": "2026-02"
+  },
+  {
+    "id": "ASCI-037",
+    "advertiser": "GRM FOODKRAFT PRIVATE LIMITED",
+    "product": "10X CLASSIC MP ATTA",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“Made from Best wheat”, “better for health”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Atta ad claims 'made from best wheat' and 'better for health' were upheld, and no celebrity due diligence was shown.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-5-7-6-C.41772",
+    "date": "2025-06"
+  },
+  {
+    "id": "ASCI-038",
+    "advertiser": "VINOD AGRO INDUSTRIES PRIVATE LIMITED",
+    "product": "BIKANER FRESH GN OIL",
+    "category": "food",
+    "medium": "print",
+    "claim_text": "“Controls cholesterol level”, “Boosts heart health”, “Lowers blood pressure”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Health claims for groundnut oil (cholesterol control, heart health, blood pressure) had no clinical or third-party evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2022-6-29-6-C.680",
+    "date": "2022-06"
+  },
+  {
+    "id": "ASCI-039",
+    "advertiser": "ASHOK SALES COMPANY PRIVATE LIMITED",
+    "product": "ASHOK RANGE OF PRODUCTS (FOOD PRODUCT)",
+    "category": "food",
+    "medium": "print",
+    "claim_text": "“Increase immunity in your body with the great taste of home-made thandai”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A thandai masala's 'increase immunity' claim had no efficacy evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2022-6-29-6-C.678",
+    "date": "2022-06"
+  },
+  {
+    "id": "ASCI-040",
+    "advertiser": "Swmabhan Commerce Private Limited",
+    "product": "Rage coffee",
+    "category": "food",
+    "medium": "digital",
+    "claim_text": "\"World's First plant based Vitamins coffee\"",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'World's first plant-based vitamin coffee' lacked independent validation.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2023-2-2-6-C.6655",
+    "date": "2023-02"
+  },
+  {
+    "id": "ASCI-041",
+    "advertiser": "Vilcart Solutions Private Limited",
+    "product": "SURYAKASH REFINED SUNFLOWER OIL",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“The Food cooked in this oil is healthy”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "'Food cooked in this oil is healthy' was unsubstantiated, and visuals of dripping oil contradicted it.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-3-10-6-C.40050",
+    "date": "2025-04"
+  },
+  {
+    "id": "ASCI-042",
+    "advertiser": "Prime Agro Food Processing Private Limited",
+    "product": "PRIME TOMATO KETCHUP",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“TOMATO KETCHUP – Fresh & Pure”",
+    "outcome": "upheld",
+    "grounds": [
+      "statutory"
+    ],
+    "ruling_summary": "'Fresh & Pure' for tomato ketchup breached the food-claims rules on use of 'pure' for single-ingredient foods.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-10-6-C.44124",
+    "date": "2025-08"
+  },
+  {
+    "id": "ASCI-043",
+    "advertiser": "Imagine Foods Private Limited",
+    "product": "Imagine Meats Mutton Seekh Kebab (300g)",
+    "category": "food",
+    "medium": "digital",
+    "claim_text": "“Plant Based Mutton Seekh Kebab”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "implication"
+    ],
+    "ruling_summary": "Labelling a plant-based product with meat terms ('Mutton Seekh Kebab') was held capable of misleading consumers about its nature.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-24-1-C.44424",
+    "date": "2025-09"
+  },
+  {
+    "id": "ASCI-044",
+    "advertiser": "Hindustan Unilever Limited",
+    "product": "Horlicks Women's PLUS",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“Increases bone strength in 6 months”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Horlicks Women's Plus 'increases bone strength in 6 months' was held inadequately substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-11-28-6-C.50663",
+    "date": "2026-02"
+  },
+  {
+    "id": "ASCI-045",
+    "advertiser": "Adret Retail Private Limited",
+    "product": "Kapiva Dia Free Juice",
+    "category": "food",
+    "medium": "print",
+    "claim_text": "`शुगर की जड़ पर करेवार’ and `10 लाख + लोगोों का भरोसा⌃’",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Kapiva's '10 lakh+ trust' claim was inadequately substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-6-16-4-C.54590",
+    "date": "2026-08"
+  },
+  {
+    "id": "ASCI-046",
+    "advertiser": "Adret Retail Private Limited",
+    "product": "Kapiva Dia Free Juice",
+    "category": "food",
+    "medium": "digital",
+    "claim_text": "“1. It is clinically proven to: 🍏Month 1: Improve Gut Health 💪Month 2: Improve Energy levels ✅Month 3: *Improve Sugar!” and “It is the No. 1 Rated sugar supplement on Amazon, so try out Dia Free Juice today! 🙋‍♂️”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Kapiva's 'No. 1 rated sugar supplement on Amazon' claim had no ranking data behind it.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-3-24-1-C.52504",
+    "date": "2026-05"
+  },
+  {
+    "id": "ASCI-047",
+    "advertiser": "Shree Balaji Trader - Mango Herbs",
+    "product": "Mango Herbs - PREBIOTIC FIBER PRO",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Regulates cholesterol & blood sugar”, “Boosts immunity & skin health”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Claims of regulating cholesterol and blood sugar and boosting immunity and skin health had no clinical evidence; advertiser did not respond.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-24-6-C.56092",
+    "date": "2026-08"
+  },
+  {
+    "id": "ASCI-048",
+    "advertiser": "Streamline Pharma Private Limited",
+    "product": "Stream X Detox Capsules",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Detoxifies the Body”, “Clears blood from harmful components”, “Regulates blood clotting”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Detox capsule claims of clearing blood and regulating clotting were not substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-8-21-5-C.56718",
+    "date": "2026-09"
+  },
+  {
+    "id": "ASCI-049",
+    "advertiser": "Pellucid Lifesciences Private Limited",
+    "product": "My Chew Weight Management + Probiotic Gummies",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“12 हफ़्ते में मोटापा ख़त्म!” (Eliminate obesity in 12 weeks!)",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "'Say goodbye to obesity in 12 weeks' for a gummy implied large weight loss without lifestyle change and was unsupported.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-9-10-6-C.57582",
+    "date": "2026-10"
+  },
+  {
+    "id": "ASCI-050",
+    "advertiser": "Godwit Lifestyle Private Limited",
+    "product": "Nutrigod - Detox",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Remove toxins from our body” and “Help in Colon Detox and cleaning”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Detox supplement claims (remove toxins, colon cleaning) were unsubstantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-8-21-5-C.56712",
+    "date": "2026-09"
+  },
+  {
+    "id": "ASCI-051",
+    "advertiser": "Vaidban Ayurved Bhawan",
+    "product": "Diabetes Control Powder",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "\"Diabetes Control Powder\", \"Diabetes control has now become easy with Vaidban Diabetes Control Powder”, “A natural Ayurvedic blend designed to support balanced blood sugar levels, crafted with herbs traditionally known for helping manage diabetes and overall wellness”, \"Diabetes Control के उपाय\", \"New Pack\"",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Ayurvedic powder marketed as helping 'control and manage diabetes' without evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-7-6-4-C.54669",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-052",
+    "advertiser": "Aquisara Trading Private Limited",
+    "product": "Soft Steps Heal Sutra Detox Foot Pads",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Healthy insulin function”, “Healthy A1C levels”, “Controls Blood Sugar Levels”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Detox foot pads claiming healthy insulin function and blood-sugar control had no evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-5-29-6-C.54638",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-053",
+    "advertiser": "Namhya Foods Private Limited",
+    "product": "Namhya Liver Cleanse Tea",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Complete 28 day liver cleanse”, “Metabolism Boost: Enhances metabolic rate & lower cholesterol”, “Digestive Health: Balanced enzyme levels, & limits fibrosis”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'Complete 28 day liver cleanse' and related metabolism claims for a tea were unsubstantiated; the cleanse claim was later withdrawn.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-3-10-6-C.40057",
+    "date": "2026-03"
+  },
+  {
+    "id": "ASCI-054",
+    "advertiser": "Wellness Ville Private Limited",
+    "product": "What's Up Daily Burner",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Reduces carb absorption”, “Controls cravings”, and “Manages weight”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Weight-management supplement claims (reduces carb absorption, controls cravings) lacked evidence; some claims were withdrawn.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-4-8-5-C.40846",
+    "date": "2026-03"
+  },
+  {
+    "id": "ASCI-055",
+    "advertiser": "UnLOAD by Asha Ashta",
+    "product": "90 Days Weight Loss Challenge",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Calories are a fake concept” (the ruling also records the ad as saying weight loss can occur without calorie counting or a calorie deficit)",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Claims that calories are a 'fake concept' and weight loss needs no deficit were not substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-12-26-1-C.51108",
+    "date": "2025-12"
+  },
+  {
+    "id": "ASCI-056",
+    "advertiser": "Wellnessia Lifesciences Private Limited",
+    "product": "Wellnessia Male Vitality Gummies",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Enhances Vitality & Performance\", and \"Increases Sperm Count & Motility”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Gummy claims of increasing sperm count and performance were unsubstantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-12-24-6-C.51535",
+    "date": "2026-01"
+  },
+  {
+    "id": "ASCI-057",
+    "advertiser": "EGA Wellness Reverse Age Health Services Private Limited",
+    "product": "EGA Fat Burn Oil",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Reduces Arm & Belly Fat”, “Removes Fat Cells”, “Burns Fat Tissue”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A fat-burn oil claiming to remove fat cells and burn fat tissue had no evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-10-30-6-C.49716",
+    "date": "2025-11"
+  },
+  {
+    "id": "ASCI-058",
+    "advertiser": "Soil Serumz",
+    "product": "Soil Serumz Weightloss Powder",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Get Your Dream Body Naturally In 90 Days”, “Burns Fat & Boosts Metabolism”, “Improves digestion & reduces bloating”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration",
+      "implication"
+    ],
+    "ruling_summary": "Weight-loss powder claims of a 'dream body in 90 days' and visuals implying guaranteed results were not substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-11-10-6-C.50228",
+    "date": "2025-11"
+  },
+  {
+    "id": "ASCI-059",
+    "advertiser": "Medchain Innovation Private Limited",
+    "product": "Zanskar Advanced Pain Healing Cream",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“5-year-old frozen shoulder gone in just 30 days!”, “It heals nerve and tissue damage, reduces pain, and restores normal mobility”, “Its advanced healing formula goes 6x deeper into the muscles compared to other creams and oils”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A pain cream's frozen-shoulder cure and '6x deeper penetration' claims were not supported.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-5-12-6-C.54276",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-060",
+    "advertiser": "Blupin Technologies Private Limited",
+    "product": "Mylo Care LactoMama Lactation Granules",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“1) Increases Breastmilk in 7 days 2) Faster Postpartum Recovery 3) Introducing Mylo LactoMama Granules, a natural way to boost breast milk supply!”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Lactation granule claims of more breastmilk in 7 days lacked evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-10-8-6-C.48350",
+    "date": "2025-10"
+  },
+  {
+    "id": "ASCI-061",
+    "advertiser": "Natural (Global India Enterprises)",
+    "product": "Natural Diabetes Care",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“Blood Glucose Regulator”, “Regulates Glucose and Lipid Metabolism”, “Converts Proinsulin to Insulin”, “Improves Glucose Tolerance”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Diabetes supplement claims such as 'blood glucose regulator' were unsubstantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-9-1-6-C.46714",
+    "date": "2025-09"
+  },
+  {
+    "id": "ASCI-062",
+    "advertiser": "Amrutanjan Health Care Limited",
+    "product": "Amrutanjan Strong Pain Balm",
+    "category": "health",
+    "medium": "tv",
+    "claim_text": "“Starts Working in 1 Minute”, and “Relief Up To 8 Hours”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'Starts working in 1 minute' and 'relief up to 8 hours' for a pain product were inadequately substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-10-8-5-C.48351",
+    "date": "2025-11"
+  },
+  {
+    "id": "ASCI-063",
+    "advertiser": "V Business Enterprises LLP",
+    "product": "Atom Colostrum Immunity Boost Superfood Powder",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“89% users saw fewer infections”, “72% felt more energy”, “69% experienced less bloating”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Superfood powder consumer-survey results ('89% fewer infections') were not backed by adequate evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-7-6-C.43944",
+    "date": "2025-07"
+  },
+  {
+    "id": "ASCI-064",
+    "advertiser": "Svastha Foods & Nutrition Private Limited",
+    "product": "Oraah PCOS Tea",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“\"Reduce Cramps”, “Regularize Period Cycle”, “Improves Mood Swings”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A PCOS tea's claims about cramps, cycles and mood swings had no clinical support.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-9-3-6-C.46801",
+    "date": "2025-10"
+  },
+  {
+    "id": "ASCI-065",
+    "advertiser": "Merhaki Foods and Nutrition Private Limited",
+    "product": "andme",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "Regularises periods cycle”, “Improves energy level”, “Reduces body hair and acne\"",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Women's supplement claims (regularises periods, reduces body hair) had no clinical evidence.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2023-1-31-6-C.6532",
+    "date": "2023-01"
+  },
+  {
+    "id": "ASCI-066",
+    "advertiser": "Divisa Herbals Pvt. Ltd",
+    "product": "CB-DR ORTHO STRONG OIL-BABY JOHN",
+    "category": "health",
+    "medium": "tv",
+    "claim_text": "Hindi voice-over, as translated in the ruling: “It penetrates deep and defeats oldest of the old joint pain”",
+    "outcome": "upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "A joint-pain oil's 'defeats oldest joint pain' claim was unsubstantiated and the celebrity's due diligence was not shown.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-1-9-6-C.37963",
+    "date": "2025-01"
+  },
+  {
+    "id": "ASCI-067",
+    "advertiser": "Hindustan Unilever Limited",
+    "product": "Boost Milkshake",
+    "category": "food",
+    "medium": "digital",
+    "claim_text": "“Meet the New Secret of Mahi’s Energy”, & “Boost Milkshake is a nourishing beverage to be consumed alongside your daily diet and exercise plan”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Boost Milkshake 'secret of Mahi's energy' was treated as aspirational brand language, and 'nourishing beverage' as an accurate nutritional description.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-8-13-4-C.55301",
+    "date": "2026-09"
+  },
+  {
+    "id": "ASCI-068",
+    "advertiser": "Hindustan Unilever Limited",
+    "product": "Rexona Deodorant",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“72H Odour Protection (Pack Claim)\" is”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "The 72-hour odour-protection pack claim was backed by clinical and consumer studies reviewed by an independent expert.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-4-20-6-C.53786",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-069",
+    "advertiser": "Nestle India Limited",
+    "product": "Nestlé Ceregrow Multigrain Cereal",
+    "category": "food",
+    "medium": "digital",
+    "claim_text": "“One bowl of Ceregrow has 35% of daily iron”, “Imagine if little ones started asking ‘Does my food have enough iron’, you shouldn’t be left guessing. Nestlé CEREGROW helps bridge that doubt since it delivers 35% of daily iron requirement in just one bowl.” & “No Refined Sugar”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Iron-content claim matched lab testing and the 'no refined sugar' claim fit the regulatory definition of refined sugar.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-5-29-4-C.54038",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-070",
+    "advertiser": "Nivea India Private Limited",
+    "product": "Nivea Derma Control - Even Tone - Under-Arm Roll On",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“For visibly Brighter underarms in 5 days”, “Recovers natural skin tone”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Brightening and skin-tone recovery claims were supported by a third-party clinical study and consumer-perception data.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-6-8-4-C.54410",
+    "date": "2026-07"
+  },
+  {
+    "id": "ASCI-071",
+    "advertiser": "YMI Ghar Soaps Private Limited",
+    "product": "Ghar Soaps Magic Face Wash (Tan Removal / Brightening Face Wash)",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“I hold PhD in reducing tan”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'PhD in reducing tan' was read as puffery, and the underlying tan-reduction claim was supported by a clinical study.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-4-27-1-C.53712",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-072",
+    "advertiser": "Hindustan Unilever Limited",
+    "product": "Horlicks – Meal Replacement for Weight Loss",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“BREAK UP with that Extra Weight”, “Meal Replacement for Weight Loss” and “L-Carnitine for Fat Burn”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Meal-replacement and 'L-Carnitine for fat burn' claims were accepted as consistent with the product's dietary category and nutrient science.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-3-11-4-C.52605",
+    "date": "2026-04"
+  },
+  {
+    "id": "ASCI-073",
+    "advertiser": "JNTL Consumer Health India (Private) Limited",
+    "product": "Aveeno Skin Relief Moisturizing Lotion",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“This fragrance-free lotion provides clinically proven long‐lasting intense hydration for 72 hours*, relief dry, itchy skin in 20 seconds”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "72-hour hydration and 20-second relief claims were supported by clinical study data.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-4-10-6-C.53603",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-074",
+    "advertiser": "Glanbia Performance Nutrition India Private Limited",
+    "product": "Optimum Nutrition Gold Standard Whey",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“World’s No. 1 Whey Protein”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'World's No. 1 Whey Protein' was held substantiated by market certification data.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-4-22-5-C.53814",
+    "date": "2026-06"
+  },
+  {
+    "id": "ASCI-075",
+    "advertiser": "Marico Limited",
+    "product": "Parachute Advansed Pre-Wash Nourishing Mask",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Enjoy 10X Stronger Hair / 10X Stronger Smoother Hair” [pack claim], and “Enjoy 2X Shinier, Smoother Hair”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'10X stronger' and '2X smoother, shinier' hair claims were supported by instrumental test data.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-3-16-6-C.53088",
+    "date": "2026-04"
+  },
+  {
+    "id": "ASCI-076",
+    "advertiser": "Cipla Ltd.",
+    "product": "Cheston Cold Tablets",
+    "category": "health",
+    "medium": "print",
+    "claim_text": "“Iska P2DC formula 15 minute mein asar dikhana shuru kare”, “It's P2DC* formula starts action in 15 mins#, so you can be at your best”, and “काम सुरु 15 मममिटाांमध्ये*”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "The 15-minute onset claim for a cold tablet was backed by evidence and the statutory caution was present.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2026-1-23-1-C.51867",
+    "date": "2026-03"
+  },
+  {
+    "id": "ASCI-077",
+    "advertiser": "AWL Agri Business Limited",
+    "product": "Fortune Refined Sunflower Oil",
+    "category": "food",
+    "medium": "digital",
+    "claim_text": "“Absorbs 17% less oil*”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'Absorbs 17% less oil' was confirmed by comparative analytical testing.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-11-20-1-C.50323",
+    "date": "2026-01"
+  },
+  {
+    "id": "ASCI-078",
+    "advertiser": "Dr. Reddys Laboratories Limited",
+    "product": "Celevida Diabetes Care",
+    "category": "health",
+    "medium": "tv",
+    "claim_text": "“Diabetologist Recommended”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'Diabetologist Recommended' was accepted on prescription-audit evidence, by majority.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-11-20-6-C.50518",
+    "date": "2026-01"
+  },
+  {
+    "id": "ASCI-079",
+    "advertiser": "Nutricia International Private Limited",
+    "product": "DexoGrow Nutritious Milk Drink",
+    "category": "food",
+    "medium": "print",
+    "claim_text": "“Not just height, weight, and strength. Now brain too”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "The 'brain too' claim for a milk drink was supported by a review of clinical trials on its nutrients.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-24-5-C.44634",
+    "date": "2025-09"
+  },
+  {
+    "id": "ASCI-080",
+    "advertiser": "Win-Medicare Private Limited",
+    "product": "Groviva Gold",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“Only Groviva Gold has 46 growth and digestive nutrients unique power that gets digested and gives wow health. Not only Growth, Groviva growth”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "The '46 growth and digestive nutrients' comparison was substantiated with competitor nutrient counts.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-8-26-6-C.46422",
+    "date": "2025-10"
+  },
+  {
+    "id": "ASCI-081",
+    "advertiser": "Procter & Gamble Hygiene & Health Care Limited",
+    "product": "Neurobion Forte Tablets",
+    "category": "health",
+    "medium": "tv",
+    "claim_text": "“Upto 3X more Vitamin B”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "'Up to 3X more Vitamin B' was substantiated and carried a suitable comparative disclaimer.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-19-6-C.44462",
+    "date": "2025-09"
+  },
+  {
+    "id": "ASCI-082",
+    "advertiser": "Hindustan Unilever Limited",
+    "product": "Lifebuoy Lemon Aloe Fresh Soap Bar",
+    "category": "skincare",
+    "medium": "tv",
+    "claim_text": "“12 Hour Deo Fresh”, and “Ye badbu paida karne wale kitaanu se lade aur de 12 ganto ki taazki” (It fights odour-causing germs and gives 12-hour freshness)",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "12-hour deo-fresh soap claims were supported by evidence on odour-causing bacteria.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-6-18-6-C.43224",
+    "date": "2025-09"
+  },
+  {
+    "id": "ASCI-083",
+    "advertiser": "ELCA Cosmetics Private Limited",
+    "product": "Estée Lauder Advanced Night Repair Serum",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Won’t cause breakouts, won’t clog pores (non-acnegenic)”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'Non-acnegenic' serum claim was backed by clinical testing, though a disclaimer was advised.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-11-1-C.43394",
+    "date": "2025-08"
+  },
+  {
+    "id": "ASCI-084",
+    "advertiser": "Valyou Products Private Limited",
+    "product": "Amrith Noni D Plus",
+    "category": "health",
+    "medium": "tv",
+    "claim_text": "“Clinically proven”, “Sugar-free”, and “It has got successful results in human clinical trials”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'Clinically proven' and 'sugar-free' claims were supported by human clinical trial documentation.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-6-21-6-C.43315",
+    "date": "2025-08"
+  },
+  {
+    "id": "ASCI-085",
+    "advertiser": "Hindustan Unilever Limited",
+    "product": "Clinic Plus Shampoo",
+    "category": "skincare",
+    "medium": "tv",
+    "claim_text": "“Go 5 layers inside and makes the hair strong and long”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'Makes hair strong and long' was explained as reduced breakage and held substantiated.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-5-26-6-C.42403",
+    "date": "2025-07"
+  },
+  {
+    "id": "ASCI-086",
+    "advertiser": "Hindustan Unilever Limited",
+    "product": "New Dove Intense Repair (Bio-Protein Care)",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“Gives up to 100% Damage Repair”, and “No Damage”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Dove's up to 100% damage repair claim was backed by lab and consumer data, by majority.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-1-29-1-C.37763",
+    "date": "2025-02"
+  },
+  {
+    "id": "ASCI-087",
+    "advertiser": "Mosaic Wellness Private Limited",
+    "product": "Nourish Hair Gummies",
+    "category": "health",
+    "medium": "digital",
+    "claim_text": "“As much Biotin as 2 cups of almonds in every gummy”, and “Biotin in 1 Hair Gummy > 15 Avocados”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Biotin-comparison claims against almonds and avocados were verified by independent analysis of the gummy.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2024-4-1-1-C.25776",
+    "date": "2024-05"
+  },
+  {
+    "id": "ASCI-088",
+    "advertiser": "PEP Technologies Private Limited",
+    "product": "mCaffeine Coffee Under Eye Cream",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“94% users saw reduced dark circles”, “Roll away dark circles, fine lines, and under-eye puffiness with our Coffee Under Eye Cream!”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'94% users saw reduced dark circles' was supported by the user-study data submitted.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2024-2-22-1-C.24961",
+    "date": "2024-04"
+  },
+  {
+    "id": "ASCI-089",
+    "advertiser": "Dot & Key Wellness Private Limited",
+    "product": "Vitamin C + E Super Bright Sunscreen Water- light",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“80 min Water Resistant”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'80 min water resistant' sunscreen claim was supported by water-immersion SPF testing.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2024-3-12-1-C.27306",
+    "date": "2024-04"
+  },
+  {
+    "id": "ASCI-090",
+    "advertiser": "Hindustan Unilever Limited",
+    "product": "LAKMÉ 9 To 5 Vitamin C+ Face Serum",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“98% Pure Vitamin C Complex”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'98% pure Vitamin C complex' was substantiated by composition and stability data.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2023-9-16-2-C.18524",
+    "date": "2023-10"
+  },
+  {
+    "id": "ASCI-091",
+    "advertiser": "Atomberg Technologies Private Limited",
+    "product": "Atomberg Ozeo Electric Fan",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“Air delivery-(CMM-m3/min)- 225”, “Power Input-W – 28”, “Service value (CMM/W) – 8”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Fan air-delivery, power and service-value figures were validated against test data.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2022-5-31-1-C.208",
+    "date": "2022-08"
+  },
+  {
+    "id": "ASCI-092",
+    "advertiser": "Havells India Limited",
+    "product": "Havells Efficiencia Neo Fan",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“Air delivery-(CMM-m3/min) – 220”, “Power Input-W:26”, and “Service value (CMM/W) – 8.46”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Fan performance figures were supported by test data on air delivery and power input.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2022-5-31-1-C.205",
+    "date": "2022-07"
+  },
+  {
+    "id": "ASCI-093",
+    "advertiser": "Whirlpool of India Limited",
+    "product": "Whirlpool Xpert Care Washing Machine",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“This gently sanitizes and removes odours without detergent or water”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Washing machine sanitising claim was backed by technical test data.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2022-11-30-4-C.4284",
+    "date": "2023-01"
+  },
+  {
+    "id": "ASCI-094",
+    "advertiser": "Crompton Greaves Consumer Electricals Limited",
+    "product": "Crompton Air Cooler",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“Early cooling even on hottest day” and “Higher air delivery”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Air cooler cooling and air-delivery claims were accepted, and the exaggerated juice-freezing visual was treated as acceptable creative liberty.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2023-6-6-4-C.11953",
+    "date": "2023-06"
+  },
+  {
+    "id": "ASCI-095",
+    "advertiser": "Burge Electronics Private Limited",
+    "product": "Burge Ion Dome",
+    "category": "electronics",
+    "medium": "digital",
+    "claim_text": "“Kills viruses for healthy air”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'Kills viruses' claim for an air purifier was accepted after re-examination on the data supplied.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2022-6-30-6-C.724",
+    "date": "2022-08"
+  },
+  {
+    "id": "ASCI-096",
+    "advertiser": "Parle Products Private Limited",
+    "product": "Parle-G Select Chakki Atta",
+    "category": "food",
+    "medium": "print",
+    "claim_text": "“100% Atta 0% Maida”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'100% Atta 0% Maida' was held not misleading as products were shown individually with ingredient lists on pack.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2024-4-5-1-C.29053",
+    "date": "2024-04"
+  },
+  {
+    "id": "ASCI-097",
+    "advertiser": "Britannia Industries Limited",
+    "product": "NutriChoice Sugar Free Cracker Biscuits",
+    "category": "food",
+    "medium": "other",
+    "claim_text": "“NutriChoice”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'NutriChoice' was read as a brand name, not a nutrition or diabetic-suitability claim.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-1-1-C.43746",
+    "date": "2025-08"
+  },
+  {
+    "id": "ASCI-098",
+    "advertiser": "USV Private Limited",
+    "product": "SebaMed Body Lotion",
+    "category": "skincare",
+    "medium": "digital",
+    "claim_text": "“What if your baby could feel as protected outside. Baby Sebamed with ideal pH 5.5 gives your baby the best protection as they go from the womb to the world. Best Protection after the womb”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated",
+      "exaggeration"
+    ],
+    "ruling_summary": "Baby lotion 'best protection' claim linked to pH 5.5 was accepted on the evidence supplied.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-10-28-2-C.48759",
+    "date": "2026-01"
+  },
+  {
+    "id": "ASCI-099",
+    "advertiser": "Godrej Consumer Products Limited",
+    "product": "Park Avenue Voyage Deo Lotion",
+    "category": "skincare",
+    "medium": "tv",
+    "claim_text": "“That goes on skin and lasts all day”, and “48 HR Odour Protection”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "Deo lotion '48 HR odour protection' was supported by independent lab results.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-11-21-6-C.50549",
+    "date": "2025-12"
+  },
+  {
+    "id": "ASCI-100",
+    "advertiser": "Gemini Edibles & Fats India Limited (GEF India)",
+    "product": "Be-Rite Refined Sunflower Oil",
+    "category": "food",
+    "medium": "tv",
+    "claim_text": "“From India's No. 1 Sunflower Oil Company”, “…Pure with no chances of adulteration”, and “It has cleared 101 tests and thus it can be completely trusted for its purity”",
+    "outcome": "not_upheld",
+    "grounds": [
+      "unsubstantiated"
+    ],
+    "ruling_summary": "'Pure, no chance of adulteration' oil claim was backed by purity tests.",
+    "source_url": "https://www.ascionline.in/complaint-outcomes-details?case_id=2025-7-25-6-C.44725",
+    "date": "2025-08"
+  }
+]
