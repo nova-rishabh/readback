@@ -123,7 +123,7 @@ export interface Finding {
   suggestion: Suggestion | null;
   status: "open" | "accepted" | "edited" | "disputed" | "dismissed";
   dispute_note?: string;
-  applied_replacement?: string; // the wording the author accepted or edited, kept until they save the next version
+  applied_replacement?: string | null; // the wording the author accepted or edited, kept until they save the next version
 }
 
 export interface Suggestion {

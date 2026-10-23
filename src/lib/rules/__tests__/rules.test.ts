@@ -98,7 +98,7 @@ describe("runRules text", () => {
     const text = "Visible glow in 7 days. Zero chemicals. Try Velura Nightshift";
     const f = await runRules({ text, brand, channel: "instagram" });
     const ids = f.map((x) => x.id).sort();
-    expect(ids).toEqual(["rule-disclaimer-0", "rule-embargo-44", "rule-terminology-24"].sort());
+    expect(ids).toEqual(["rule-disclaimer-0", "rule-embargo-44-61", "rule-banned-24-38"].sort());
     const banned = f.find((x) => x.category === "terminology")!;
     expect(banned.engine).toBe("rule");
     expect(banned.severity).toBe("high");

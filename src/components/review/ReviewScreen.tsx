@@ -54,11 +54,15 @@ export function ReviewScreen(props: {
 }) {
   const { submission, current, previous, isLatest, user } = props;
   const router = useRouter();
-  const { state, run } = useCheckStream(current.id, submission.id, () => router.refresh());
+  const { state, run: runCheck } = useCheckStream(current.id, submission.id, () => router.refresh());
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [overrides, setOverrides] = useState<Record<string, Override>>({});
-  const [replacements, setReplacements] = useState<Record<string, string>>({});
+  // fix text the author accepted or edited; saved on the finding so it survives a reload
+  const [replacements, setReplacements] = useState<Record<string, string>>(() =>
+    Object.fromEntries(current.findings.filter((f) => f.applied_replacement).map((f) => [f.id, f.applied_replacement!])),
+  );
+  const saveQueue = useRef<Promise<unknown>>(Promise.resolve());
   const [busy, setBusy] = useState<Record<string, boolean>>({});
   const [cardErrors, setCardErrors] = useState<Record<string, string | null>>({});
   const [showDiff, setShowDiff] = useState(false);
@@ -73,7 +77,7 @@ export function ReviewScreen(props: {
   useEffect(() => {
     if (!props.autoRun || autoRan.current) return;
     autoRan.current = true;
-    void run();
+    void runCheck();
     const url = new URL(window.location.href);
     if (url.searchParams.has("run")) {
       url.searchParams.delete("run");
@@ -83,7 +87,14 @@ export function ReviewScreen(props: {
     return () => {
       autoRan.current = false;
     };
-  }, [props.autoRun, run]);
+  }, [props.autoRun, runCheck]);
+
+  // a re-run replaces the findings; local decisions are dropped here and carried over by the server where they still apply
+  const rerun = useCallback(() => {
+    setOverrides({});
+    setReplacements({});
+    return runCheck();
+  }, [runCheck]);
 
   const live = state.status !== "idle";
   const running = state.status === "running";
@@ -135,7 +146,11 @@ export function ReviewScreen(props: {
     });
     setBusy((b) => ({ ...b, [f.id]: true }));
     setCardErrors((e) => ({ ...e, [f.id]: null }));
-    const r = await updateFindingAction(submission.id, current.id, f.id, patch);
+    const full = repl === undefined ? patch : { ...patch, applied_replacement: repl };
+    // queue saves: each one rewrites the version's findings, so two quick clicks must not race
+    const job = saveQueue.current.then(() => updateFindingAction(submission.id, current.id, f.id, full));
+    saveQueue.current = job.catch(() => undefined);
+    const r = await job;
     setBusy((b) => ({ ...b, [f.id]: false }));
     if (!r.ok) {
       setOverrides((o) => ({ ...o, [f.id]: prevOverride ?? {} }));
@@ -278,7 +293,7 @@ export function ReviewScreen(props: {
             {!isLatest && <span className="ml-3 text-[12.5px] text-muted">Older version, read-only.</span>}
           </nav>
           {isLatest && (
-            <Button size="sm" variant="ghost" onClick={() => void run()} disabled={running}>
+            <Button size="sm" variant="ghost" onClick={() => void rerun()} disabled={running}>
               <RotateCw size={14} aria-hidden className={running ? "animate-spin" : undefined} />
               {running ? "Checking" : "Run check again"}
             </Button>
@@ -303,7 +318,7 @@ export function ReviewScreen(props: {
               before it stopped are saved.
             </span>
           </span>
-          <Button size="sm" variant="danger" onClick={() => void run()}>
+          <Button size="sm" variant="danger" onClick={() => void rerun()}>
             Run again
           </Button>
         </div>
@@ -314,7 +329,7 @@ export function ReviewScreen(props: {
             <span className="font-medium">Partial check.</span> The last run stopped before it finished; the findings below are
             the ones it saved. Run the check again for the complete reader panel and fixes.
           </span>
-          <Button size="sm" onClick={() => void run()}>
+          <Button size="sm" onClick={() => void rerun()}>
             Run check again
           </Button>
         </p>
@@ -476,7 +491,7 @@ export function ReviewScreen(props: {
               This version has not been checked yet.
               {isLatest && (
                 <div className="mt-3">
-                  <Button variant="primary" size="sm" onClick={() => void run()}>
+                  <Button variant="primary" size="sm" onClick={() => void rerun()}>
                     Run the check
                   </Button>
                 </div>
@@ -492,7 +507,7 @@ export function ReviewScreen(props: {
 
         {/* Right: readers and comments */}
         <div className="flex flex-col gap-8 lg:col-span-2 lg:grid lg:grid-cols-2 xl:col-span-1 xl:flex">
-          <div data-tour="readers"><ReaderPanel personas={props.personas} state={state} onRun={() => void run()} canRun={isLatest} /></div>
+          <div data-tour="readers"><ReaderPanel personas={props.personas} state={state} onRun={() => void rerun()} canRun={isLatest} /></div>
           <div className="flex flex-col gap-8">
             <Comments
               submissionId={submission.id}

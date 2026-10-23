@@ -21,7 +21,7 @@ export async function updateFindingAction(
   submissionId: string,
   versionId: string,
   findingId: string,
-  patch: Partial<Pick<Finding, "status" | "dispute_note">>,
+  patch: Partial<Pick<Finding, "status" | "dispute_note" | "applied_replacement">>,
 ): Promise<ActionResult> {
   try {
     await updateFinding(versionId, findingId, patch);

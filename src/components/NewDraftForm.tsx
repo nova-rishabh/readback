@@ -225,7 +225,7 @@ export function NewDraftForm() {
             ) : (
               <label
                 htmlFor="image-input"
-                className="flex min-h-[200px] cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-rule-strong bg-sheet px-6 text-center text-[14px] text-muted hover:border-ink focus-within:border-ink"
+                className="flex min-h-[200px] cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-control bg-sheet px-6 text-center text-[14px] text-muted hover:border-ink focus-within:border-ink"
               >
                 <ImageUp size={18} aria-hidden />
                 <span>

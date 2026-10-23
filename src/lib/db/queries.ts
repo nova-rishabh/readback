@@ -245,7 +245,11 @@ export async function addVersion(
   const image_alt = input.image_alt !== undefined ? input.image_alt : (last?.image_alt ?? null);
   const hash = sha256(`${input.body}\n${image_path ?? ""}\n${image_alt ?? ""}`);
   // a changed draft needs a fresh review: an approved, published or in-review submission goes back to draft
-  const cur = must(await sb.from("submissions").select("status").eq("id", submissionId).single(), "addVersion(status)");
+  const cur = must(await sb.from("submissions").select("status, locked_phrases").eq("id", submissionId).single(), "addVersion(status)");
+  const lost = ((cur.locked_phrases ?? []) as string[]).filter((p) => p.trim() && !input.body.toLowerCase().includes(p.toLowerCase()));
+  if (lost.length) throw new Error(`These phrases must stay in the copy: ${lost.map((p) => `"${p}"`).join(", ")}`);
+  // a new version may keep the current image or drop it; it cannot point at some other stored file
+  if (input.image_path && input.image_path !== (last?.image_path ?? null)) throw new Error("That image does not belong to this draft");
   const row = must(
     await sb.from("versions").insert({
       submission_id: submissionId, n, body: input.body, image_path, image_alt, content_hash: hash,
@@ -408,6 +412,11 @@ export async function upsertFact(f: Partial<Fact> & { statement: string }): Prom
   const expires_on = f.expires_on !== undefined ? f.expires_on : (existing?.expires_on ?? null);
   let status: Fact["status"] = f.status ?? (existing?.status === "retired" ? "retired" : "active");
   if (status === "active" && expires_on && expires_on < todayISO()) status = "expired";
+  // saving an unchanged fact must not bump its version or re-queue every post that cites it
+  if (
+    existing && existing.statement === f.statement && existing.status === status && (existing.expires_on ?? null) === expires_on &&
+    (f.source ?? existing.source) === existing.source && (f.owner ?? existing.owner) === existing.owner
+  ) return;
   const version = existing ? existing.version + 1 : 1;
 
   const row: Record<string, unknown> = {

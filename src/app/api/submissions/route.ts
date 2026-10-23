@@ -8,6 +8,15 @@ const CHANNELS: Channel[] = ["instagram", "website", "amazon", "nykaa", "whatsap
 const LANGS: Lang[] = ["en", "hi", "hinglish"];
 const MAX_IMAGE = 8 * 1024 * 1024;
 
+function sniffImage(b: Buffer): string | null {
+  if (b.length < 12) return null;
+  if (b[0] === 0x89 && b.toString("ascii", 1, 4) === "PNG") return "image/png";
+  if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "image/jpeg";
+  if (b.toString("ascii", 0, 4) === "RIFF" && b.toString("ascii", 8, 12) === "WEBP") return "image/webp";
+  if (b.toString("ascii", 0, 3) === "GIF") return "image/gif";
+  return null;
+}
+
 /**
  * Multipart draft submission. A route handler rather than a server action so
  * images above the 1 MB server-action body limit still go through.
@@ -38,6 +47,9 @@ export async function POST(req: Request) {
   if (!title) errors.title = "Give the draft a title your reviewer will recognise.";
   if (!body) errors.body = "Paste the copy you want checked.";
   if (!intent) errors.intent = "Say in one line what a reader should take away.";
+  if (title.length > 160) errors.title = "Keep the title under 160 characters.";
+  if (body.length > 5000) errors.body = "Keep the copy under 5,000 characters; split longer pieces into separate drafts.";
+  if (intent.length > 300) errors.intent = "Keep the intended takeaway to one line (under 300 characters).";
   if (!CHANNELS.includes(channel)) errors.channel = "Pick a channel.";
   if (!LANGS.includes(lang)) errors.lang = "Pick a language.";
   for (const p of lockedPhrases) {
@@ -49,7 +61,12 @@ export async function POST(req: Request) {
   if (file && typeof file !== "string" && file.size > 0) {
     if (!file.type.startsWith("image/")) errors.image = "Upload a PNG, JPEG or WebP image.";
     else if (file.size > MAX_IMAGE) errors.image = "Images must be 8 MB or smaller.";
-    else image = { data: Buffer.from(await file.arrayBuffer()), mime: file.type, alt: altRaw || null };
+    else {
+      const data = Buffer.from(await file.arrayBuffer());
+      const mime = sniffImage(data); // trust the bytes, not the browser-supplied type
+      if (!mime) errors.image = "That file is not a PNG, JPEG, WebP or GIF image.";
+      else image = { data, mime, alt: altRaw || null };
+    }
   }
 
   if (Object.keys(errors).length) return NextResponse.json({ errors }, { status: 422 });

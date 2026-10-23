@@ -57,6 +57,7 @@ export function Tour() {
   const steps = name && i !== null ? TOURS[name].filter((s) => !s.target || document.querySelector(`[data-tour="${s.target}"]`)) : [];
   const step = i !== null ? steps[i] : null;
 
+  const opener = useRef<HTMLElement | null>(null);
   const close = useCallback(() => {
     if (name) {
       try {
@@ -66,6 +67,10 @@ export function Tour() {
       }
     }
     setI(null);
+    // give focus back to where the person was before the tour took it
+    const back = opener.current;
+    opener.current = null;
+    if (back?.isConnected) back.focus();
   }, [name]);
 
   // auto-start once per page type, after the page has painted its anchors
@@ -107,9 +112,26 @@ export function Tour() {
 
   useEffect(() => {
     if (i === null) return;
+    if (!opener.current && document.activeElement instanceof HTMLElement && !card.current?.contains(document.activeElement)) {
+      opener.current = document.activeElement;
+    }
     card.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
+      // modal dialog: keep Tab inside the card
+      if (e.key === "Tab" && card.current) {
+        const f = [...card.current.querySelectorAll<HTMLElement>("button, [href], [tabindex]:not([tabindex='-1'])")];
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        const inside = card.current.contains(document.activeElement);
+        const wrapTo = e.shiftKey
+          ? (document.activeElement === first || !inside) && last
+          : (document.activeElement === last || !inside) && first;
+        if (wrapTo) {
+          e.preventDefault();
+          wrapTo.focus();
+        }
+      }
       if (e.key === "ArrowRight") setI((n) => (n !== null && n < steps.length - 1 ? n + 1 : n));
       if (e.key === "ArrowLeft") setI((n) => (n ? n - 1 : n));
     };

@@ -40,14 +40,14 @@ function termFindings(text: string, brand: BrandSpace): Finding[] {
     const span = { start: h.start, end: h.end, text: text.slice(h.start, h.end) };
     if (t.kind === "embargo") {
       out.push(base({
-        id: `rule-embargo-${h.start}`, category: "embargo", severity: "high",
+        id: `rule-embargo-${h.start}-${h.end}`, category: "embargo", severity: "high",
         title: `Embargoed term: “${span.text}”`,
         explanation: `“${span.text}” is embargoed and must not appear in published copy yet.`,
         citation: citeTerm(t, brand), span,
       }));
     } else if (t.kind === "banned") {
       out.push(base({
-        id: `rule-terminology-${h.start}`, category: "terminology", severity: "high",
+        id: `rule-banned-${h.start}-${h.end}`, category: "terminology", severity: "high",
         title: `Banned term: “${span.text}”`,
         explanation: `The brand guidelines do not allow “${span.text}”.` + (t.replacement ? ` Use “${t.replacement}” instead.` : ""),
         citation: citeTerm(t, brand), span,
@@ -56,7 +56,7 @@ function termFindings(text: string, brand: BrandSpace): Finding[] {
     } else if (t.replacement) {
       // A preferred entry with a replacement means: this wording is discouraged, use the replacement. Without one it is approved wording.
       out.push(base({
-        id: `rule-terminology-${h.start}`, category: "terminology", severity: "low",
+        id: `rule-preferred-${h.start}-${h.end}`, category: "terminology", severity: "low",
         title: `Preferred wording: “${t.replacement}”`,
         explanation: `The brand prefers “${t.replacement}” over “${span.text}”.`,
         citation: citeTerm(t, brand), span,
@@ -114,7 +114,7 @@ async function contrastFindings(input: RunRulesInput, image: Buffer): Promise<Fi
     const span = idx >= 0 ? { start: idx, end: idx + bt.length, text: input.text.slice(idx, idx + bt.length) } : null;
     const ratio = Math.round(r.ratio * 100) / 100;
     out.push(base({
-      id: span ? `rule-accessibility-${span.start}` : `rule-accessibility-box-${i}`,
+      id: span ? `rule-accessibility-${span.start}-${i}` : `rule-accessibility-box-${i}`,
       category: "accessibility", severity: ratio < 3 ? "high" : "medium",
       title: `Low contrast: “${bt}”`,
       explanation: `The text “${bt}” has a contrast ratio of ${ratio}:1 against its background; ${required}:1 is required for ${required === 3 ? "large" : "normal"} text.`,
