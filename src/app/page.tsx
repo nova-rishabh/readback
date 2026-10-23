@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { getSessionUser } from "@/lib/db/queries";
-import { RoleEntries, EmailSignIn } from "@/components/shell/RoleEntry";
+import { RoleEntries, EmailSignIn, EnterAsButton } from "@/components/shell/RoleEntry";
 import { DisclosureFull } from "@/components/shell/Disclosure";
-import { BeliefMeter } from "@/components/review/BeliefMeter";
+import { ProofSheet } from "@/components/landing/ProofSheet";
+import { buttonClass } from "@/components/ui/Button";
 import { roleLabel } from "@/components/format";
 
 export const dynamic = "force-dynamic";
+
+const REPO = "https://github.com/nova-rishabh/readback";
 
 async function currentUser() {
   try {
@@ -15,101 +18,141 @@ async function currentUser() {
   }
 }
 
-function Mark({ n, sev, kind, children }: { n: number; sev: "high" | "medium"; kind: string; children: React.ReactNode }) {
-  return (
-    <span className={`proof-mark ${kind}`} data-sev={sev} style={{ cursor: "default" }}>
-      {children}
-      <sup aria-hidden className="ml-0.5 font-sans text-[11px] font-semibold not-italic" style={{ color: sev === "high" ? "var(--color-proof)" : "var(--color-ochre)" }}>
-        {n}
-      </sup>
-    </span>
-  );
-}
+// A draft really does move through these in order, so they are numbered.
+const STEPS = [
+  { title: "Submit a draft", body: "Paste the copy, add the image, and write one line on what readers should take away." },
+  { title: "Rules run instantly", body: "Banned terms, missing disclaimers, embargoed names, image contrast and alt text, checked by plain code." },
+  { title: "Six readers react", body: "Simulated readers say what they believe after five seconds with the post, including what it only implies." },
+  { title: "Beliefs meet the facts", body: "Each belief is matched to the brand’s Fact Ledger: supported, contradicted, or unsupported." },
+  { title: "A person decides", body: "The creator accepts or disputes each finding; a reviewer approves. Every decision is logged." },
+];
 
-const NOTES = [
-  {
-    n: 1,
-    label: "[AI]",
-    meter: 4,
-    text: "4 of 6 readers believed a dermatologist recommends this serum. The ledger only holds F-03, “Dermatologist-tested”.",
-  },
-  {
-    n: 2,
-    label: "[AI]",
-    meter: 5,
-    text: "5 of 6 readers believed results are guaranteed within a week. No fact in the ledger backs a 7-day claim.",
-  },
-  {
-    n: 3,
-    label: "[RULE]",
-    meter: null,
-    text: "“zero chemicals” is on Velura’s banned-terms list. Suggested: “92% naturally derived ingredients” (F-12).",
-  },
+const RULES = [
+  "Banned and preferred terms, matched to the clause",
+  "Required disclaimers and embargoed product names",
+  "Text-on-image contrast measured from pixels (WCAG 1.4.3)",
+  "Alt text (WCAG 1.1.1) and off-palette colours",
+];
+const READERS = [
+  "Implied claims: endorsements, guarantees, “natural”",
+  "Tone against the brand’s voice",
+  "Beliefs that contradict or lack an approved fact",
+  "Translations that make a claim stronger",
+];
+
+const NAV = [
+  { href: "#how", label: "How it works" },
+  { href: "#checks", label: "What it checks" },
+  { href: "#roles", label: "Try a role" },
 ];
 
 export default async function Landing() {
   const user = await currentUser();
   return (
-    <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
-      <header className="flex h-16 items-center justify-between border-b border-rule">
-        <span className="font-display text-[22px] font-medium tracking-[-0.01em]">Readback</span>
-        {user && (
-          <Link href="/app" className="text-[14px] underline decoration-rule-strong underline-offset-4 hover:decoration-ink">
-            Continue as {user.name} ({roleLabel[user.role].toLowerCase()})
+    <>
+      <header className="sticky top-0 z-30 border-b border-rule bg-sheet/95 backdrop-blur-sm">
+        <div className="mx-auto flex h-16 max-w-[1180px] items-center gap-8 px-5 lg:px-10">
+          <Link href="/" className="font-display text-[22px] font-medium tracking-[-0.01em]">
+            Readback
           </Link>
-        )}
+          <nav aria-label="Page sections" className="hidden items-center gap-6 text-[14px] text-muted md:flex">
+            {NAV.map((n) => (
+              <a key={n.href} href={n.href} className="hover:text-ink">
+                {n.label}
+              </a>
+            ))}
+            <a href={REPO} className="hover:text-ink" target="_blank" rel="noreferrer">
+              Source code
+            </a>
+          </nav>
+          <div className="ml-auto">
+            {user ? (
+              <Link href="/app" className={buttonClass("primary", "md")}>
+                Continue as {user.name.split(" ")[0]} ({roleLabel[user.role].toLowerCase()})
+              </Link>
+            ) : (
+              <a href="#roles" className={buttonClass("primary", "md")}>
+                Open the demo
+              </a>
+            )}
+          </div>
+        </div>
       </header>
 
-      <main>
-        <section className="grid gap-10 py-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14 lg:py-20">
+      <main id="main" className="mx-auto max-w-[1180px] px-5 lg:px-10">
+        <section className="grid items-center gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-16 lg:py-20">
           <div>
-            <h1 className="font-display text-[40px] leading-[1.08] tracking-[-0.015em] lg:text-[48px]">
-              Readback marks up a marketing draft before it ships: brand rules checked to the clause, and six simulated
-              readers telling you what they came away believing.
+            <h1 className="max-w-[17ch] font-display text-[34px] leading-[1.1] tracking-[-0.015em] sm:text-[42px] lg:text-[46px]">
+              Know what readers will believe before your ad goes live.
             </h1>
-            <p className="mt-6 max-w-[52ch] text-[15.5px] leading-relaxed text-muted">
-              Built for the Velura demo brand, an Indian skincare label. Every belief is traced to the words or image
-              that caused it and checked against the brand&rsquo;s Fact Ledger before anyone sees it.
+            <p className="mt-5 max-w-[48ch] text-[17px] leading-relaxed text-muted">
+              Readback checks marketing drafts against your brand rules and approved facts, then shows the claims readers take away,
+              including the ones the copy only implies. Every finding cites its source and a person makes the final call.
             </p>
-          </div>
-
-          <figure aria-label="Example: draft #142 marked up by Readback" className="rounded-md border border-rule bg-sheet">
-            <figcaption className="flex items-baseline justify-between border-b border-rule px-5 py-3 text-[13px] text-muted">
-              <span>
-                Velura draft <span className="font-mono text-ink">#142</span>, Instagram, v1
-              </span>
-              <span>3 of 7 findings shown</span>
-            </figcaption>
-            <div className="grid gap-6 p-5 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-              <p className="font-display text-[26px] leading-[1.6]">
-                <Mark n={1} sev="high" kind="mark-wavy">Dermatologist-loved</Mark> Vitamin C serum.{" "}
-                <Mark n={2} sev="high" kind="mark-wavy">Visible glow in 7 days</Mark>. 100% natural,{" "}
-                <Mark n={3} sev="medium" kind="mark-double">zero chemicals</Mark>. Shop now
-              </p>
-              <ol className="flex flex-col gap-4 border-t border-rule pt-4 md:border-t-0 md:border-l md:pt-0 md:pl-5">
-                {NOTES.map((note) => (
-                  <li key={note.n} className="grid grid-cols-[18px_1fr] gap-x-2 text-[13.5px] leading-snug">
-                    <span className="font-semibold tabular-nums">{note.n}</span>
-                    <div>
-                      <div className="mb-1 flex items-center gap-2">
-                        <span className="font-mono text-[11px] text-muted">{note.label}</span>
-                        {note.meter !== null && <BeliefMeter k={note.meter} of={6} compact />}
-                      </div>
-                      {note.text}
-                    </div>
-                  </li>
-                ))}
-              </ol>
+            <div className="mt-8 flex flex-wrap items-start gap-3">
+              <EnterAsButton role="creator">Try it as a creator</EnterAsButton>
+              <a href="#how" className={buttonClass("secondary", "lg")}>
+                See how it works
+              </a>
             </div>
-          </figure>
+            <p className="mt-4 text-[13px] text-muted">No sign-up. The demo brand, Velura, and its people are fictional.</p>
+          </div>
+          <ProofSheet />
         </section>
 
-        <section aria-labelledby="enter-h" className="pb-14">
-          <h2 id="enter-h" className="font-display text-[24px] leading-tight">
-            Open the Velura workspace
+        <section id="how" aria-labelledby="how-h" className="scroll-mt-20 border-t border-rule py-14 lg:py-16">
+          <h2 id="how-h" className="font-display text-[28px] leading-tight lg:text-[32px]">
+            How a draft moves through Readback
           </h2>
-          <p className="mt-1 mb-5 text-[14px] text-muted">
-            Four seeded accounts, one click each. Each role sees and can do different things, enforced by row-level security.
+          <ol className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-5">
+            {STEPS.map((s, i) => (
+              <li key={s.title} className="flex flex-col gap-2">
+                <span className="font-display text-[30px] leading-none text-proof">{i + 1}</span>
+                <h3 className="text-[16px] font-semibold">{s.title}</h3>
+                <p className="text-[14px] leading-relaxed text-muted">{s.body}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="checks" aria-labelledby="checks-h" className="scroll-mt-20 border-t border-rule py-14 lg:py-16">
+          <h2 id="checks-h" className="font-display text-[28px] leading-tight lg:text-[32px]">
+            Two kinds of check, labelled on every finding
+          </h2>
+          <p className="mt-3 max-w-[64ch] text-[15.5px] leading-relaxed text-muted">
+            Anything that can be decided exactly is checked by code. Only questions of meaning go to the AI, and an AI finding
+            has to quote the words or point to the part of the image that caused it.
+          </p>
+          <div className="mt-8 grid gap-10 md:grid-cols-2">
+            {[
+              { tag: "[RULE]", title: "Rule engine", lede: "Exact, instant, no AI involved.", items: RULES },
+              { tag: "[AI]", title: "Reader panel", lede: "Six simulated readers, grounded in the draft and the Fact Ledger.", items: READERS },
+            ].map((col) => (
+              <div key={col.title} className="border-l-2 border-ink pl-5">
+                <h3 className="flex items-baseline gap-2 text-[18px] font-semibold">
+                  {col.title} <span className="font-mono text-[12px] font-normal text-muted">{col.tag}</span>
+                </h3>
+                <p className="mt-1 text-[14px] text-muted">{col.lede}</p>
+                <ul className="mt-4 flex flex-col gap-2.5 text-[15px]">
+                  {col.items.map((it) => (
+                    <li key={it} className="flex gap-2.5">
+                      <span aria-hidden className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-ink" />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="roles" aria-labelledby="enter-h" className="scroll-mt-20 border-t border-rule py-14 lg:py-16">
+          <h2 id="enter-h" className="font-display text-[28px] leading-tight lg:text-[32px]">
+            Try it from any seat
+          </h2>
+          <p className="mt-3 mb-7 max-w-[64ch] text-[15.5px] leading-relaxed text-muted">
+            Four demo accounts, one click each. A short guided tour starts when you arrive; reopen it any time from the Tour
+            button in the top bar.
           </p>
           <RoleEntries />
           <details className="mt-6 max-w-[720px] text-[14px]">
@@ -122,10 +165,19 @@ export default async function Landing() {
           </details>
         </section>
 
-        <div className="pb-16">
+        <section aria-label="Privacy and AI use" className="border-t border-rule py-14">
           <DisclosureFull />
-        </div>
+        </section>
       </main>
-    </div>
+
+      <footer className="border-t border-rule bg-sheet">
+        <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-3 px-5 py-6 text-[13px] text-muted lg:px-10">
+          <span>Readback, by Team Nova for the Inkloom AI brand-governance challenge.</span>
+          <a href={REPO} className="underline decoration-rule-strong underline-offset-4 hover:text-ink" target="_blank" rel="noreferrer">
+            Source code on GitHub
+          </a>
+        </div>
+      </footer>
+    </>
   );
 }

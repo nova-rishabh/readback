@@ -241,7 +241,9 @@ export function ReviewScreen(props: {
               </p>
             )}
           </div>
+          <div data-tour="decision">
           <DecisionBar submission={submission} user={user} versionN={current.n} isLatest={isLatest} items={items} />
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -322,7 +324,7 @@ export function ReviewScreen(props: {
       {/* Three columns at xl, two at lg, stacked below */}
       <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1.1fr)_minmax(0,0.8fr)]">
         {/* Left: the draft */}
-        <div className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto">
+        <div data-tour="draft" className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto">
           <div className="rounded-md border border-rule bg-sheet">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-rule px-5 py-2.5">
               <h2 className="text-[13px] font-medium">
@@ -468,7 +470,7 @@ export function ReviewScreen(props: {
         </div>
 
         {/* Middle: findings */}
-        <div className="flex flex-col gap-8">
+        <div data-tour="findings" className="flex flex-col gap-8">
           {!live && items.length === 0 && !current.summary ? (
             <div className="rounded-md border border-dashed border-rule-strong px-5 py-8 text-center text-[14px] text-muted">
               This version has not been checked yet.
@@ -490,7 +492,7 @@ export function ReviewScreen(props: {
 
         {/* Right: readers and comments */}
         <div className="flex flex-col gap-8 lg:col-span-2 lg:grid lg:grid-cols-2 xl:col-span-1 xl:flex">
-          <ReaderPanel personas={props.personas} state={state} onRun={() => void run()} canRun={isLatest} />
+          <div data-tour="readers"><ReaderPanel personas={props.personas} state={state} onRun={() => void run()} canRun={isLatest} /></div>
           <div className="flex flex-col gap-8">
             <Comments
               submissionId={submission.id}

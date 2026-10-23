@@ -8,6 +8,7 @@ import { ChevronDown, LogOut } from "lucide-react";
 import { switchRoleAction, signOutAction } from "@/app/actions";
 import type { Role } from "@/lib/types";
 import { ROLES, roleLabel } from "@/components/format";
+import { TourButton } from "./Tour";
 
 const NAV = [
   { href: "/app", label: "Inbox", exact: true },
@@ -68,6 +69,7 @@ export function TopBar({ user, brandName }: { user: { name: string; role: Role }
               <Link
                 key={n.href}
                 href={n.href}
+                data-tour={`nav-${n.href.split("/")[2] ?? "inbox"}`}
                 aria-current={active ? "page" : undefined}
                 className={clsx(
                   "inline-flex items-center border-b-2 px-2.5 text-[14px] whitespace-nowrap transition-colors",
@@ -80,7 +82,8 @@ export function TopBar({ user, brandName }: { user: { name: string; role: Role }
           })}
         </nav>
 
-        <details ref={menuRef} className="relative">
+        <TourButton />
+        <details ref={menuRef} className="relative" data-tour="role-switch">
           <summary className="flex h-9 cursor-pointer list-none items-center gap-2 rounded-[5px] border border-rule-strong bg-sheet px-3 text-[13.5px] hover:border-ink [&::-webkit-details-marker]:hidden">
             <span className="hidden sm:inline">{user.name}</span>
             <span className="text-muted">{roleLabel[user.role]}</span>

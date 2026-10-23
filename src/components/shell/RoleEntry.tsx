@@ -83,3 +83,18 @@ export function EmailSignIn() {
     </form>
   );
 }
+
+/** A single "enter as" button for the landing hero; same seeded sign-in as the role grid. */
+export function EnterAsButton({ role, children }: { role: Role; children: React.ReactNode }) {
+  const [state, action, pending] = useActionState(enterAsRoleAction, initial);
+  return (
+    <form action={action} className="flex flex-col gap-2">
+      <input type="hidden" name="role" value={role} />
+      <Button type="submit" variant="primary" size="lg" disabled={pending}>
+        {pending && <LoaderCircle size={16} className="animate-spin" aria-hidden />}
+        {pending ? "Opening the workspace" : children}
+      </Button>
+      {state.error && !pending && <p className="max-w-[40ch] text-[13px] text-proof">{state.error}</p>}
+    </form>
+  );
+}

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSessionUser, getBrand } from "@/lib/db/queries";
 import { TopBar } from "@/components/shell/TopBar";
+import { Tour } from "@/components/shell/Tour";
 import { DisclosureFooter } from "@/components/shell/Disclosure";
 
 export const dynamic = "force-dynamic";
@@ -18,6 +19,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         {children}
       </main>
       <DisclosureFooter />
+      <Tour />
     </div>
   );
 }

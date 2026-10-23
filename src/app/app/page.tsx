@@ -56,7 +56,7 @@ export default async function Inbox({ searchParams }: { searchParams: Promise<{ 
           </EmptyState>
         </div>
       ) : (
-        <div className="mt-4 overflow-x-auto">
+        <div data-tour="inbox-list" className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[820px] border-collapse text-[14px]">
             <caption className="sr-only">Submissions{status ? `, filtered to ${statusLabel[status]}` : ""}</caption>
             <thead>
