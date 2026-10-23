@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "seed": "tsx scripts/seed.ts",
-    "seed:image": "tsx scripts/make-demo-image.ts"
+    "seed:image": "tsx scripts/make-demo-image.ts",
+    "bench": "tsx scripts/asci-bench.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",

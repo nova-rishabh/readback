@@ -118,7 +118,8 @@ export async function callObject<T>(o: {
         return unmaskDeep(object, tokens);
       } catch (e) {
         if (process.env.READBACK_DEBUG) console.error(`[gemini] ${model} fail ${statusOf(e)} ${(e as Error).message?.slice(0, 120)}`);
-        const s = statusOf(e);
+        const timedOut = (e as Error)?.name === "TimeoutError" || /aborted due to timeout/i.test((e as Error)?.message ?? "");
+        const s = timedOut ? 503 : statusOf(e); // a hung model is treated like an overloaded one: rotate
         if (s === 429) (cooldown.set(model, Date.now() + retrySeconds(e) * 1000), quotaHit.add(model));
         else if (s === 503) cooldown.set(model, Date.now() + 15_000);
         else if (s === 404) cooldown.set(model, Date.now() + 3_600_000);

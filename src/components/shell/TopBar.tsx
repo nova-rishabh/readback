@@ -12,6 +12,7 @@ import { ROLES, roleLabel } from "@/components/format";
 const NAV = [
   { href: "/app", label: "Inbox", exact: true },
   { href: "/app/new", label: "New draft" },
+  { href: "/app/compare", label: "Compare" },
   { href: "/app/brand", label: "Brand Space" },
   { href: "/app/recall", label: "Recall queue" },
   { href: "/app/insights", label: "Insights" },

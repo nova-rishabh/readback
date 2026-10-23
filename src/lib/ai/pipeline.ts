@@ -23,6 +23,8 @@ export interface CheckInput {
   imageAlt?: string | null;
   lockedPhrases: string[];
   brand: BrandSpace;
+  // benchmark knobs: skip span fixes, and bypass the content-hash cache so repeated runs measure stability
+  options?: { fixes?: boolean; cache?: boolean };
 }
 export interface CheckResult {
   findings: Finding[];
@@ -36,7 +38,8 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
   const t0 = Date.now();
   const mode = isMock() ? "mock" : "cloud";
   const key = contentHash({ ...input, mode });
-  const hit = cache.get(key);
+  const useCache = input.options?.cache !== false;
+  const hit = useCache ? cache.get(key) : undefined;
   if (hit) {
     hit.events.forEach(emit);
     return hit.result;
@@ -121,7 +124,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       const targets: FixTarget[] = ai
         .filter((f) => fixable.has(f.id) && (f.category === "tone" || bad.includes(f)))
         .map((f) => ({ id: f.id, span: fixable.get(f.id)!, kind: f.category === "tone" ? "tone" : "claim", belief: f.belief?.statement ?? null, reason: f.explanation }));
-      if (targets.length) {
+      if (targets.length && input.options?.fixes !== false) {
         out({ type: "stage", stage: "fix", message: `Drafting ${targets.length} fix(es) and re-reading the corrected draft` });
         const sugs = await fixAllAndGate(targets, { draft: text, intent: input.intent, locked: input.lockedPhrases, brand, panel, image, flagged, embargo });
         for (const f of ai) {
@@ -130,12 +133,13 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
         }
       }
     } catch (e) {
-      if (!(e instanceof QuotaError)) throw e;
+      // any AI-stage failure keeps the rule findings: they are saved and the reason is shown
       partial = true;
       out({
         type: "error",
-        message:
-          e.reason === "quota"
+        message: !(e instanceof QuotaError)
+          ? `The AI check stopped (${e instanceof Error ? e.message.slice(0, 120) : "unknown error"}). Rule findings are saved; run the check again.`
+          : e.reason === "quota"
             ? `Gemini free-tier limit reached (5 requests per minute per model). Rule findings are saved; run the AI check again in ${e.retryAfterSeconds}s.`
             : `Gemini is overloaded right now (HTTP 503 on every model). Rule findings are saved; run the AI check again in a minute.`,
       });
@@ -158,7 +162,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
     out({ type: "stage", stage: "done", message: "Check complete" });
     out({ type: "summary", summary });
     const result = { findings, summary, readers };
-    if (!partial) cache.set(key, { events, result });
+    if (!partial && useCache) cache.set(key, { events, result });
     return result;
   } catch (e) {
     out({ type: "error", message: e instanceof Error ? e.message : String(e) });
