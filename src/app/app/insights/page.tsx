@@ -33,9 +33,9 @@ export default async function InsightsPage() {
         lede="Where drafts keep breaking the rules, and which rules people keep arguing with. Counts cover every saved check."
       />
       <div className="grid gap-5 lg:grid-cols-2">
-        <Section title="Most-broken clauses" lede="Findings per clause, rule and reader findings together.">
+        <Section title="Rules broken most often" lede="Findings per clause, rule and reader findings together.">
           {ins.topClauses.length === 0 ? (
-            <Empty>No findings cite a clause yet.</Empty>
+            <Empty>No findings cite a clause yet. Run a few checks to fill this page.</Empty>
           ) : (
             <ul className="flex flex-col gap-2.5">
               {ins.topClauses.map((c) => (
@@ -56,7 +56,7 @@ export default async function InsightsPage() {
 
         <Section title="Findings by author" lede="Total findings on each author's drafts; the red part is high severity.">
           {ins.byAuthor.length === 0 ? (
-            <Empty>No checks have run yet.</Empty>
+            <Empty>No checks have run yet. Run a few checks to fill this page.</Empty>
           ) : (
             <ul className="flex flex-col gap-2.5">
               {ins.byAuthor.map((a) => (
@@ -84,7 +84,7 @@ export default async function InsightsPage() {
         </Section>
 
         <Section
-          title="Unclear clauses"
+          title="Rules people dispute"
           lede="High dispute rates or readers split down the middle usually mean the clause needs rewording, not the drafts."
         >
           {ins.unclear.length === 0 ? (
@@ -95,7 +95,7 @@ export default async function InsightsPage() {
                 <tr className="border-b border-rule text-left text-[12px] text-muted">
                   <th scope="col" className="py-1.5 pr-3 font-medium">Clause</th>
                   <th scope="col" className="w-40 py-1.5 pr-3 font-medium">Disputed</th>
-                  <th scope="col" className="w-20 py-1.5 text-right font-medium">50/50 splits</th>
+                  <th scope="col" className="w-20 py-1.5 text-right font-medium">Readers split</th>
                 </tr>
               </thead>
               <tbody>

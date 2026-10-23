@@ -23,7 +23,7 @@ const STEPS = [
   { title: "Submit a draft", body: "Paste the copy, add the image, and write one line on what readers should take away." },
   { title: "Rules run instantly", body: "Banned terms, missing disclaimers, embargoed names, image contrast and alt text, checked by plain code." },
   { title: "Six readers react", body: "Simulated readers say what they believe after five seconds with the post, including what it only implies." },
-  { title: "Beliefs meet the facts", body: "Each belief is matched to the brand’s Fact Ledger: supported, contradicted, or unsupported." },
+  { title: "Beliefs meet the facts", body: "Each belief is checked against the brand’s approved facts (the Fact Ledger): supported, contradicted, or unsupported." },
   { title: "A person decides", body: "The creator accepts or disputes each finding; a reviewer approves. Every decision is logged." },
 ];
 
@@ -50,6 +50,12 @@ export default async function Landing() {
   const user = await currentUser();
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:rounded focus:bg-ink focus:px-3 focus:py-1.5 focus:text-sheet"
+      >
+        Skip to content
+      </a>
       <header className="sticky top-0 z-30 border-b border-rule bg-sheet/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-[1180px] items-center gap-8 px-5 lg:px-10">
           <Link href="/" className="font-display text-[22px] font-medium tracking-[-0.01em]">
@@ -72,7 +78,7 @@ export default async function Landing() {
               </Link>
             ) : (
               <a href="#roles" className={buttonClass("primary", "md")}>
-                Open the demo
+                Try the demo
               </a>
             )}
           </div>
@@ -95,7 +101,7 @@ export default async function Landing() {
                 See how it works
               </a>
             </div>
-            <p className="mt-4 text-[13px] text-muted">No sign-up. The demo brand, Velura, and its people are fictional.</p>
+            <p className="mt-4 text-[13px] text-muted">No sign-up. You&apos;ll land in the Velura workspace with example drafts already checked.</p>
           </div>
           <ProofSheet />
         </section>
@@ -125,8 +131,8 @@ export default async function Landing() {
           </p>
           <div className="mt-8 grid gap-10 md:grid-cols-2">
             {[
-              { tag: "[RULE]", title: "Rule engine", lede: "Exact, instant, no AI involved.", items: RULES },
-              { tag: "[AI]", title: "Reader panel", lede: "Six simulated readers, grounded in the draft and the Fact Ledger.", items: READERS },
+              { tag: "[RULE]", title: "Rule checks", lede: "Exact, instant, no AI involved.", items: RULES },
+              { tag: "[AI]", title: "AI reader panel", lede: "Six simulated readers, grounded in the draft and the approved facts.", items: READERS },
             ].map((col) => (
               <div key={col.title} className="border-l-2 border-ink pl-5">
                 <h3 className="flex items-baseline gap-2 text-[18px] font-semibold">
@@ -151,7 +157,7 @@ export default async function Landing() {
             Try it from any seat
           </h2>
           <p className="mt-3 mb-7 max-w-[64ch] text-[15.5px] leading-relaxed text-muted">
-            Four demo accounts, one click each. A short guided tour starts when you arrive; reopen it any time from the Tour
+            Four demo accounts, one click each. A short guided tour starts automatically when you arrive; reopen it any time from the Tour
             button in the top bar.
           </p>
           <RoleEntries />
@@ -170,6 +176,22 @@ export default async function Landing() {
         </section>
       </main>
 
+      <script
+        type="application/ld+json"
+        // static, server-authored JSON: describes the product for search engines
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            name: "Readback",
+            applicationCategory: "BusinessApplication",
+            operatingSystem: "Web",
+            description: "Pre-publication brand and claim checker: brand rules, approved facts and six simulated readers, with human review.",
+            url: "https://readback-virid.vercel.app",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+          }),
+        }}
+      />
       <footer className="border-t border-rule bg-sheet">
         <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-3 px-5 py-6 text-[13px] text-muted lg:px-10">
           <span>Readback, by Team Nova for the Inkloom AI brand-governance challenge.</span>

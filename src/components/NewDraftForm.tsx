@@ -74,7 +74,7 @@ export function NewDraftForm() {
         fileRef.current.files = dt.files;
       }
     } catch {
-      setErrors({ image: "The example text loaded, but /demo/velura-142.png was not found. Run pnpm seed to generate it, or upload any image." });
+      setErrors({ image: "Couldn't load the demo image. Upload any PNG or JPEG instead." });
     } finally {
       setLoadingExample(false);
     }
@@ -133,16 +133,16 @@ export function NewDraftForm() {
             and low-contrast overlay text.
           </p>
         </div>
-        <Button onClick={loadExample} disabled={loadingExample || submitting}>
+        <Button variant="primary" onClick={loadExample} disabled={loadingExample || submitting}>
           {loadingExample && <LoaderCircle size={14} className="animate-spin" aria-hidden />}
-          Load Velura #142 example
+          Fill in the demo draft
         </Button>
       </div>
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <div className="flex flex-col gap-5">
-          <Field label="Title" error={errors.title} hint="Internal only. Reviewers see this in the inbox.">
-            {(p) => <Input {...p} value={title} onChange={(e) => setTitle(e.target.value)} />}
+          <Field label="Title (required)" error={errors.title} hint="Internal only. Reviewers see this in the inbox.">
+            {(p) => <Input {...p} required aria-required value={title} onChange={(e) => setTitle(e.target.value)} />}
           </Field>
           <div className="grid gap-5 sm:grid-cols-2">
             <Field label="Channel" error={errors.channel}>
@@ -169,13 +169,15 @@ export function NewDraftForm() {
             </Field>
           </div>
           <Field
-            label="Copy"
+            label="Copy (required)"
             error={errors.body}
             hint={`${body.length} characters. Paste it exactly as it will run, including hashtags and line breaks.`}
           >
             {(p) => (
               <Textarea
                 {...p}
+                required
+                aria-required
                 rows={7}
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
@@ -184,17 +186,17 @@ export function NewDraftForm() {
             )}
           </Field>
           <Field
-            label="Intended takeaway"
+            label="Intended takeaway (required)"
             error={errors.intent}
             hint="One line. Readers are asked whether they got this; fixes must keep it."
           >
-            {(p) => <Input {...p} value={intent} onChange={(e) => setIntent(e.target.value)} />}
+            {(p) => <Input {...p} required aria-required value={intent} onChange={(e) => setIntent(e.target.value)} />}
           </Field>
           <Field
-            label="Locked phrases"
+            label="Phrases fixes must keep"
             optional
             error={errors.locked ?? (missingLocked.length ? `Not in the copy: ${missingLocked.join(", ")}` : null)}
-            hint="One per line. Suggested fixes will never rewrite these, for example a product name or legal line."
+            hint="Optional. One per line, for example a product name or legal line."
           >
             {(p) => (
               <Textarea {...p} rows={3} value={locked} onChange={(e) => setLocked(e.target.value)} className="font-mono text-[13px]" />
@@ -255,7 +257,7 @@ export function NewDraftForm() {
           {submitting && <LoaderCircle size={16} className="animate-spin" aria-hidden />}
           {submitting ? "Saving draft" : "Save and run check"}
         </Button>
-        <p className="text-[13px] text-muted">The check usually takes 10 to 20 seconds. You can watch readers report in.</p>
+        <p className="text-[13px] text-muted">Next: the checks run and findings appear as they arrive.</p>
         {errors.form && (
           <p role="alert" className="w-full text-[13.5px] text-proof">
             {errors.form}

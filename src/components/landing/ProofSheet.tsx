@@ -37,7 +37,7 @@ function Mark({ n, active, onSelect, children }: { n: number; active: boolean; o
       onClick={() => onSelect(n)}
       onMouseEnter={() => onSelect(n)}
       aria-pressed={active}
-      aria-label={`Finding ${n}: ${note.head}`}
+      aria-describedby={active ? "proof-note" : undefined}
       className={clsx("proof-mark rounded-[2px] text-left", note.kind, active && "bg-proof-tint")}
       data-sev={note.sev}
     >
@@ -63,7 +63,7 @@ export function ProofSheet() {
         <Mark n={2} active={sel === 2} onSelect={setSel}>Visible glow in 7 days</Mark>. 100% natural,{" "}
         <Mark n={3} active={sel === 3} onSelect={setSel}>zero chemicals</Mark>. Shop now
       </p>
-      <div aria-live="polite" className="mx-5 mb-5 border-t border-rule pt-4">
+      <div id="proof-note" aria-live="polite" className="mx-5 mb-5 border-t border-rule pt-4">
         <div className="mb-1.5 flex items-center gap-2 text-[12px] text-muted">
           <span className="font-mono">[{note.engine}]</span>
           {note.meter !== null && <BeliefMeter k={note.meter} of={6} compact />}

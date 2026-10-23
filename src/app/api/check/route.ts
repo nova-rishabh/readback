@@ -7,6 +7,11 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 300; // free-tier Gemini can be slow; findings are also checkpointed as they arrive
 
+// One running check per version and at most two per user on this server instance: double clicks, a second tab or a
+// reload mid-run would otherwise start parallel runs that overwrite each other and burn the shared Gemini quota.
+const running = new Set<string>();
+const perUser = new Map<string, number>();
+
 function json(status: number, body: unknown) {
   return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 }
@@ -48,8 +53,24 @@ export async function POST(req: Request) {
   const record = await getSubmission(submissionId).catch(() => null);
   const version = record?.versions.find((v) => v.id === versionId);
   if (!record || !version) return json(404, { error: "No version with that id is visible to you." });
+  const latest = Math.max(...record.versions.map((v) => v.n));
+  if (version.n !== latest) return json(409, { error: `Only the latest version (v${latest}) can be checked.` });
+  if (running.has(versionId)) return json(409, { error: "A check is already running on this version. Wait for it to finish." });
+  if ((perUser.get(user.id) ?? 0) >= 2) return json(429, { error: "You already have two checks running. Wait for one to finish." });
+  running.add(versionId);
+  perUser.set(user.id, (perUser.get(user.id) ?? 0) + 1);
+  const release = () => {
+    running.delete(versionId);
+    perUser.set(user.id, Math.max(0, (perUser.get(user.id) ?? 1) - 1));
+  };
 
-  const brand = await getBrand();
+  let brand: Awaited<ReturnType<typeof getBrand>>;
+  try {
+    brand = await getBrand();
+  } catch {
+    release();
+    return json(500, { error: "Could not load the brand rules. Try again." });
+  }
 
   let image: { data: Buffer; mime: string } | null = null;
   if (version.image_path) {
@@ -99,6 +120,7 @@ export async function POST(req: Request) {
             imageAlt: version.image_alt,
             lockedPhrases: record.submission.locked_phrases ?? [],
             brand,
+            options: { cache: false }, // "Run check again" must really re-run (brand rules may have changed)
           },
           emit,
         );
@@ -108,6 +130,7 @@ export async function POST(req: Request) {
       } catch (err) {
         emit({ type: "error", message: err instanceof Error ? err.message : "The check stopped unexpectedly." });
       } finally {
+        release();
         if (!closed) {
           closed = true;
           try {

@@ -92,11 +92,11 @@ export function FactsTab({ facts, canEdit }: { facts: Fact[]; canEdit: boolean }
       )}
       {editing && !editing.id && <FactForm initial={editing} onDone={() => setEditing(null)} />}
       {sorted.length === 0 ? (
-        <p className="text-[14px] text-muted">The ledger is empty, so every claim a reader believes will show as unsupported.</p>
+        <p className="text-[14px] text-muted">There are no approved facts yet, so every claim a reader believes will show as unsupported.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[860px] border-collapse text-[14px]">
-            <caption className="sr-only">Fact Ledger</caption>
+            <caption className="sr-only">Approved facts</caption>
             <thead>
               <tr className="border-b border-rule-strong text-left text-[12.5px] text-muted">
                 <th scope="col" className="w-16 py-2 pr-3 font-medium">Code</th>

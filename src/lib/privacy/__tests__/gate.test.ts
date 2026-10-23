@@ -46,3 +46,13 @@ describe("mask", () => {
     expect(unmask("plain", new Map())).toBe("plain");
   });
 });
+
+describe("extra PII patterns", () => {
+  it("masks unspaced Aadhaar and Luhn-valid card numbers", () => {
+    const r = mask("Aadhaar 234567890123, card 4111 1111 1111 1111", []);
+    expect(r.masked).toBe("Aadhaar ⟦AADHAAR_1⟧, card ⟦CARD_1⟧");
+  });
+  it("leaves long numbers that fail the Luhn check alone", () => {
+    expect(mask("Order 1234567890123", []).masked).toBe("Order 1234567890123");
+  });
+});

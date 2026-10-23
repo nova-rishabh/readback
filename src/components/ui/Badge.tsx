@@ -82,8 +82,8 @@ export function VerdictBadge({ verdict, factCode, split }: { verdict: Verdict; f
       return <Badge tone="proof">Contradicted{factCode ? ` by ${factCode}` : ""}</Badge>;
     case "unsupported":
       return (
-        <Badge tone="ochre" title="No fact in the ledger backs this belief. That is not the same as false.">
-          Unsupported{factCode ? ` (nearest ${factCode})` : ": no fact in ledger"}
+        <Badge tone="ochre" title="No approved fact backs this belief. That is not the same as false.">
+          Unsupported{factCode ? ` (nearest ${factCode})` : ": no approved fact covers this"}
         </Badge>
       );
     case "ambiguous":

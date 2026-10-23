@@ -82,7 +82,7 @@ export function Comments({
             <span className="min-w-0 flex-1">
               Anchored to <span className="font-display text-[14px] italic">&ldquo;{anchor.text}&rdquo;</span>
             </span>
-            <button type="button" onClick={onClearAnchor} aria-label="Remove anchor" className="rounded p-0.5 text-muted hover:text-ink">
+            <button type="button" onClick={onClearAnchor} aria-label="Remove anchor" className="rounded p-1.5 text-muted hover:text-ink">
               <X size={14} aria-hidden />
             </button>
           </div>
@@ -155,7 +155,7 @@ export function History({ audit }: { audit: AuditEntry[] }) {
               )}
             </span>
             <span className="tabular-nums text-muted">{fmtDateTime(a.created_at)}</span>
-            <span className="col-span-2 font-mono text-[10.5px] text-muted/80" title={a.hash}>
+            <span className="col-span-2 font-mono text-[10.5px] text-muted" title={a.hash}>
               {a.hash.slice(0, 12)}
             </span>
           </li>

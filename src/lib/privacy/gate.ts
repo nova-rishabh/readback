@@ -4,15 +4,29 @@ import { AhoCorasick } from "@/lib/rules/aho-corasick";
 const PATTERNS: { kind: string; re: RegExp }[] = [
   { kind: "EMAIL", re: /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/g },
   { kind: "PAN", re: /(?<![A-Za-z0-9])[A-Z]{5}[0-9]{4}[A-Z](?![A-Za-z0-9])/g },
-  { kind: "AADHAAR", re: /(?<!\d)\d{4}[ -]\d{4}[ -]\d{4}(?!\d)/g },
+  { kind: "CARD", re: /(?<!\d)\d(?:[ -]?\d){12,18}(?!\d)/g }, // kept only if it passes the Luhn check
+  { kind: "AADHAAR", re: /(?<!\d)\d{4}[ -]?\d{4}[ -]?\d{4}(?!\d)/g },
   { kind: "PHONE", re: /(?<![\w+])(?:\+91[ -]?|91[ -]?|0)?[6-9]\d{4}[ -]?\d{5}(?!\d)/g },
 ];
 
 interface Hit { start: number; end: number; kind: string }
 
+/** Luhn checksum, so ordinary long numbers (order ids, batch codes) are not masked as cards. */
+function luhn(raw: string): boolean {
+  const d = raw.replace(/\D/g, "");
+  let sum = 0;
+  for (let i = 0; i < d.length; i++) {
+    let n = Number(d[d.length - 1 - i]);
+    if (i % 2) n = n * 2 > 9 ? n * 2 - 9 : n * 2;
+    sum += n;
+  }
+  return sum % 10 === 0;
+}
+
 export function mask(text: string, embargo: string[]): { masked: string; tokens: Map<string, string>; count: number } {
   const hits: Hit[] = [];
-  for (const { kind, re } of PATTERNS) for (const m of text.matchAll(re)) hits.push({ start: m.index!, end: m.index! + m[0].length, kind });
+  for (const { kind, re } of PATTERNS)
+    for (const m of text.matchAll(re)) if (kind !== "CARD" || luhn(m[0])) hits.push({ start: m.index!, end: m.index! + m[0].length, kind });
   const terms = embargo.filter((t) => t.trim());
   if (terms.length) for (const m of new AhoCorasick(terms).search(text)) hits.push({ start: m.start, end: m.end, kind: "EMBARGO" });
 

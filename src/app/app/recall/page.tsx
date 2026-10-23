@@ -17,11 +17,11 @@ export default async function RecallPage() {
     <Page>
       <PageHeader
         title="Recall queue"
-        lede="Published posts whose cited facts have since changed, expired or been retired. Each one was approved against an older fact version, recorded in the audit log."
+        lede="These published or approved posts relied on a fact that has since changed or expired. Review each one and mark it recalled if it should come down."
       />
       {queue.length === 0 ? (
-        <EmptyState title="Nothing to recall">
-          When a fact in the ledger is edited or expires, every published post that cited it lands here with the reason.
+        <EmptyState title="No recalls">
+          No recalls. Edit or expire a fact in Brand Space &gt; Approved facts and any post that cited it appears here.
         </EmptyState>
       ) : (
         <div className="overflow-x-auto">

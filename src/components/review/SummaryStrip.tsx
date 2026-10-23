@@ -2,15 +2,15 @@ import type { CheckSummary } from "@/lib/types";
 
 export function SummaryStrip({ summary, ruleMs }: { summary: CheckSummary; ruleMs: number | null }) {
   const cells: { label: string; value: React.ReactNode; tone?: string }[] = [
-    { label: "Rule findings", value: summary.rule_count },
-    { label: "Reader findings", value: summary.ai_count },
+    { label: "Rule checks flagged", value: summary.rule_count },
+    { label: "Reader beliefs flagged", value: summary.ai_count },
     { label: "High severity", value: summary.high, tone: summary.high > 0 ? "text-proof" : undefined },
     {
       label: "Got the intended takeaway",
       value: `${summary.intent_kept} of ${summary.of}`,
       tone: summary.of > 0 && summary.intent_kept / summary.of <= 0.5 ? "text-proof" : undefined,
     },
-    { label: "Masked before model calls", value: summary.masked_tokens },
+    { label: "Personal data hidden from AI", value: summary.masked_tokens },
     {
       label: summary.mode === "mock" ? "Mock run" : "Model",
       value: <span className="font-mono text-[13px]">{summary.mode === "mock" ? "offline" : summary.model}</span>,

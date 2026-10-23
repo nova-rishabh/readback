@@ -14,8 +14,8 @@ const EXAMPLE = {
 };
 
 const KIND: Record<DriftKind, { label: string; tone: Tone }> = {
-  new_belief: { label: "NEW BELIEF", tone: "proof" },
-  strengthened: { label: "STRENGTHENED CLAIM", tone: "proof" },
+  new_belief: { label: "Added in translation", tone: "proof" },
+  strengthened: { label: "Made stronger", tone: "proof" },
   dropped: { label: "Dropped", tone: "ochre" },
   weakened: { label: "Weakened", tone: "steel" },
   same: { label: "Same", tone: "moss" },
@@ -68,7 +68,7 @@ export function CompareForm() {
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between gap-4 rounded-md border border-rule bg-sheet px-4 py-3">
         <p className="text-[13.5px] text-muted">
-          Try the Velura case: the English line promises a gradual result; the agency&apos;s Hindi adds <span className="font-medium text-ink">पक्का</span> (“guaranteed”).
+          Try the Velura case: the English line promises a gradual result; the agency&apos;s Hindi adds <span lang="hi" className="font-medium text-ink">पक्का</span> (“guaranteed”).
         </p>
         <Button type="button" size="sm" onClick={() => (setMaster(EXAMPLE.master), setVariant(EXAMPLE.variant), setLang("hi"))}>
           Load Velura example
@@ -82,11 +82,11 @@ export function CompareForm() {
           void run();
         }}
       >
-        <Field label="English master" hint="The approved source version.">
+        <Field label="English master (required)" hint="The approved source version.">
           {(p) => <Textarea {...p} rows={5} value={master} onChange={(e) => setMaster(e.target.value)} required />}
         </Field>
         <div className="flex flex-col gap-3">
-          <Field label="Translated version" hint="The agency or regional copy to check.">
+          <Field label="Translated version (required)" hint="The agency or regional copy to check.">
             {(p) => <Textarea {...p} rows={5} value={variant} onChange={(e) => setVariant(e.target.value)} lang={lang === "hi" ? "hi" : undefined} required />}
           </Field>
           <Field label="Language">
@@ -101,16 +101,20 @@ export function CompareForm() {
         <div className="flex items-center gap-3 lg:col-span-2">
           <Button type="submit" variant="primary" disabled={pending || !master.trim() || !variant.trim()}>
             {pending && <LoaderCircle size={15} className="animate-spin" aria-hidden />}
-            {pending ? "Readers are comparing…" : "Compare beliefs"}
+            {pending ? "Comparing… usually under 20 seconds" : "Compare translation"}
           </Button>
-          <p role="status" aria-live="polite" className="text-[13px] text-proof">
+          <p role="alert" className="text-[13px] text-proof">
             {error}
           </p>
         </div>
       </form>
 
+      {!result && (
+        <p className="text-[13.5px] text-muted">Results appear here: what readers believe from each version, side by side.</p>
+      )}
+
       {result && (
-        <section aria-labelledby="drift-h" className="flex flex-col gap-3">
+        <section aria-labelledby="drift-h" aria-live="polite" className="flex flex-col gap-3">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="drift-h" className="font-display text-[22px]">
               {flagged ? `${flagged} belief${flagged > 1 ? "s" : ""} changed in translation` : "Both versions leave the same beliefs"}
@@ -139,7 +143,7 @@ export function CompareForm() {
                       <p className="mt-2 text-[12.5px] text-muted">{r.explanation}</p>
                     </td>
                     <td className="px-4 py-3"><Side s={r.master} of={result.of} /></td>
-                    <td className="px-4 py-3"><Side s={r.variant} of={result.of} /></td>
+                    <td className="px-4 py-3" lang={lang === "hi" ? "hi" : undefined}><Side s={r.variant} of={result.of} /></td>
                   </tr>
                 ))}
               </tbody>

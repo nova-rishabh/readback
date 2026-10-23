@@ -13,7 +13,7 @@ import { TourButton } from "./Tour";
 const NAV = [
   { href: "/app", label: "Inbox", exact: true },
   { href: "/app/new", label: "New draft" },
-  { href: "/app/compare", label: "Compare" },
+  { href: "/app/compare", label: "Compare translations" },
   { href: "/app/brand", label: "Brand Space" },
   { href: "/app/recall", label: "Recall queue" },
   { href: "/app/insights", label: "Insights" },

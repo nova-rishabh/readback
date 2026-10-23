@@ -18,12 +18,19 @@ export default async function BrandPage({ searchParams }: { searchParams: Promis
   const [brand, user] = await Promise.all([getBrand(), getSessionUser()]);
   const canEdit = user?.role === "owner";
 
+  const PURPOSE: Record<Tab, string> = {
+    clauses: "The written brand rules that every finding cites.",
+    facts: "Claims the brand can prove. Readers' beliefs are checked against these (the Fact Ledger).",
+    terms: "Words drafts must avoid or use instead.",
+    voice: "The brand's approved colours and how it should sound.",
+    personas: "The audience readers the AI panel plays when it reads a draft.",
+  };
   const items = [
-    { id: "clauses", label: "Clauses", href: "/app/brand?tab=clauses", count: brand.clauses.length },
-    { id: "facts", label: "Fact Ledger", href: "/app/brand?tab=facts", count: brand.facts.length },
-    { id: "terms", label: "Terms", href: "/app/brand?tab=terms", count: brand.terms.length },
+    { id: "clauses", label: "Guidelines", href: "/app/brand?tab=clauses", count: brand.clauses.length },
+    { id: "facts", label: "Approved facts", href: "/app/brand?tab=facts", count: brand.facts.length },
+    { id: "terms", label: "Banned and preferred words", href: "/app/brand?tab=terms", count: brand.terms.length },
     { id: "voice", label: "Palette and voice", href: "/app/brand?tab=voice" },
-    { id: "personas", label: "Personas", href: "/app/brand?tab=personas", count: brand.personas.length },
+    { id: "personas", label: "Reader personas", href: "/app/brand?tab=personas", count: brand.personas.length },
   ];
 
   return (
@@ -37,6 +44,8 @@ export default async function BrandPage({ searchParams }: { searchParams: Promis
         }
       />
       <Tabs label="Brand Space sections" items={items} value={tab} />
+      <p className="mt-4 text-[13.5px] text-muted">{PURPOSE[tab]}</p>
+      {!canEdit && <p className="mt-1 text-[13.5px] font-medium text-ink">View only. Switch to Brand owner (top right) to edit.</p>}
       <div className="pt-6">
         {tab === "clauses" && <ClausesTab clauses={brand.clauses} canEdit={canEdit} />}
         {tab === "facts" && <FactsTab facts={brand.facts} canEdit={canEdit} />}

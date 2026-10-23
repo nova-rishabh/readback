@@ -141,10 +141,10 @@ export const FindingCard = forwardRef<HTMLElement, FindingCardProps>(function Fi
       onMouseLeave={() => props.onHover(null)}
       onFocus={() => props.onHover(f.id)}
       className={clsx(
-        "rb-arrive scroll-mt-28 rounded-md border border-l-[3px] bg-sheet px-4 py-3.5 transition-colors outline-none",
+        "rb-arrive scroll-mt-28 rounded-md border border-l-[3px] px-4 py-3.5 transition-colors outline-none",
         sevBorder[f.severity],
         active ? "border-rule-strong border-y-ink/40 border-r-ink/40 bg-white" : "border-rule",
-        resolved && "opacity-75",
+        resolved ? "bg-paper" : "bg-sheet", // resolved cards recede by background, not opacity (keeps text contrast)
       )}
     >
       <header className="flex flex-wrap items-center gap-x-2 gap-y-1">

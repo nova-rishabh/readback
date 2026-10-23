@@ -7,11 +7,12 @@
   --color-ink: #1b1a17;
   --color-rule: #e3ddd1;
   --color-rule-strong: #cfc7b8;
+  --color-control: #8a8274; /* form-control borders: 3.5:1 or better (WCAG 1.4.11) */
   --color-muted: #6b655b;
 
   --color-proof: #b3261e;
   --color-proof-tint: #f7e4e1;
-  --color-ochre: #9a6700;
+  --color-ochre: #8a5d00; /* 4.9:1 on its tint, 5.3:1 on paper */
   --color-ochre-tint: #f6ecd6;
   --color-steel: #3d5a80;
   --color-steel-tint: #e3e9f1;
@@ -31,6 +32,7 @@
 }
 
 html {
+  scroll-padding-top: 5rem; /* keep focused elements clear of the sticky header (WCAG 2.4.11) */
   background: var(--color-paper);
   color: var(--color-ink);
 }

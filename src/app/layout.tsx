@@ -22,10 +22,23 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://readback-virid.vercel.app";
+const DESCRIPTION =
+  "Readback checks marketing drafts against brand rules and approved facts, and shows what six simulated readers come away believing. Try the demo, no sign-up.";
+
 export const metadata: Metadata = {
-  title: { default: "Readback", template: "%s | Readback" },
-  description:
-    "Readback checks a marketing draft against your brand rules and shows what six simulated readers come away believing, before it goes live.",
+  metadataBase: new URL(SITE),
+  title: { default: "Readback: catch misleading ad claims before they publish", template: "%s | Readback" },
+  description: DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Readback",
+    title: "Readback: catch misleading ad claims before they publish",
+    description: DESCRIPTION,
+  },
+  twitter: { card: "summary_large_image", title: "Readback", description: DESCRIPTION },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

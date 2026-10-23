@@ -244,6 +244,8 @@ export async function addVersion(
   const image_path = input.image_path !== undefined ? input.image_path : (last?.image_path ?? null);
   const image_alt = input.image_alt !== undefined ? input.image_alt : (last?.image_alt ?? null);
   const hash = sha256(`${input.body}\n${image_path ?? ""}\n${image_alt ?? ""}`);
+  // a changed draft needs a fresh review: an approved, published or in-review submission goes back to draft
+  const cur = must(await sb.from("submissions").select("status").eq("id", submissionId).single(), "addVersion(status)");
   const row = must(
     await sb.from("versions").insert({
       submission_id: submissionId, n, body: input.body, image_path, image_alt, content_hash: hash,
@@ -251,6 +253,10 @@ export async function addVersion(
     "addVersion",
   );
   await writeAudit(a, { submission_id: submissionId, action: "version_added", version_hash: hash, detail: { version: n } });
+  if (cur.status === "approved" || cur.status === "published" || cur.status === "in_review") {
+    must(await sb.from("submissions").update({ status: "draft" }).eq("id", submissionId).select("id").single(), "addVersion(reset)");
+    await writeAudit(a, { submission_id: submissionId, action: "returned_to_draft", version_hash: hash, detail: { from: cur.status, to: "draft", reason: `v${n} saved` } });
+  }
   return row.id;
 }
 
@@ -258,6 +264,16 @@ export async function addVersion(
 export async function saveCheckResult(versionId: string, findings: Finding[], summary: CheckSummary | null): Promise<void> {
   const a = await requireActor();
   const sb = await createClient();
+  // only the latest version is checked (an older check would overwrite the current version's fact citations),
+  // and decisions already made on a finding carry over when the same finding comes back from a re-run
+  const cur = must(await sb.from("versions").select("submission_id, n, findings").eq("id", versionId).single(), "saveCheckResult(read)");
+  const { data: newest } = await sb.from("versions").select("n").eq("submission_id", cur.submission_id).order("n", { ascending: false }).limit(1).single();
+  if (newest && newest.n !== cur.n) throw new Error(`v${cur.n} is not the latest version; check v${newest.n} instead`);
+  const prior = new Map(((cur.findings ?? []) as Finding[]).filter((f) => f.status !== "open").map((f) => [`${f.id}|${f.span?.text ?? f.title}`, f]));
+  findings = findings.map((f) => {
+    const p = prior.get(`${f.id}|${f.span?.text ?? f.title}`);
+    return p ? { ...f, status: p.status, dispute_note: p.dispute_note, applied_replacement: p.applied_replacement } : f;
+  });
   if (!summary) {
     must(await sb.from("versions").update({ findings }).eq("id", versionId).select("id").single(), "saveCheckResult checkpoint");
     return;
@@ -287,7 +303,7 @@ export async function saveCheckResult(versionId: string, findings: Finding[], su
 }
 
 export async function updateFinding(
-  versionId: string, findingId: string, patch: Partial<Pick<Finding, "status" | "dispute_note">>,
+  versionId: string, findingId: string, patch: Partial<Pick<Finding, "status" | "dispute_note" | "applied_replacement">>,
 ): Promise<void> {
   const a = await requireActor();
   const sb = await createClient();
@@ -323,13 +339,28 @@ const STATUS_ACTION: Record<SubmissionStatus, string> = {
   recalled: "recalled",
 };
 
+// Allowed status changes. "published" is reached only by recording a live URL; a new version resets to "draft".
+const TRANSITIONS: Record<SubmissionStatus, SubmissionStatus[]> = {
+  draft: ["in_review"],
+  changes_requested: ["in_review"],
+  in_review: ["approved", "changes_requested"],
+  approved: ["recalled", "changes_requested"],
+  published: ["recalled"],
+  recalled: [],
+};
+const REVIEW_ONLY: SubmissionStatus[] = ["approved", "changes_requested", "recalled"];
+
 export async function setStatus(submissionId: string, status: SubmissionStatus, note?: string): Promise<void> {
   const a = await requireActor();
-  if ((status === "approved" || status === "recalled") && a.role !== "reviewer" && a.role !== "owner") {
-    throw new Error("Only a reviewer or owner can approve or recall a submission");
+  if (REVIEW_ONLY.includes(status) && a.role !== "reviewer" && a.role !== "owner") {
+    throw new Error("Only a reviewer or the brand owner can make this decision");
   }
   const sb = await createClient();
-  const before = must(await sb.from("submissions").select("status").eq("id", submissionId).single(), "setStatus");
+  const before = must(await sb.from("submissions").select("status, author_id").eq("id", submissionId).single(), "setStatus");
+  if (!TRANSITIONS[before.status as SubmissionStatus].includes(status)) {
+    throw new Error(`A submission that is ${before.status.replace("_", " ")} cannot move to ${status.replace("_", " ")}`);
+  }
+  if (status === "approved" && before.author_id === a.id) throw new Error("You cannot approve your own draft; ask another reviewer");
   must(await sb.from("submissions").update({ status }).eq("id", submissionId).select("id").single(), "setStatus(update)");
   await writeAudit(a, {
     submission_id: submissionId,
@@ -344,6 +375,8 @@ export async function recordPublishedUrl(submissionId: string, url: string): Pro
   const a = await requireActor();
   const sb = await createClient();
   const cur = must(await sb.from("submissions").select("status").eq("id", submissionId).single(), "recordPublishedUrl");
+  if (cur.status !== "approved" && cur.status !== "published") throw new Error("Only an approved submission can be published");
+  if (!/^https?:[/][/]/i.test(url)) throw new Error("Enter the full link, starting with https://");
   const patch: Record<string, unknown> = { published_url: url };
   if (cur.status === "approved") patch.status = "published";
   must(await sb.from("submissions").update(patch).eq("id", submissionId).select("id").single(), "recordPublishedUrl(update)");

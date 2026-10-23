@@ -62,7 +62,7 @@ export function RoleEntries() {
             <LoaderCircle size={14} className="animate-spin" aria-hidden /> Signing in with the seeded demo account
           </span>
         )}
-        {state.error && !pending && <span className="text-proof">{state.error}</span>}
+        {state.error && !pending && <span role="alert" className="text-proof">{state.error}</span>}
       </p>
     </form>
   );
@@ -79,7 +79,7 @@ export function EmailSignIn() {
       <Button type="submit" variant="secondary" disabled={pending}>
         {pending ? "Signing in" : "Sign in"}
       </Button>
-      {state.error && <p className="text-[13px] text-proof sm:col-span-3">{state.error}</p>}
+      {state.error && <p role="alert" className="text-[13px] text-proof sm:col-span-3">{state.error}</p>}
     </form>
   );
 }
@@ -94,7 +94,7 @@ export function EnterAsButton({ role, children }: { role: Role; children: React.
         {pending && <LoaderCircle size={16} className="animate-spin" aria-hidden />}
         {pending ? "Opening the workspace" : children}
       </Button>
-      {state.error && !pending && <p className="max-w-[40ch] text-[13px] text-proof">{state.error}</p>}
+      {state.error && !pending && <p role="alert" className="max-w-[40ch] text-[13px] text-proof">{state.error}</p>}
     </form>
   );
 }

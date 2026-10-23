@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { forwardRef, useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
 
 const control =
-  "w-full rounded-[5px] border border-rule-strong bg-sheet px-3 text-[15px] text-ink placeholder:text-muted/70 " +
+  "w-full rounded-[5px] border border-control bg-sheet px-3 text-[15px] text-ink placeholder:text-muted " +
   "focus:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-ink disabled:opacity-60";
 
 /** Label + hint + error wrapper. Pass a render function to receive the generated id. */
@@ -38,7 +38,7 @@ export function Field({
         </p>
       )}
       {error && (
-        <p id={errId} className="text-[12.5px] text-proof">
+        <p id={errId} role="alert" className="text-[12.5px] text-proof">
           {error}
         </p>
       )}

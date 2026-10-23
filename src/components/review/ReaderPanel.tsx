@@ -76,7 +76,7 @@ export function StageTrack({ state }: { state: StreamState }) {
           <li
             key={s.id}
             aria-current={current ? "step" : undefined}
-            className={clsx("inline-flex items-center gap-1", current ? "text-ink font-medium" : reached ? "text-ink/70" : "text-muted/60")}
+            className={clsx("inline-flex items-center gap-1", current ? "text-ink font-medium" : reached ? "text-ink/70" : "text-muted")}
           >
             {current ? (
               <LoaderCircle size={11} className="animate-spin" aria-hidden />
@@ -131,12 +131,11 @@ export function ReaderPanel({
 
       {!live ? (
         <div className="rounded-md border border-dashed border-rule-strong px-4 py-4 text-[13.5px] leading-relaxed text-muted">
-          Reader takeaways stream in during a live check and are not stored. The findings on this version were saved from an
-          earlier run.
+          Reader answers appear only during a live check. Run the check to see how each of the six readers reads this draft.
           {canRun && (
             <div className="mt-3">
               <Button size="sm" onClick={onRun}>
-                Run the six readers again
+                Run check
               </Button>
             </div>
           )}

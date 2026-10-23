@@ -3,7 +3,7 @@ import { listSubmissions, getSessionUser } from "@/lib/db/queries";
 import type { SubmissionStatus } from "@/lib/types";
 import { Page, PageHeader, EmptyState } from "@/components/shell/PageHeader";
 import { ButtonLink } from "@/components/ui/Button";
-import { StatusPill, statusLabel } from "@/components/ui/Badge";
+import { Badge, StatusPill, statusLabel } from "@/components/ui/Badge";
 import { Tabs } from "@/components/ui/Tabs";
 import { STATUSES, channelLabel, langLabel, fmtDateTime, roleLabel } from "@/components/format";
 
@@ -41,7 +41,7 @@ export default async function Inbox({ searchParams }: { searchParams: Promise<{ 
       {rows.length === 0 ? (
         <div className="mt-6">
           <EmptyState
-            title={status ? `Nothing is ${statusLabel[status].toLowerCase()} right now` : "No drafts yet"}
+            title={status ? `No drafts are ${statusLabel[status].toLowerCase()} yet` : "No drafts yet"}
             action={
               !status && (
                 <ButtonLink href="/app/new" variant="primary">
@@ -51,7 +51,7 @@ export default async function Inbox({ searchParams }: { searchParams: Promise<{ 
             }
           >
             {status
-              ? "Drafts move here as reviewers act on them."
+              ? "Open a draft that is In review to act on it, and it moves here."
               : "Submit a caption, listing or email with its image. Readback runs the rule check and the reader panel as soon as it is saved."}
           </EmptyState>
         </div>
@@ -81,6 +81,11 @@ export default async function Inbox({ searchParams }: { searchParams: Promise<{ 
                     >
                       {s.title}
                     </Link>
+                    {s.number === 142 && (
+                      <Badge tone="steel" className="relative ml-2 align-middle">
+                        Start here
+                      </Badge>
+                    )}
                     <div className="mt-0.5 line-clamp-1 max-w-[52ch] text-[12.5px] text-muted">Intended: {s.intent}</div>
                   </td>
                   <td className="py-2.5 pr-3 text-muted">
