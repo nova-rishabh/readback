@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signInAsRole } from "@/lib/db/queries";
 import { createClient } from "@/lib/db/server";
@@ -30,6 +31,8 @@ export async function switchRoleAction(formData: FormData) {
   if (!ROLES.includes(role)) return;
   const res = await signInAsRole(role);
   if (!res.ok) redirect("/");
+  // the session changed: drop every cached page so the new role's view renders, not the previous one
+  revalidatePath("/", "layout");
   redirect(back.startsWith("/app") ? back : "/app");
 }
 
