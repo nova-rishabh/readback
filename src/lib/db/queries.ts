@@ -354,7 +354,8 @@ export async function upsertFact(f: Partial<Fact> & { statement: string }): Prom
     expires_on, status, version, updated_at: new Date().toISOString(),
   };
   if (!existing || existing.statement !== f.statement) {
-    const emb = await embedText(f.statement); // null when no key: skipped gracefully
+    const { data: emb_terms } = await sb.from("terms").select("phrase").eq("brand_id", a.brand_id).eq("kind", "embargo");
+    const emb = await embedText(f.statement, (emb_terms ?? []).map((t: { phrase: string }) => t.phrase)); // null when no key
     row.embedding = emb ? toVectorLiteral(emb) : null;
   }
   must(await sb.from("facts").upsert(row, { onConflict: "brand_id,code" }).select("id").single(), "upsertFact");
@@ -504,12 +505,13 @@ export async function getInsights(): Promise<{
     for (const f of latest.findings ?? []) {
       row.findings += 1;
       if (f.severity === "high") row.high += 1;
-      if (f.citation?.kind === "clause") {
-        const c = byClause.get(f.citation.code) ?? { total: 0, disputed: 0, split: 0 };
+      const clauseCode = f.citation?.kind === "clause" ? f.citation.code : f.clause_code;
+      if (clauseCode) {
+        const c = byClause.get(clauseCode) ?? { total: 0, disputed: 0, split: 0 };
         c.total += 1;
         if (f.status === "disputed") c.disputed += 1;
         if (f.belief?.verdict === "ambiguous") c.split += 1;
-        byClause.set(f.citation.code, c);
+        byClause.set(clauseCode, c);
       }
     }
     byAuthor.set(key, row);

@@ -90,6 +90,13 @@ export async function verifyGroups(groups: BeliefGroup[], brand: BrandSpace, emb
 
 const SEVERE = new Set(["health", "guarantee"]);
 
+// Guideline clause that governs each belief category (Velura numbering; ignored when the brand lacks the clause).
+const CLAUSE_FOR: Record<string, string> = {
+  endorsement: "G-04", health: "G-04", environment: "G-05", efficacy: "G-12", guarantee: "G-12",
+  urgency: "G-14", price: "G-14", comparison: "G-15", language_drift: "G-13",
+};
+export const clauseFor = (brand: BrandSpace, key: string) => brand.clauses.find((c) => c.code === CLAUSE_FOR[key]) ?? null;
+
 export function buildClaimFindings(groups: BeliefGroup[], judged: Judged[], of: number, brand: BrandSpace, model: string): Finding[] {
   const out: Finding[] = [];
   groups.forEach((g, i) => {
@@ -100,6 +107,7 @@ export function buildClaimFindings(groups: BeliefGroup[], judged: Judged[], of: 
     const verdict: Verdict = j.verdict === "contradicted" ? "contradicted" : isAmbiguous(k, of) ? "ambiguous" : j.verdict;
     const severity: Severity = verdict === "contradicted" ? "high" : verdict === "ambiguous" ? "low" : SEVERE.has(category) ? "high" : "medium";
     const fact = brand.facts.find((f) => f.code === j.fact_code) ?? null;
+    const clause = clauseFor(brand, category);
     const spans = g.items.flatMap((x) => (x.span ? [x.span] : []));
     const tally = new Map<string, number>();
     spans.forEach((s) => tally.set(`${s.start}:${s.end}`, (tally.get(`${s.start}:${s.end}`) ?? 0) + 1));
@@ -113,7 +121,12 @@ export function buildClaimFindings(groups: BeliefGroup[], judged: Judged[], of: 
       severity,
       title: `${k} of ${of} readers believed: ${g.statement}`,
       explanation: `${k} of ${of} readers took away "${g.statement}"${span ? ` from "${span.text}"` : " from the image"}. ${j.reason}`,
-      citation: fact ? { kind: "fact", code: fact.code, text: fact.statement } : null,
+      citation: fact
+        ? { kind: "fact", code: fact.code, text: fact.statement }
+        : clause
+          ? { kind: "clause", code: clause.code, text: clause.title }
+          : null,
+      clause_code: clause?.code ?? null,
       span,
       model,
       belief: {

@@ -132,16 +132,18 @@ async function paletteFindings(input: RunRulesInput, image: Buffer): Promise<Fin
   const out: Finding[] = [];
   for (const d of await dominantColors(image)) {
     if (d.share <= 0.08) continue;
-    const de = Math.min(...pal.map((p) => deltaE2000(rgbToLab(d.rgb), p)));
+    const dists = pal.map((p) => deltaE2000(rgbToLab(d.rgb), p));
+    const de = Math.min(...dists);
     if (de <= 20) continue;
+    const nearest = input.brand.palette[dists.indexOf(de)].name;
     const hex = rgbToHex(d.rgb);
     out.push(base({
       id: `rule-visual-${hex.slice(1).toLowerCase()}`, category: "visual", severity: "low",
       title: `Off-palette colour ${hex}`,
-      explanation: `${Math.round(d.share * 100)}% of the image is close to ${hex}, which is far from every brand palette colour (ΔE ${de.toFixed(1)}, limit 20).`,
+      explanation: `${Math.round(d.share * 100)}% of the image is close to ${hex}, which is far from every brand palette colour; nearest is ${nearest} (ΔE ${de.toFixed(1)}, limit 20).`,
       citation: clause ? { kind: "clause", code: clause.code, text: clause.title } : { kind: "clause", code: "PALETTE", text: "Brand palette" },
       span: null,
-      measured: { color: hex, share: Math.round(d.share * 100) / 100, delta_e: Math.round(de * 10) / 10 },
+      measured: { color: hex, share: Math.round(d.share * 100) / 100, delta_e: Math.round(de * 10) / 10, nearest },
     }));
   }
   return out;

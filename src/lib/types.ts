@@ -103,6 +103,8 @@ export interface Finding {
   title: string; // "Banned term: “zero chemicals”"
   explanation: string; // why it was flagged, plain English
   citation: { kind: "clause" | "fact" | "wcag"; code: string; text: string } | null;
+  // guideline clause this finding falls under, even when the citation is a fact (feeds Insights)
+  clause_code?: string | null;
   span: Span | null;
   model: string | null; // e.g. "gemini-2.5-flash" for AI findings
   // AI claim findings only

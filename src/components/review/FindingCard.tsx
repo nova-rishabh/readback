@@ -58,6 +58,20 @@ function Measured({ m }: { m: Record<string, string | number> }) {
       </div>
     );
   }
+  // off-palette colour: { color, share (0..1), delta_e, nearest }
+  if (typeof m.color === "string") {
+    return (
+      <div className="flex flex-wrap items-center gap-3 rounded-[5px] border border-rule bg-paper px-3 py-2 text-[13px]">
+        <span className="h-7 w-7 rounded-[3px] border border-rule-strong" style={{ background: m.color }} aria-hidden />
+        <span>
+          <span className="font-mono">{m.color}</span> covers{" "}
+          <span className="font-mono tabular-nums">{Math.round(Number(m.share) * 100)}%</span> of the image
+          {m.nearest !== undefined && <>; nearest brand colour {String(m.nearest)}</>}
+        </span>
+        <span className="font-mono text-[11.5px] text-muted">ΔE2000 {String(m.delta_e)} (limit 20)</span>
+      </div>
+    );
+  }
   return (
     <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 rounded-[5px] border border-rule bg-paper px-3 py-2 text-[12.5px]">
       {Object.entries(m).map(([k, v]) => (

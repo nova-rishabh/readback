@@ -43,6 +43,7 @@ export function toneFinding(readers: ReaderResult[], brand: BrandSpace, text: st
   if (!c.majority) return null;
   const m = text.match(PUSHY_RX);
   const adj = c.adjectives.join(", ");
+  const voice = brand.clauses.find((cl) => /(voice|tone)/i.test(cl.title)) ?? null;
   return {
     id: "ai-tone",
     engine: "ai",
@@ -50,7 +51,8 @@ export function toneFinding(readers: ReaderResult[], brand: BrandSpace, text: st
     severity: "medium",
     title: `Tone reads as ${adj}`,
     explanation: `${c.readers} of ${c.of} readers described the tone as ${adj}, which conflicts with the brand voice (${brand.voice_traits.join(", ")}).`,
-    citation: null,
+    citation: voice ? { kind: "clause", code: voice.code, text: voice.title } : null,
+    clause_code: voice?.code ?? null,
     span: m && m.index !== undefined ? { start: m.index, end: m.index + m[0].length, text: m[0] } : null,
     model,
     suggestion: null,
