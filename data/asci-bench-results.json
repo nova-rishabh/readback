@@ -1,0 +1,254 @@
+{
+  "generated_at": "2026-10-23T12:33:17.747Z",
+  "mode": "cloud",
+  "limit": 20,
+  "metrics": {
+    "scored": 20,
+    "upheld": 13,
+    "not_upheld": 7,
+    "errors": 0,
+    "readback": {
+      "recall": 0.8461538461538461,
+      "false_alarm": 0.42857142857142855,
+      "stability": 0.8
+    },
+    "baseline": {
+      "recall": 0.7692307692307693,
+      "false_alarm": 0.5714285714285714
+    }
+  },
+  "rows": [
+    {
+      "id": "ASCI-001",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product eliminates nearly all microbes in the room.",
+        "4/6 It cuts down toxic gas levels by three quarters.",
+        "2/6 Ninety percent of oxygen recovery happens within eight hours."
+      ],
+      "repeats": [
+        true,
+        true
+      ],
+      "ms": 421161
+    },
+    {
+      "id": "ASCI-002",
+      "outcome": "upheld",
+      "readback": false,
+      "baseline": true,
+      "beliefs": [],
+      "repeats": [
+        true,
+        true
+      ],
+      "ms": 118747
+    },
+    {
+      "id": "ASCI-003",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 It removes nearly all indoor pollutants.",
+        "2/6 One should buy this right now before it sells out.",
+        "2/6 This is the top smart nature-based air purifier in the world."
+      ],
+      "repeats": [
+        true,
+        true
+      ],
+      "ms": 59391
+    },
+    {
+      "id": "ASCI-004",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 This is India's absolute first single door refrigerator with anti-frost technology.",
+        "2/6 The appliance will prevent ice buildup automatically inside the fridge."
+      ],
+      "repeats": [
+        true,
+        true
+      ],
+      "ms": 31636
+    },
+    {
+      "id": "ASCI-005",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The availability is restricted to one specific retailer."
+      ],
+      "repeats": [
+        true,
+        true
+      ],
+      "ms": 25012
+    },
+    {
+      "id": "ASCI-006",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The phone cannot be damaged.",
+        "5/6 The phone is water-resistant enough to survive a washing machine."
+      ],
+      "repeats": [],
+      "ms": 12286
+    },
+    {
+      "id": "ASCI-007",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 Longer filter lifespan comes at the expense of pure water quality."
+      ],
+      "repeats": [],
+      "ms": 13974
+    },
+    {
+      "id": "ASCI-008",
+      "outcome": "upheld",
+      "readback": false,
+      "baseline": true,
+      "beliefs": [],
+      "repeats": [],
+      "ms": 28004
+    },
+    {
+      "id": "ASCI-009",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The brand is officially recognized as a top-tier choice in the Indian market."
+      ],
+      "repeats": [],
+      "ms": 9562
+    },
+    {
+      "id": "ASCI-010",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is guaranteed to reverse skin aging by seven years."
+      ],
+      "repeats": [],
+      "ms": 6835
+    },
+    {
+      "id": "ASCI-011",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "4/6 The product will make my wrinkles less noticeable."
+      ],
+      "repeats": [],
+      "ms": 6546
+    },
+    {
+      "id": "ASCI-012",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product works in exactly three minutes.",
+        "2/6 The claim of repairing years of damage is scientifically improbable."
+      ],
+      "repeats": [],
+      "ms": 6189
+    },
+    {
+      "id": "ASCI-013",
+      "outcome": "upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product claims to be highly effective at reversing aging."
+      ],
+      "repeats": [],
+      "ms": 5468
+    },
+    {
+      "id": "ASCI-067",
+      "outcome": "not_upheld",
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "repeats": [],
+      "ms": 7561
+    },
+    {
+      "id": "ASCI-068",
+      "outcome": "not_upheld",
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "repeats": [],
+      "ms": 11716
+    },
+    {
+      "id": "ASCI-069",
+      "outcome": "not_upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is a healthier choice because it lacks refined sugar.",
+        "5/6 This cereal provides a significant portion of a child's daily iron needs."
+      ],
+      "repeats": [],
+      "ms": 6744
+    },
+    {
+      "id": "ASCI-070",
+      "outcome": "not_upheld",
+      "readback": false,
+      "baseline": true,
+      "beliefs": [],
+      "repeats": [],
+      "ms": 7529
+    },
+    {
+      "id": "ASCI-071",
+      "outcome": "not_upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is effective for tan removal."
+      ],
+      "repeats": [],
+      "ms": 19228
+    },
+    {
+      "id": "ASCI-072",
+      "outcome": "not_upheld",
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 This product will help me lose weight quickly.",
+        "2/6 The claim of fat burning via L-Carnitine lacks clinical evidence in this context."
+      ],
+      "repeats": [],
+      "ms": 31740
+    },
+    {
+      "id": "ASCI-073",
+      "outcome": "not_upheld",
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "repeats": [],
+      "ms": 7611
+    }
+  ]
+}

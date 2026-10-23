@@ -20,6 +20,7 @@ Built by Team Nova (Rishabh Kataria, solo) for the Inkloom AI brand-governance p
 3. Go to **New draft** → **Load Velura #142 example** → **Save and run check** to watch a live check stream in.
 4. Switch to **Reviewer** (top-right menu) and approve or request changes. Then open **Audit log** → **Verify chain**.
 5. As **Brand owner**, edit a fact in **Brand Space → Fact Ledger**. Every approved or published post that cited it appears in the **Recall queue**.
+6. Open **Compare** → **Load Velura example** → **Compare beliefs**. The Hindi line adds पक्का ("guaranteed") and is flagged as a **STRENGTHENED CLAIM** under clause G-13.
 
 ## What works (Round 2)
 
@@ -33,8 +34,31 @@ Built by Team Nova (Rishabh Kataria, solo) for the Inkloom AI brand-governance p
 | Span-level fixes with a re-read gate and locked phrases | ✅ (needs Gemini capacity, see limitations) |
 | Review workflow: accept / edit / dispute per finding, versions with word diffs, inline comments, approve / request changes, record published URL | ✅ |
 | Hash-chained, insert-only audit log with chain verification | ✅ |
-| Recall Queue for stale or changed facts, Insights (most-broken clauses, findings by author, unclear clauses, stale facts) | ✅ |
-| ASCI-Bench v1 dataset: 100 public ASCI rulings in [`data/asci-bench.json`](data/asci-bench.json) | ✅ dataset; ⏳ scoring runner |
+| Recall Queue for stale or changed facts, Insights (most-broken clauses, findings by author, unclear clauses from disputes and 50/50 reader splits, stale facts) | ✅ |
+| Cross-language belief diff: English master vs Hindi/Hinglish, NEW BELIEF / STRENGTHENED CLAIM labels | ✅ v1 |
+| ASCI-Bench: 100 public ASCI rulings plus a CLI runner comparing Readback with a single-prompt baseline | ✅ v1 |
+
+## The three named improvements
+
+These are the three improvements named in the Round 1 plan. Each has a working first version in Round 2 and a stated Round 3 target.
+
+| # | Improvement | Round 2 state (in this repo) | Round 3 target |
+|---|---|---|---|
+| 1 | **ASCI-Bench** | [`data/asci-bench.json`](data/asci-bench.json) has 100 real rulings (66 upheld, 34 not upheld). [`scripts/asci-bench.ts`](scripts/asci-bench.ts) (`pnpm bench`) runs Readback and a single-prompt baseline on a stratified slice and reports recall on upheld rulings, the false-alarm rate on not-upheld rulings, and run-to-run stability. Results go to `data/asci-bench-results.json`. | Full 100-case runs with three repeats, hand-checked ground labels, per-ground breakdown, and an advertiser-evidence ledger so not-upheld cases are judged against the evidence ASCI accepted. |
+| 2 | **Cross-language consistency** | [`src/lib/ai/drift.ts`](src/lib/ai/drift.ts), [`/api/drift`](src/app/api/drift/route.ts) and the **Compare** page ([`CompareForm.tsx`](src/components/CompareForm.tsx)). The panel reads both versions in one call and pairs beliefs; code labels each pair NEW BELIEF, STRENGTHENED CLAIM, weakened, dropped or same, citing clause G-13. | Link variants to their master submission so drift findings join the review workflow and audit log; marketplace-listing variants; more Indic languages. |
+| 3 | **Fact Recall** | `fact_citations` records the fact versions every approval relied on. Editing or expiring a fact puts each approved or published post that cited it into the Recall Queue with its live URL ([`listRecallQueue`](src/lib/db/queries.ts)). | Scheduled re-checks of the live URLs (Amazon, Nykaa, website) to confirm the stale claim was actually removed, plus expiry alerts before a fact lapses. |
+
+## ASCI-Bench v1 results (Round 2)
+
+`pnpm bench` on a stratified 20-case slice of real ASCI rulings (13 upheld, 7 not upheld), live Gemini, 23 Oct 2026. Raw per-case output is in [`data/asci-bench-results.json`](data/asci-bench-results.json).
+
+| Metric | Readback | Single-prompt baseline |
+|---|---|---|
+| Recall on upheld rulings | **84.6%** (11/13) | 76.9% (10/13) |
+| False alarms on not-upheld rulings | **42.9%** (3/7) | 57.1% (4/7) |
+| Run-to-run stability (5 cases × 3 runs) | 80.0% | not measured |
+
+With n = 20 these numbers are directional, not statistically significant. The false-alarm rate is an upper bound because the benchmark brand has no Fact Ledger: Readback cannot see the evidence advertisers gave ASCI. Closing that gap is the Round 3 target for improvement 1.
 
 ## Architecture
 
@@ -76,7 +100,7 @@ Supabase Postgres + pgvector + private Storage
 | Models (external service) | Google Gemini: `gemini-3.8-flash`, with `gemini-3.5-flash`, `gemini-flash-latest` and `gemini-3.1-flash-lite` as rotation fallbacks; embeddings from `gemini-embedding-001` (768 dims) |
 | Libraries | sharp (pixels), diff (word diffs), mammoth (DOCX), unpdf (PDF), lucide-react (icons), clsx |
 | Fonts | Newsreader, Inter Tight, JetBrains Mono (Google Fonts via `next/font`) |
-| Testing | Vitest (46 unit tests: Aho-Corasick, contrast, ΔE2000, masking, grounding, clustering, mock pipeline) |
+| Testing | Vitest (50 unit tests: Aho-Corasick, contrast, ΔE2000, masking, grounding, clustering, drift labelling, mock pipeline); ASCI-Bench CLI |
 | Data | ASCI Complaint Outcomes (public rulings) for ASCI-Bench; see [`data/asci-bench.README.md`](data/asci-bench.README.md) |
 | Hosting | Vercel |
 
@@ -89,13 +113,14 @@ cp .env.example .env.local     # fill in Supabase + Gemini keys and a DEMO_PASSW
 pnpm seed                      # demo brand, users, submissions, embeddings
 pnpm dev                       # http://localhost:3000
 pnpm test                      # unit tests
+pnpm bench                     # ASCI-Bench on 20 cases (--limit 100, --stability 0, --mock, --fresh)
 ```
 
 Set `READBACK_MOCK_AI=1` to run with deterministic mock readers and no API key.
 
 ## Privacy, security and responsible design
 
-- **What leaves the server:** draft text and image go to Google Gemini, but only after the Privacy Gate replaces emails, phone numbers, PAN, Aadhaar and embargoed product names with tokens. Fact statements are sent for embedding. This is disclosed on the landing page and in the app footer.
+- **What leaves the server:** draft text and image go to Google Gemini, but only after the Privacy Gate replaces emails, phone numbers, PAN, Aadhaar and embargoed product names with tokens. Fact statements sent for embedding pass through the same gate. This is disclosed on the landing page and in the app footer.
 - **Access control:** row-level security in Postgres. Agencies see only their own submissions. Only the brand owner edits Brand Space. Only reviewers and the owner approve. Images live in a private bucket served through short-lived signed URLs. The service-role key is used only on the server.
 - **Human control:** Readback never edits content automatically, never publishes, and never blocks a human override. Every finding is labelled `[RULE]` or `[AI]` with the model name and the cited clause, fact or WCAG criterion. Disputes are recorded with a note.
 - **Limits of AI personas:** simulated readers don't represent real populations. The panel is a comprehension stress test, kept honest by grounding, multi-reader agreement and human sign-off.
@@ -104,7 +129,8 @@ Set `READBACK_MOCK_AI=1` to run with deterministic mock readers and no API key.
 
 - **Live AI on the free tier is slow and can fail.** On a free Gemini key a live check can take 30–120 s, and when Google returns 503 "high demand" it may save only rule findings. The seeded submissions always show complete results.
 - **Reader cards don't persist.** They appear only during a live run. Findings and summaries are saved.
-- **ASCI-Bench scoring isn't run yet.** The dataset (100 rulings, 66 upheld / 34 not upheld) is in the repo; the scoring runner and baseline comparison are Round 3 work. Its `grounds` tags were assigned by keyword rules and need hand review.
+- **ASCI-Bench is a small first run.** On the free Gemini tier a full 100-case run takes hours and can hit the daily quota, so the Round 2 numbers above come from a 20-case stratified slice. The benchmark brand has an empty Fact Ledger, so the false-alarm rate is an upper bound. The dataset's `grounds` tags were assigned by keyword rules and need hand review.
+- **Drift comparisons are not stored.** The Compare page is a standalone check; linking variants to submissions is Round 3 work.
 - **Single brand.** The demo workspace is one brand (Velura).
 
 ## Disclosures
