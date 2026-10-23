@@ -10,7 +10,7 @@ import { createAdmin, createClient } from "./server";
 import { embedText, toVectorLiteral } from "./embed";
 import {
   mapAudit, mapClause, mapComment, mapFact, mapPalette, mapPersona, mapSubmission, mapTerm,
-  mapVersion, todayISO,
+  mapVersion, todayISO, type Row,
 } from "./mappers";
 
 /** Seeded demo accounts (password = DEMO_PASSWORD). */
@@ -140,10 +140,34 @@ export async function listSubmissions(filter?: { status?: SubmissionStatus }): P
   return must(await q, "listSubmissions").map(mapSubmission);
 }
 
+const ROLE_WORD: Record<Role, string> = { owner: "brand owner", reviewer: "reviewer", creator: "creator", agency: "agency" };
+
+/**
+ * Agencies may not read other people's profiles (RLS), so their comment authors come back empty. Look up only the
+ * role of those authors with the service client (never the name) and label them by role, e.g. "Velura reviewer".
+ */
+async function labelHiddenAuthors(rows: Row[], brandId: string): Promise<Row[]> {
+  const hidden = [...new Set(rows.filter((r) => !r.author?.name && r.author_id).map((r) => r.author_id as string))];
+  if (!hidden.length) return rows;
+  const admin = createAdmin();
+  const [{ data: roles }, { data: brand }] = await Promise.all([
+    admin.from("profiles").select("id, role").in("id", hidden),
+    admin.from("brands").select("name").eq("id", brandId).maybeSingle(),
+  ]);
+  const roleOf = new Map((roles ?? []).map((p: { id: string; role: Role }) => [p.id, p.role]));
+  return rows.map((r) => {
+    if (r.author?.name) return r;
+    const role = roleOf.get(r.author_id);
+    if (!role) return r;
+    const name = role === "agency" ? "Another agency" : `${brand?.name ?? "Brand"} ${ROLE_WORD[role]}`;
+    return { ...r, author: { name, role } };
+  });
+}
+
 export async function getSubmission(id: string): Promise<{
   submission: Submission; versions: Version[]; comments: Comment[]; audit: AuditEntry[];
 } | null> {
-  await requireActor();
+  const actor = await requireActor();
   const sb = await createClient();
   const { data: s, error } = await sb.from("submissions").select(SUBMISSION_SELECT).eq("id", id).maybeSingle();
   if (error) throw new Error(`getSubmission: ${error.message}`);
@@ -156,7 +180,7 @@ export async function getSubmission(id: string): Promise<{
   return {
     submission: mapSubmission(s),
     versions: must(v, "versions").map(mapVersion),
-    comments: must(c, "comments").map(mapComment),
+    comments: (await labelHiddenAuthors(must(c, "comments"), actor.brand_id)).map(mapComment),
     audit: must(a, "audit").map(mapAudit),
   };
 }

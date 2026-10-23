@@ -5,7 +5,7 @@ import type {
 } from "../types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Row = Record<string, any>;
+export type Row = Record<string, any>;
 
 export function todayISO(): string {
   return new Date().toISOString().slice(0, 10);
