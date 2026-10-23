@@ -297,14 +297,25 @@ export function ReviewScreen(props: {
           <span className="flex items-start gap-2">
             <TriangleAlert size={16} aria-hidden className="mt-0.5 shrink-0 text-proof" />
             <span>
-              <span className="font-medium text-proof">The check did not finish.</span> {state.error} Findings shown are the
-              ones that arrived before it stopped and were not saved.
+              <span className="font-medium text-proof">The check did not finish.</span> {state.error} Findings that arrived
+              before it stopped are saved.
             </span>
           </span>
           <Button size="sm" variant="danger" onClick={() => void run()}>
             Run again
           </Button>
         </div>
+      )}
+      {!live && !current.summary && current.findings.length > 0 && (
+        <p className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-md border border-ochre/40 bg-ochre-tint px-4 py-2.5 text-[13.5px]">
+          <span>
+            <span className="font-medium">Partial check.</span> The last run stopped before it finished; the findings below are
+            the ones it saved. Run the check again for the complete reader panel and fixes.
+          </span>
+          <Button size="sm" onClick={() => void run()}>
+            Run check again
+          </Button>
+        </p>
       )}
       {summary && <SummaryStrip summary={summary} ruleMs={state.ruleMs} />}
 

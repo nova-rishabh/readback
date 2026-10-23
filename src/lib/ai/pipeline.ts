@@ -58,17 +58,26 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
     const masked = maskAll([text, input.intent, input.imageAlt ?? "", ...input.lockedPhrases], embargo);
     out({ type: "stage", stage: "mask", message: `Masked ${masked.count} private or embargoed item(s) before any model call` });
 
-    // 2. vision text boxes + 3. rule engine
+    // 2. rule engine on text immediately, then 3. again with image text boxes once vision answers (contrast needs them)
     out({ type: "stage", stage: "rules", message: "Running rule engine" });
     const tr = Date.now();
-    const textBoxes: TextBox[] = image ? await extractTextBoxes(image) : [];
-    let ruleFindings: Finding[] = [];
-    try {
-      ruleFindings = await runRules({ text, image: image?.data ?? null, imageAlt: input.imageAlt ?? null, textBoxes, brand, channel: input.channel });
-    } catch (e) {
-      out({ type: "error", message: `Rule engine failed: ${e instanceof Error ? e.message : String(e)}` });
-    }
+    const rules = async (textBoxes: TextBox[]) => {
+      try {
+        return await runRules({ text, image: image?.data ?? null, imageAlt: input.imageAlt ?? null, textBoxes, brand, channel: input.channel });
+      } catch (e) {
+        out({ type: "error", message: `Rule engine failed: ${e instanceof Error ? e.message : String(e)}` });
+        return [];
+      }
+    };
+    let ruleFindings: Finding[] = await rules([]);
     out({ type: "rules", findings: ruleFindings, ms: Date.now() - tr });
+    if (image) {
+      const textBoxes: TextBox[] = await extractTextBoxes(image);
+      if (textBoxes.length) {
+        ruleFindings = await rules(textBoxes);
+        out({ type: "rules", findings: ruleFindings, ms: Date.now() - tr });
+      }
+    }
 
     // 4. the six-reader panel: ONE batched call (free-tier Gemini allows 5 requests/min per model)
     const panel = panelFor(brand);
@@ -124,7 +133,10 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       const targets: FixTarget[] = ai
         .filter((f) => fixable.has(f.id) && (f.category === "tone" || bad.includes(f)))
         .map((f) => ({ id: f.id, span: fixable.get(f.id)!, kind: f.category === "tone" ? "tone" : "claim", belief: f.belief?.statement ?? null, reason: f.explanation }));
-      if (targets.length && input.options?.fixes !== false) {
+      // fixes are the last, optional stage: skip them when the check is already long so results get saved in time
+      const late = Date.now() - t0 > 150_000;
+      if (late && targets.length) out({ type: "stage", stage: "fix", message: "Skipped fixes: the check ran long. Run it again for suggestions." });
+      if (targets.length && input.options?.fixes !== false && !late) {
         out({ type: "stage", stage: "fix", message: `Drafting ${targets.length} fix(es) and re-reading the corrected draft` });
         const sugs = await fixAllAndGate(targets, { draft: text, intent: input.intent, locked: input.lockedPhrases, brand, panel, image, flagged, embargo });
         for (const f of ai) {

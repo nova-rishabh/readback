@@ -1,11 +1,11 @@
 import { getBrand, getSessionUser, getSubmission, saveCheckResult, signedImageUrl } from "@/lib/db/queries";
 import { createClient } from "@/lib/db/server";
 import { runCheck } from "@/lib/ai/pipeline";
-import type { CheckEvent } from "@/lib/types";
+import type { CheckEvent, Finding } from "@/lib/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 120;
+export const maxDuration = 300; // free-tier Gemini can be slow; findings are also checkpointed as they arrive
 
 function json(status: number, body: unknown) {
   return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
@@ -71,7 +71,16 @@ export async function POST(req: Request) {
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       let closed = false;
+      // Checkpoint partial results, so a run cut off by the platform time limit still leaves its findings saved.
+      let rules: CheckEvent & { type: "rules" } | null = null;
+      let saving = Promise.resolve();
+      const checkpoint = (ai: Finding[]) => {
+        const findings = [...(rules?.findings ?? []), ...ai];
+        saving = saving.then(() => saveCheckResult(versionId, findings, null).catch(() => undefined));
+      };
       const emit = (e: CheckEvent) => {
+        if (e.type === "rules") (rules = e), checkpoint([]);
+        if (e.type === "findings") checkpoint(e.findings);
         if (closed) return;
         try {
           controller.enqueue(encoder.encode(JSON.stringify(e) + "\n"));
@@ -93,6 +102,7 @@ export async function POST(req: Request) {
           },
           emit,
         );
+        await saving;
         await saveCheckResult(versionId, result.findings, result.summary);
         emit({ type: "stage", stage: "done", message: `Saved to v${version.n}.` });
       } catch (err) {

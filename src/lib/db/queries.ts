@@ -230,9 +230,14 @@ export async function addVersion(
   return row.id;
 }
 
-export async function saveCheckResult(versionId: string, findings: Finding[], summary: CheckSummary): Promise<void> {
+/** summary === null is a mid-run checkpoint: findings so far are stored, citations and audit wait for the final save. */
+export async function saveCheckResult(versionId: string, findings: Finding[], summary: CheckSummary | null): Promise<void> {
   const a = await requireActor();
   const sb = await createClient();
+  if (!summary) {
+    must(await sb.from("versions").update({ findings }).eq("id", versionId).select("id").single(), "saveCheckResult checkpoint");
+    return;
+  }
   const v = must(
     await sb.from("versions").update({ findings, summary }).eq("id", versionId)
       .select("submission_id, n, content_hash").single(),

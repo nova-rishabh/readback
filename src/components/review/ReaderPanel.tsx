@@ -2,7 +2,8 @@
 
 import { clsx } from "clsx";
 import { Check, LoaderCircle, X } from "lucide-react";
-import type { Persona, ReaderResult } from "@/lib/types";
+import type { BrandSpace, Persona, ReaderResult } from "@/lib/types";
+import { panelFor } from "@/lib/ai/personas";
 import { Button } from "@/components/ui/Button";
 import { STAGES, type StreamState } from "./useCheckStream";
 
@@ -103,10 +104,8 @@ export function ReaderPanel({
   onRun: () => void;
   canRun: boolean;
 }) {
-  const slots: { id: string; name: string; builtin: boolean }[] =
-    personas.length > 0
-      ? [...personas].sort((a, b) => Number(a.builtin) - Number(b.builtin)).map((p) => ({ id: p.id, name: p.name, builtin: p.builtin }))
-      : Array.from({ length: 6 }, (_, i) => ({ id: `slot-${i}`, name: `Reader ${i + 1}`, builtin: false }));
+  // same panel the engine reads with: up to 3 brand personas plus the 3 built-in readers
+  const slots: { id: string; name: string; builtin: boolean }[] = panelFor({ personas } as BrandSpace).map((p) => ({ id: p.id, name: p.name, builtin: p.builtin }));
   const byId = new Map(state.readers.map((r) => [r.persona_id, r]));
   const extra = state.readers.filter((r) => !slots.some((s) => s.id === r.persona_id));
   // When persona ids don't line up (e.g. mock readers), fill empty slots in arrival order.
