@@ -15,12 +15,12 @@ Built by Team Nova (Rishabh Kataria, solo) for the Inkloom AI brand-governance p
 
 ## Try it
 
-1. Open the deployed app and click **Enter as creator**, **reviewer**, **brand owner** or **agency**. No sign-up is needed. Each role sees and can do different things, enforced by Postgres row-level security.
+1. Open the deployed app and click **Try it as a creator** (or any **Enter as…** role). No sign-up is needed. A short guided tour starts on first visit; reopen it with **Tour** in the top bar. Each role sees and can do different things, enforced by Postgres row-level security and workflow triggers.
 2. Open **#142 Hero post: Vitamin C serum**. It has precomputed results, so you can explore the full review screen without waiting for AI calls.
-3. Go to **New draft** → **Load Velura #142 example** → **Save and run check** to watch a live check stream in.
-4. Switch to **Reviewer** (top-right menu) and approve or request changes. Then open **Audit log** → **Verify chain**.
-5. As **Brand owner**, edit a fact in **Brand Space → Fact Ledger**. Every approved or published post that cited it appears in the **Recall queue**.
-6. Open **Compare** → **Load Velura example** → **Compare beliefs**. The Hindi line adds पक्का ("guaranteed") and is flagged as a **STRENGTHENED CLAIM** under clause G-13.
+3. Go to **New draft** → **Fill in the demo draft** → **Save and run check** to watch a live check stream in (rule findings appear at once; the six readers take one to two minutes on the free Gemini tier).
+4. Accept a fix and **Save as v2**, then **Send for review**. Switch to **Reviewer** (top-right menu), approve, and **Record published URL**. Then open **Audit log** → **Verify chain**.
+5. As **Brand owner**, edit a fact in **Brand Space → Approved facts**. Every approved or published post that cited it appears in the **Recall queue**.
+6. Open **Compare translations** → **Load Velura example** → **Compare translation**. The Hindi line adds पक्का ("guaranteed") and is flagged **Made stronger** under clause G-13; the dropped disclaimer is flagged too.
 
 ## What works (Round 2)
 
@@ -28,12 +28,14 @@ Built by Team Nova (Rishabh Kataria, solo) for the Inkloom AI brand-governance p
 |---|---|
 | One-click demo roles (owner, creator, reviewer, agency) with RLS | ✅ |
 | Brand Space: clauses (with guideline PDF/DOCX/TXT import and clause confirmation), Fact Ledger with versions and expiry, banned/preferred/disclaimer/embargo terms, palette and voice, personas | ✅ |
-| Privacy Gate: emails, Indian phone numbers, PAN, Aadhaar and embargoed names are masked into tokens before any model call | ✅ |
+| Privacy Gate: emails, Indian phone numbers, PAN, Aadhaar (spaced or not), card numbers (Luhn-checked) and embargoed names are masked into tokens before any model or embedding call | ✅ |
 | Rule Engine: hand-written Aho-Corasick term matching, missing disclaimers, embargo leaks, WCAG 1.4.3 contrast measured from image pixels, WCAG 1.1.1 alt text, off-palette colours by ΔE2000 | ✅ |
 | Impression Engine: 6 readers (3 brand personas + literal buyer, Hindi/Hinglish reader, ASCI sceptic), quote and visual grounding, belief grouping (≥2 of 6 readers), Fact Ledger verdicts, tone check | ✅ |
 | Span-level fixes with a re-read gate and locked phrases | ✅ (needs Gemini capacity, see limitations) |
 | Review workflow: accept / edit / dispute per finding, versions with word diffs, inline comments, approve / request changes, record published URL | ✅ |
 | Hash-chained, insert-only audit log with chain verification | ✅ |
+| Workflow rules enforced in Postgres as well as the app: allowed status changes only, no self-approval, saved versions immutable, a new version sends reviewed content back to draft | ✅ |
+| First-visit guided tour (inbox and review screen), instant role switcher, WCAG 2.2 AA pass on contrast, focus and announcements | ✅ |
 | Recall Queue for stale or changed facts, Insights (most-broken clauses, findings by author, unclear clauses from disputes and 50/50 reader splits, stale facts) | ✅ |
 | Cross-language belief diff: English master vs Hindi/Hinglish, NEW BELIEF / STRENGTHENED CLAIM labels | ✅ v1 |
 | ASCI-Bench: 100 public ASCI rulings plus a CLI runner comparing Readback with a single-prompt baseline | ✅ v1 |
@@ -100,7 +102,7 @@ Supabase Postgres + pgvector + private Storage
 | Models (external service) | Google Gemini: `gemini-3.8-flash`, with `gemini-3.5-flash`, `gemini-flash-latest` and `gemini-3.1-flash-lite` as rotation fallbacks; embeddings from `gemini-embedding-001` (768 dims) |
 | Libraries | sharp (pixels), diff (word diffs), mammoth (DOCX), unpdf (PDF), lucide-react (icons), clsx |
 | Fonts | Newsreader, Inter Tight, JetBrains Mono (Google Fonts via `next/font`) |
-| Testing | Vitest (50 unit tests: Aho-Corasick, contrast, ΔE2000, masking, grounding, clustering, drift labelling, mock pipeline); ASCI-Bench CLI |
+| Testing | Vitest (52 unit tests: Aho-Corasick, contrast, ΔE2000, masking, grounding, clustering, drift labelling, mock pipeline); ASCI-Bench CLI |
 | Data | ASCI Complaint Outcomes (public rulings) for ASCI-Bench; see [`data/asci-bench.README.md`](data/asci-bench.README.md) |
 | Hosting | Vercel |
 
@@ -109,7 +111,7 @@ Supabase Postgres + pgvector + private Storage
 ```bash
 pnpm install
 cp .env.example .env.local     # fill in Supabase + Gemini keys and a DEMO_PASSWORD
-# run supabase/migrations/0001_init.sql in the Supabase SQL editor (see supabase/README.md)
+# run supabase/migrations/0001_init.sql, then 0002_hardening.sql, in the Supabase SQL editor (see supabase/README.md)
 pnpm seed                      # demo brand, users, submissions, embeddings
 pnpm dev                       # http://localhost:3000
 pnpm test                      # unit tests
@@ -121,13 +123,15 @@ Set `READBACK_MOCK_AI=1` to run with deterministic mock readers and no API key.
 ## Privacy, security and responsible design
 
 - **What leaves the server:** draft text and image go to Google Gemini, but only after the Privacy Gate replaces emails, phone numbers, PAN, Aadhaar and embargoed product names with tokens. Fact statements sent for embedding pass through the same gate. This is disclosed on the landing page and in the app footer.
-- **Access control:** row-level security in Postgres. Agencies see only their own submissions. Only the brand owner edits Brand Space. Only reviewers and the owner approve. Images live in a private bucket served through short-lived signed URLs. The service-role key is used only on the server.
+- **Access control:** row-level security in Postgres, plus triggers that enforce the review workflow for anyone calling the database directly (allowed status changes only, no self-approval, immutable versions, image-only uploads up to 8 MB). Agencies see only their own submissions. Only the brand owner edits Brand Space. Only reviewers and the owner approve. Images live in a private bucket served through short-lived signed URLs. The service-role key is used only on the server.
+- **Prompt-injection hardening:** draft text is fenced in prompts and cannot close its fence; a belief only counts if it quotes the draft or a visual element confirmed in the image, so injected text cannot invent or hide findings on its own.
 - **Human control:** Readback never edits content automatically, never publishes, and never blocks a human override. Every finding is labelled `[RULE]` or `[AI]` with the model name and the cited clause, fact or WCAG criterion. Disputes are recorded with a note.
 - **Limits of AI personas:** simulated readers don't represent real populations. The panel is a comprehension stress test, kept honest by grounding, multi-reader agreement and human sign-off.
 
 ## Known limitations
 
-- **Live AI on the free tier is slow and can fail.** On a free Gemini key a live check can take 30–120 s, and when Google returns 503 "high demand" it may save only rule findings. The seeded submissions always show complete results.
+- **Live AI on the free tier is slow and can fail.** On a free Gemini key a live check takes one to three minutes, and when Google returns 503 "high demand" it may save only rule findings (the page then says "Partial check"). Checks keep running and save even if you leave the page. The seeded submissions always show complete results.
+- **Demo sign-in is open by design.** Anyone with the link can enter any role so judges need no account; in production this would be real sign-in with invited users.
 - **Reader cards don't persist.** They appear only during a live run. Findings and summaries are saved.
 - **ASCI-Bench is a small first run.** On the free Gemini tier a full 100-case run takes hours and can hit the daily quota, so the Round 2 numbers above come from a 20-case stratified slice. The benchmark brand has an empty Fact Ledger, so the false-alarm rate is an upper bound. The dataset's `grounds` tags were assigned by keyword rules and need hand review.
 - **Drift comparisons are not stored.** The Compare page is a standalone check; linking variants to submissions is Round 3 work.

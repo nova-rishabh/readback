@@ -1,7 +1,7 @@
 # Supabase setup for Readback
 
 1. **Create a project** at https://supabase.com/dashboard (any region, free tier is fine). Save the database password.
-2. **Run the migration.** Open *SQL Editor* > *New query*, paste the full contents of `supabase/migrations/0001_init.sql`, and click *Run*. It is safe to run again. It enables `vector` and `pgcrypto`, creates all tables, RLS policies, the audit hash chain, the `match_facts` function and the private `assets` storage bucket.
+2. **Run the migration.** Open *SQL Editor* > *New query*, paste the full contents of `supabase/migrations/0001_init.sql`, and click *Run*. It is safe to run again. It enables `vector` and `pgcrypto`, creates all tables, RLS policies, the audit hash chain, the `match_facts` function and the private `assets` storage bucket. Then run `supabase/migrations/0002_hardening.sql` the same way: it enforces the review workflow in the database (allowed status changes, no self-approval, immutable versions, image-only uploads).
 3. **Copy the keys.** In *Project Settings > API* copy the Project URL, the `anon` key and the `service_role` key. Copy `.env.example` to `.env.local` and fill in:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
