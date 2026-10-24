@@ -44,13 +44,15 @@ export function GeminiKeyBadge() {
         type="button"
         onClick={open}
         className={clsx(
-          "hidden h-9 items-center gap-1.5 rounded-[5px] border px-2.5 text-[12.5px] md:inline-flex",
+          "inline-flex h-9 items-center gap-1.5 rounded-[5px] border px-2.5 text-[12.5px]",
           own ? "border-moss/40 bg-moss-tint text-moss" : "border-ochre/40 bg-ochre-tint text-ochre",
         )}
         aria-haspopup="dialog"
+        aria-label={own ? "Your Gemini key" : "Free Gemini key"}
+        title={own ? "Your Gemini key" : "Free Gemini key"}
       >
         <KeyRound size={13} aria-hidden />
-        {own ? "Your Gemini key" : "Free Gemini key"}
+        <span className="hidden md:inline">{own ? "Your Gemini key" : "Free Gemini key"}</span>
       </button>
 
       <dialog

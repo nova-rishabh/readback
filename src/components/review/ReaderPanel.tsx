@@ -98,23 +98,28 @@ export function ReaderPanel({
   state,
   onRun,
   canRun,
+  saved,
 }: {
   personas: Persona[];
   state: StreamState;
   onRun: () => void;
   canRun: boolean;
+  saved?: ReaderResult[]; // readers stored with the last finished check, shown when no check is running
 }) {
   // same panel the engine reads with: up to 3 brand personas plus the 3 built-in readers
   const slots: { id: string; name: string; builtin: boolean }[] = panelFor({ personas } as BrandSpace).map((p) => ({ id: p.id, name: p.name, builtin: p.builtin }));
-  const byId = new Map(state.readers.map((r) => [r.persona_id, r]));
-  const extra = state.readers.filter((r) => !slots.some((s) => s.id === r.persona_id));
+  const live = state.status !== "idle";
+  const readers = live ? state.readers : (saved ?? []);
+  const show = live || readers.length > 0;
+  // match by persona id, or by name (unique per brand) for readers saved before ids were known, e.g. seeded checks
+  const byId = new Map(readers.flatMap((r) => [[r.persona_id, r], [`name:${r.persona_name}`, r]] as const));
+  const extra = readers.filter((r) => !slots.some((s) => s.id === r.persona_id || s.name === r.persona_name));
   // When persona ids don't line up (e.g. mock readers), fill empty slots in arrival order.
-  const filled = slots.map((s) => byId.get(s.id) ?? null);
+  const filled = slots.map((s) => byId.get(s.id) ?? byId.get(`name:${s.name}`) ?? null);
   for (let i = 0; i < filled.length && extra.length; i++) if (!filled[i]) filled[i] = extra.shift()!;
 
-  const live = state.status !== "idle";
   const waiting = state.status === "running";
-  const reported = state.readers.length;
+  const reported = readers.length;
 
   return (
     <section aria-labelledby="readers-h" className="flex flex-col gap-3">
@@ -122,6 +127,7 @@ export function ReaderPanel({
         <h2 id="readers-h" className="font-display text-[20px]">
           Reader panel
         </h2>
+        {!live && show && <span className="text-[12.5px] text-muted">From the last check</span>}
         {live && (
           <span className="text-[12.5px] tabular-nums text-muted" aria-live="polite">
             {reported} of {slots.length} reported
@@ -129,7 +135,7 @@ export function ReaderPanel({
         )}
       </div>
 
-      {!live ? (
+      {!show ? (
         <div className="rounded-md border border-dashed border-rule-strong px-4 py-4 text-[13.5px] leading-relaxed text-muted">
           Reader answers appear only during a live check. Run the check to see how each of the six readers reads this draft.
           {canRun && (

@@ -84,6 +84,19 @@ function Measured({ m }: { m: Record<string, string | number> }) {
   );
 }
 
+type Reread = NonNullable<NonNullable<Finding["suggestion"]>["reread"]>;
+
+/** Why a suggested fix failed its re-read, most specific reason first. */
+function failReason(r: Reread): string {
+  if (r.untested) return "this rewrite overlaps another fix, so it was not re-read on its own";
+  if (r.locked_broken) return "the rewrite changed a phrase that must be kept";
+  if (r.still_held) return "readers still came away with the same belief after the rewrite";
+  if (r.tone_still_off) return "readers still found the tone off-brand";
+  if (r.new_unsupported > 0) return `the rewrite created ${r.new_unsupported} new unsupported belief${r.new_unsupported === 1 ? "" : "s"}`;
+  if (r.unsupported_after >= r.unsupported_before) return `unsupported beliefs did not drop (${r.unsupported_before} to ${r.unsupported_after})`;
+  return `only ${r.intent_kept} of ${r.of} readers still got the intended takeaway`;
+}
+
 function RereadLine({ s }: { s: NonNullable<Finding["suggestion"]> }) {
   const r = s.reread;
   if (!r) return <p className="text-[12.5px] text-muted">Replacement from the brand term list. No re-read needed.</p>;
@@ -98,20 +111,7 @@ function RereadLine({ s }: { s: NonNullable<Finding["suggestion"]> }) {
       </p>
     );
   }
-  // say the reason this fix failed, most specific first
-  const why = r.untested
-    ? "this rewrite overlaps another fix, so it was not re-read on its own"
-    : r.locked_broken
-      ? "the rewrite changed a phrase that must be kept"
-      : r.still_held
-        ? "readers still came away with the same belief after the rewrite"
-        : r.tone_still_off
-          ? "readers still found the tone off-brand"
-          : r.new_unsupported > 0
-      ? `the rewrite created ${r.new_unsupported} new unsupported belief${r.new_unsupported === 1 ? "" : "s"}`
-      : r.unsupported_after >= r.unsupported_before
-        ? `unsupported beliefs did not drop (${r.unsupported_before} to ${r.unsupported_after})`
-        : `only ${r.intent_kept} of ${r.of} readers still got the intended takeaway`;
+  const why = failReason(r);
   return (
     <p className="flex items-start gap-1.5 text-[12.5px] text-proof">
       <CircleAlert size={14} aria-hidden className="mt-px shrink-0" />
@@ -263,7 +263,7 @@ export const FindingCard = forwardRef<HTMLElement, FindingCardProps>(function Fi
                         setMode("edit");
                       }}
                     >
-                      <Pencil size={14} aria-hidden /> Edit
+                      <Pencil size={14} aria-hidden /> {sug?.reread && !sug.reread.passed ? "Rewrite from suggestion" : "Edit"}
                     </Button>
                   )}
                   <Button size="sm" variant="ghost" disabled={busy} onClick={() => setMode("dispute")}>
@@ -287,6 +287,22 @@ export const FindingCard = forwardRef<HTMLElement, FindingCardProps>(function Fi
               <label className="text-[12.5px] text-muted" htmlFor={`edit-${f.id}`}>
                 New wording for &ldquo;{f.span.text}&rdquo;. Only this span changes.
               </label>
+              {sug?.reread && !sug.reread.passed && (
+                // guided rewrite: what went wrong with the suggestion, and the approved wording to lean on
+                <div className="rounded-[5px] border border-ochre/40 bg-ochre-tint px-3 py-2 text-[12.5px] leading-relaxed">
+                  <p>The suggestion below failed because {failReason(sug.reread)}.</p>
+                  {f.citation?.kind === "fact" && (
+                    <p className="mt-1">
+                      Approved fact to lean on ({f.citation.code}): <span className="italic">&ldquo;{f.citation.text}&rdquo;</span>
+                    </p>
+                  )}
+                  {f.belief && (
+                    <p className="mt-1">
+                      Aim: readers should no longer believe &ldquo;{f.belief.statement}&rdquo;.
+                    </p>
+                  )}
+                </div>
+              )}
               <Textarea
                 id={`edit-${f.id}`}
                 autoFocus

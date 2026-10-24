@@ -10,7 +10,8 @@ export function SummaryStrip({ summary, ruleMs }: { summary: CheckSummary; ruleM
       value: `${summary.intent_kept} of ${summary.of}`,
       tone: summary.of > 0 && summary.intent_kept / summary.of <= 0.5 ? "text-proof" : undefined,
     },
-    { label: "Personal data hidden from AI", value: summary.masked_tokens },
+    // only worth a cell when something was actually hidden
+    ...(summary.masked_tokens > 0 ? [{ label: "Personal data hidden from AI", value: summary.masked_tokens }] : []),
     {
       label: summary.mode === "mock" ? "Mock run" : "Model",
       value: (

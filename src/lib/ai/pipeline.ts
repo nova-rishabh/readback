@@ -176,6 +176,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       masked_tokens: masked.count,
       partial: partial || readers.length === 0 || undefined,
       own_key: !!input.options?.apiKey || undefined,
+      readers: readers.length ? readers : undefined,
     };
     out({ type: "stage", stage: "done", message: "Check complete" });
     out({ type: "summary", summary });

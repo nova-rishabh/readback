@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type {
-  BeliefCategory, CheckSummary, Finding, FindingCategory, PaletteColor, Role, Severity, Span, Verdict,
+  BeliefCategory, CheckSummary, Finding, FindingCategory, PaletteColor, Role, Severity, Span, Verdict, ReaderResult,
 } from "../src/lib/types";
 import { embedText, toVectorLiteral } from "../src/lib/db/embed";
 
@@ -181,8 +181,20 @@ const fix = (replacement: string, rationale: string, ub: number, ua: number, int
 });
 const ruleFix = (replacement: string, rationale: string) => ({ replacement, rationale, reread: null });
 
-function summary(findings: Finding[], intentKept: number, ms: number, masked = 0): CheckSummary {
+type SeedReader = [name: string, intent: boolean, takeaway: string, tone: string[], beliefs: [string, string, BeliefCategory][]];
+const reader = ([name, intent_match, takeaway, tone, beliefs]: SeedReader): ReaderResult => ({
+  persona_id: name.startsWith("builtin-") ? name : `seed:${name}`,
+  persona_name: BUILTIN_NAMES[name] ?? name,
+  takeaway, tone, intent_match,
+  beliefs: beliefs.map(([belief, trigger_quote, category]) => ({ belief, trigger_quote, visual_element: null, category, confidence: 0.8, grounded: true })),
+});
+const BUILTIN_NAMES: Record<string, string> = {
+  "builtin-literal": "Literal first-time buyer", "builtin-hindi": "Hindi/Hinglish reader", "builtin-asci": "ASCI code sceptic",
+};
+
+function summary(findings: Finding[], intentKept: number, ms: number, masked = 0, readers?: SeedReader[]): CheckSummary {
   return {
+    readers: readers?.map(reader),
     rule_count: findings.filter((f) => f.engine === "rule").length,
     ai_count: findings.filter((f) => f.engine === "ai").length,
     high: findings.filter((f) => f.severity === "high").length,
@@ -191,6 +203,22 @@ function summary(findings: Finding[], intentKept: number, ms: number, masked = 0
 }
 
 // ------------------------------------------------------------------ submissions
+
+// What the six readers took away from #142, so the reader panel is filled on the seeded demo draft.
+const R142: SeedReader[] = [
+  ["Urban working woman, 25-34", true, "A Vitamin C serum that dermatologists recommend and that makes skin glow within a week.", ["confident", "pushy"],
+    [["Dermatologists recommend this serum", "Dermatologist-loved", "endorsement"], ["Skin will visibly glow within 7 days", "Visible glow in 7 days", "efficacy"]]],
+  ["College student on a budget", true, "Doctor-approved serum, fully natural, fast results: sounds worth the money.", ["salesy", "exciting"],
+    [["Results are guaranteed in a week", "Visible glow in 7 days", "guarantee"], ["The formula has no chemicals at all", "zero chemicals", "environment"]]],
+  ["Skin-concern-focused reader, 35+", false, "Big claims: doctor-loved, 7-day glow, chemical-free. I'd want proof before buying.", ["exaggerated", "pushy"],
+    [["Dermatologists endorse it", "Dermatologist-loved", "endorsement"], ["It is 100% natural", "100% natural", "environment"], ["Visible results in a week", "Visible glow in 7 days", "efficacy"]]],
+  ["builtin-literal", true, "A serum doctors love that gives glowing skin in 7 days and has no chemicals.", ["urgent"],
+    [["Doctors recommend it", "Dermatologist-loved", "endorsement"], ["Glow is guaranteed in 7 days", "Visible glow in 7 days", "guarantee"], ["Contains zero chemicals", "zero chemicals", "environment"]]],
+  ["builtin-hindi", false, "Lagta hai doctor approved hai aur ek hafte mein pakka glow aayega.", ["pushy"],
+    [["A glow is certain within a week", "Visible glow in 7 days", "guarantee"], ["Fully natural product", "100% natural", "environment"]]],
+  ["builtin-asci", false, "Endorsement implied without evidence; 7-day result and chemical-free claims look unsubstantiated.", ["misleading", "exaggerated"],
+    [["Implied dermatologist endorsement", "Dermatologist-loved", "endorsement"], ["Unsubstantiated 7-day efficacy", "Visible glow in 7 days", "efficacy"], ["Absolute natural / chemical-free claim", "zero chemicals", "environment"]]],
+];
 
 interface SeedVersion { n: number; body: string; image?: boolean; alt?: string | null; findings: Finding[]; summary: CheckSummary; ageDays: number }
 interface SeedSub {
@@ -284,7 +312,7 @@ function buildSubmissions(): SeedSub[] {
       F({ id: "f142-9", engine: "ai", category: "tone", severity: "low", title: "Tone reads as pushy", explanation: "4 of 6 readers called the closing line pushy, against the voice trait “never pushy”.", citation: cl("G-11"), span: sp(body, "Shop now"), suggestion: fix("Explore the serum", "Keeps the call to action without pressure.", 0, 0, 5) }),
     ];
     subs.push({ number: 142, title: "Hero post: Vitamin C serum", channel: "instagram", lang: "en", intent: "Velura's Vitamin C serum gives a visible glow.", status: "in_review", author: "agency", locked: ["Vitamin C serum"], cites: [{ code: "F-05", version: 1 }, { code: "F-12", version: 2 }, { code: "F-03", version: 2 }], ageDays: 2,
-      versions: [{ n: 1, body, image: true, alt, findings: fs, summary: summary(fs, 4, 14200), ageDays: 2 }] });
+      versions: [{ n: 1, body, image: true, alt, findings: fs, summary: summary(fs, 4, 14200, 0, R142), ageDays: 2 }] });
   }
 
   // #143 draft

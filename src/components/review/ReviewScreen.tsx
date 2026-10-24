@@ -509,7 +509,7 @@ export function ReviewScreen(props: {
 
         {/* Right: readers and comments */}
         <div className="flex flex-col gap-8 lg:col-span-2 lg:grid lg:grid-cols-2 xl:col-span-1 xl:flex">
-          <div data-tour="readers"><ReaderPanel personas={props.personas} state={state} onRun={() => void rerun()} canRun={isLatest} /></div>
+          <div data-tour="readers"><ReaderPanel personas={props.personas} state={state} onRun={() => void rerun()} canRun={isLatest} saved={current.summary?.readers} /></div>
           <div className="flex flex-col gap-8">
             <Comments
               submissionId={submission.id}
