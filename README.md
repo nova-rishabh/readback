@@ -36,6 +36,7 @@ Built by Team Nova (Rishabh Kataria, solo) for the Inkloom AI brand-governance p
 | Hash-chained, insert-only audit log with chain verification | ✅ |
 | Workflow rules enforced in Postgres as well as the app: allowed status changes only, no self-approval, saved versions immutable, a new version sends reviewed content back to draft | ✅ |
 | First-visit guided tour (inbox and review screen), instant role switcher, WCAG 2.2 AA pass on contrast, focus and announcements | ✅ |
+| Each reader's takeaway is saved with the check, so the reader panel survives a reload; when a suggested fix fails its re-read, a guided rewrite shows why and which approved fact to use | ✅ |
 | Bring your own Gemini key: a top-bar badge shows whether checks run on the shared free key or your own; your key is checked with Google, kept only in your browser and sent with your own AI requests (never stored or logged on the server) | ✅ |
 | Recall Queue for stale or changed facts, Insights (most-broken clauses, findings by author, unclear clauses from disputes and 50/50 reader splits, stale facts) | ✅ |
 | Cross-language belief diff: English master vs Hindi/Hinglish, NEW BELIEF / STRENGTHENED CLAIM labels | ✅ v1 |
@@ -133,7 +134,6 @@ Set `READBACK_MOCK_AI=1` to run with deterministic mock readers and no API key.
 
 - **Live AI on the shared free key is slow and can fail** (add your own key from the top-bar badge to avoid this). On a free Gemini key a live check takes one to three minutes, and when Google returns 503 "high demand" it may save only rule findings (the page then says "Partial check"). Checks keep running and save even if you leave the page. The seeded submissions always show complete results.
 - **Demo sign-in is open by design.** Anyone with the link can enter any role so judges need no account; in production this would be real sign-in with invited users.
-- **Reader cards don't persist.** They appear only during a live run. Findings and summaries are saved.
 - **ASCI-Bench is a small first run.** On the free Gemini tier a full 100-case run takes hours and can hit the daily quota, so the Round 2 numbers above come from a 20-case stratified slice. The benchmark brand has an empty Fact Ledger, so the false-alarm rate is an upper bound. The dataset's `grounds` tags were assigned by keyword rules and need hand review.
 - **Drift comparisons are not stored.** The Compare page is a standalone check; linking variants to submissions is Round 3 work.
 - **Single brand.** The demo workspace is one brand (Velura).
