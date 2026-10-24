@@ -328,7 +328,7 @@ export function ReviewScreen(props: {
           <span>
             <span className="font-medium">Partial check.</span>{" "}
             {current.summary?.partial
-              ? "The AI readers could not finish (Gemini was at its limit or overloaded), so only the rule findings are complete. Run the check again later."
+              ? "The AI readers could not finish (Gemini was at its limit or overloaded), so only the rule findings are complete. Run the check again later, or add your own Gemini key from the top bar."
               : "This check is still running or stopped early; the findings below are the ones saved so far. Refresh in a minute, or run the check again."}
           </span>
           <Button size="sm" onClick={() => void rerun()}>

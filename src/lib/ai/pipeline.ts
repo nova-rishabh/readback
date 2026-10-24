@@ -24,7 +24,7 @@ export interface CheckInput {
   lockedPhrases: string[];
   brand: BrandSpace;
   // benchmark knobs: skip span fixes, and bypass the content-hash cache so repeated runs measure stability
-  options?: { fixes?: boolean; cache?: boolean };
+  options?: { fixes?: boolean; cache?: boolean; apiKey?: string };
 }
 export interface CheckResult {
   findings: Finding[];
@@ -46,7 +46,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
   }
   const events: CheckEvent[] = [];
   const out = (e: CheckEvent) => (events.push(e), emit(e));
-  const tracker: Tracker = { models: new Set(), calls: 0, deadline: t0 + 100_000 }; // keep a check under ~2 min
+  const tracker: Tracker = { models: new Set(), calls: 0, deadline: t0 + 100_000, apiKey: input.options?.apiKey }; // keep a check under ~2 min
   let partial = false;
   return withTracker(tracker, async () => {
   try {
@@ -175,6 +175,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       mode,
       masked_tokens: masked.count,
       partial: partial || readers.length === 0 || undefined,
+      own_key: !!input.options?.apiKey || undefined,
     };
     out({ type: "stage", stage: "done", message: "Check complete" });
     out({ type: "summary", summary });

@@ -180,6 +180,7 @@ export interface CheckSummary {
   model: string;
   mode: "cloud" | "mock";
   masked_tokens: number; // how many PII/embargo items were masked before model calls
+  own_key?: boolean; // ran on the viewer's own Gemini key rather than the shared free one
   partial?: boolean; // the AI stage did not complete (quota, overload); only rule findings are reliable
 }
 

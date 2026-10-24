@@ -1,4 +1,5 @@
 import { after } from "next/server";
+import { keyFrom } from "@/lib/ai/key-header";
 import { getBrand, getSessionUser, getSubmission, saveCheckResult, signedImageUrl } from "@/lib/db/queries";
 import { createClient } from "@/lib/db/server";
 import { runCheck } from "@/lib/ai/pipeline";
@@ -137,7 +138,8 @@ export async function POST(req: Request) {
           imageAlt: version.image_alt,
           lockedPhrases: record.submission.locked_phrases ?? [],
           brand,
-          options: { cache: false }, // "Run check again" must really re-run (brand rules may have changed)
+          // "Run check again" must really re-run; a viewer's own Gemini key, if sent, is used for this check only
+          options: { cache: false, apiKey: keyFrom(req) },
         },
         emit,
       );

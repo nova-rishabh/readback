@@ -1,5 +1,6 @@
 "use client";
 
+import { keyHeaders } from "@/lib/client/gemini-key";
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import type { CheckEvent, CheckSummary, Finding, ReaderResult } from "@/lib/types";
 
@@ -109,7 +110,7 @@ export function useCheckStream(versionId: string, submissionId: string, onFinish
     try {
       const res = await fetch("/api/check", {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json", ...keyHeaders() },
         body: JSON.stringify({ versionId, submissionId }),
         signal: ac.signal,
       });

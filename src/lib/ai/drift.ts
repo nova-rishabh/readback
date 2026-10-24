@@ -5,7 +5,7 @@ import { z } from "zod";
 import type { BeliefCategory, BrandSpace, Lang } from "../types";
 import { panelFor } from "./personas";
 import { CATEGORIES } from "./reader";
-import { callObject, isMock, MODEL_NAME } from "./provider";
+import { callObject, isMock, MODEL_NAME, withTracker } from "./provider";
 import { clauseFor } from "./verify";
 
 export type DriftKind = "new_belief" | "strengthened" | "weakened" | "dropped" | "same";
@@ -60,7 +60,12 @@ function mockPairs(master: string, variant: string): z.infer<typeof schema>["pai
   return pairs;
 }
 
-export async function compareVersions(i: { master: string; variant: string; variantLang: Lang; brand: BrandSpace }): Promise<DriftResult> {
+export function compareVersions(i: { master: string; variant: string; variantLang: Lang; brand: BrandSpace; apiKey?: string }): Promise<DriftResult> {
+  // a viewer's own key (if given) applies to this comparison only
+  return withTracker({ models: new Set(), calls: 0, apiKey: i.apiKey }, () => compare(i));
+}
+
+async function compare(i: { master: string; variant: string; variantLang: Lang; brand: BrandSpace }): Promise<DriftResult> {
   const panel = panelFor(i.brand);
   const mock = isMock();
   const embargo = i.brand.terms.filter((t) => t.kind === "embargo").map((t) => t.phrase);

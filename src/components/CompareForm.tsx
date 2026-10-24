@@ -1,5 +1,6 @@
 "use client";
 
+import { keyHeaders } from "@/lib/client/gemini-key";
 import { useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import type { DriftKind, DriftResult, DriftRow } from "@/lib/ai/drift";
@@ -49,7 +50,7 @@ export function CompareForm() {
     try {
       const res = await fetch("/api/drift", {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json", ...keyHeaders() },
         body: JSON.stringify({ master, variant, variantLang: lang }),
       });
       const j = await res.json();

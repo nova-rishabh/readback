@@ -13,7 +13,12 @@ export function SummaryStrip({ summary, ruleMs }: { summary: CheckSummary; ruleM
     { label: "Personal data hidden from AI", value: summary.masked_tokens },
     {
       label: summary.mode === "mock" ? "Mock run" : "Model",
-      value: <span className="font-mono text-[13px]">{summary.mode === "mock" ? "offline" : summary.model}</span>,
+      value: (
+        <span className="font-mono text-[13px]">
+          {summary.mode === "mock" ? "offline" : summary.model}
+          <span className="block font-sans text-[12px] text-muted">{summary.own_key ? "your Gemini key" : summary.mode === "mock" ? "" : "shared free key"}</span>
+        </span>
+      ),
     },
     {
       label: ruleMs !== null ? `Total, rules took ${ruleMs} ms` : "Total time",

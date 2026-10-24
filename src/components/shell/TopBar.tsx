@@ -9,6 +9,7 @@ import { switchRoleAction, signOutAction } from "@/app/actions";
 import type { Role } from "@/lib/types";
 import { ROLES, roleLabel } from "@/components/format";
 import { TourButton } from "./Tour";
+import { GeminiKeyBadge } from "./GeminiKey";
 
 const NAV = [
   { href: "/app", label: "Inbox", exact: true },
@@ -84,6 +85,7 @@ export function TopBar({ user, brandName }: { user: { name: string; role: Role }
           })}
         </nav>
 
+        <GeminiKeyBadge />
         <TourButton />
         <details ref={menuRef} className="relative" data-tour="role-switch">
           <summary className="flex h-9 cursor-pointer list-none items-center gap-2 rounded-[5px] border border-rule-strong bg-sheet px-3 text-[13.5px] hover:border-ink [&::-webkit-details-marker]:hidden">
