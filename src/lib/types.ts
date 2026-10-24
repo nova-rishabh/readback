@@ -135,6 +135,10 @@ export interface Suggestion {
     unsupported_before: number;
     unsupported_after: number;
     new_unsupported: number;
+    still_held?: boolean; // readers still formed this finding's belief after the rewrite
+    tone_still_off?: boolean;
+    locked_broken?: boolean;
+    untested?: boolean; // overlapped another fix, so it was not part of the combined re-read
     intent_kept: number; // readers who still get declared intent
     of: number;
   } | null;

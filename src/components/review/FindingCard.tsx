@@ -98,8 +98,16 @@ function RereadLine({ s }: { s: NonNullable<Finding["suggestion"]> }) {
       </p>
     );
   }
-  const why =
-    r.new_unsupported > 0
+  // say the reason this fix failed, most specific first
+  const why = r.untested
+    ? "this rewrite overlaps another fix, so it was not re-read on its own"
+    : r.locked_broken
+      ? "the rewrite changed a phrase that must be kept"
+      : r.still_held
+        ? "readers still came away with the same belief after the rewrite"
+        : r.tone_still_off
+          ? "readers still found the tone off-brand"
+          : r.new_unsupported > 0
       ? `the rewrite created ${r.new_unsupported} new unsupported belief${r.new_unsupported === 1 ? "" : "s"}`
       : r.unsupported_after >= r.unsupported_before
         ? `unsupported beliefs did not drop (${r.unsupported_before} to ${r.unsupported_after})`

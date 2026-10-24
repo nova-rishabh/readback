@@ -326,8 +326,8 @@ export function ReviewScreen(props: {
       {!live && !current.summary && current.findings.length > 0 && (
         <p className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-md border border-ochre/40 bg-ochre-tint px-4 py-2.5 text-[13.5px]">
           <span>
-            <span className="font-medium">Partial check.</span> The last run stopped before it finished; the findings below are
-            the ones it saved. Run the check again for the complete reader panel and fixes.
+            <span className="font-medium">Partial check.</span> This check is still running or stopped early; the findings below
+            are the ones saved so far. Refresh in a minute, or run the check again.
           </span>
           <Button size="sm" onClick={() => void rerun()}>
             Run check again

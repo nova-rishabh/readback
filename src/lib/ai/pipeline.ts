@@ -70,12 +70,13 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       }
     };
     let ruleFindings: Finding[] = await rules([]);
-    out({ type: "rules", findings: ruleFindings, ms: Date.now() - tr });
+    const ruleMs = Date.now() - tr; // the rule engine's own time; the vision wait below is not counted
+    out({ type: "rules", findings: ruleFindings, ms: ruleMs });
     if (image) {
       const textBoxes: TextBox[] = await extractTextBoxes(image);
       if (textBoxes.length) {
         ruleFindings = await rules(textBoxes);
-        out({ type: "rules", findings: ruleFindings, ms: Date.now() - tr });
+        out({ type: "rules", findings: ruleFindings, ms: ruleMs });
       }
     }
 
@@ -125,6 +126,9 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
         const s = f.span && trimSpan(text, f.span, input.lockedPhrases);
         if (s) { f.span = s; fixable.set(f.id, s); }
       }
+      // label AI findings with the model(s) that actually answered (rotation may have moved off the primary)
+      const answered = [...tracker.models].join("+");
+      if (answered) for (const f of ai) f.model = answered;
       out({ type: "findings", findings: ai });
 
       // 7. span fixes (one call) + one combined re-read gate

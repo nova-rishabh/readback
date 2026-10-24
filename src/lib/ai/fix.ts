@@ -255,7 +255,13 @@ export async function fixAllAndGate(
       const k = t.belief ? a.flagged.indexOf(t.belief) : -1;
       const stillHeld = k >= 0 && rs.filter((r) => r.beliefs.some((b) => b.verdict !== "ok" && b.matches_flagged === k)).length >= min;
       const toneOk = t.kind !== "tone" || !toneConflict(rs.map((r) => r.tone), a.brand.voice_traits).majority;
-      reread = { ...all, passed: lockedOk && !stillHeld && toneOk && all.new_unsupported === 0 && all.intent_kept * 2 > all.of };
+      reread = {
+        ...all,
+        passed: lockedOk && !stillHeld && toneOk && all.new_unsupported === 0 && all.intent_kept * 2 > all.of,
+        still_held: stillHeld, tone_still_off: !toneOk, locked_broken: !lockedOk,
+      };
+    } else if (rs && !inDraft.has(t.id)) {
+      reread = { ...fail, untested: true };
     }
     result.set(t.id, { replacement: fix.replacement, rationale: fix.rationale, reread });
   }

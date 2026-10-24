@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { getBrand, getSessionUser, getSubmission, saveCheckResult, signedImageUrl } from "@/lib/db/queries";
 import { createClient } from "@/lib/db/server";
 import { runCheck } from "@/lib/ai/pipeline";
@@ -88,60 +89,69 @@ export async function POST(req: Request) {
     }
   }
 
+  // The check runs as its own job, kept alive with after(): on Vercel a closed response would otherwise end the
+  // function, and a person who navigates away (or switches role) mid-check would lose the run. The response stream
+  // below only relays the job's events to whoever is still watching.
   const encoder = new TextEncoder();
+  let relay = null as ((e: CheckEvent | null) => void) | null; // set once the stream starts
   const stream = new ReadableStream<Uint8Array>({
-    async start(controller) {
-      let closed = false;
-      // Checkpoint partial results, so a run cut off by the platform time limit still leaves its findings saved.
-      let rules: CheckEvent & { type: "rules" } | null = null;
-      let saving = Promise.resolve();
-      const checkpoint = (ai: Finding[]) => {
-        const findings = [...(rules?.findings ?? []), ...ai];
-        saving = saving.then(() => saveCheckResult(versionId, findings, null).catch(() => undefined));
-      };
-      const emit = (e: CheckEvent) => {
-        if (e.type === "rules") (rules = e), checkpoint([]);
-        if (e.type === "findings") checkpoint(e.findings);
-        if (closed) return;
+    start(controller) {
+      relay = (e) => {
         try {
-          controller.enqueue(encoder.encode(JSON.stringify(e) + "\n"));
+          if (e) controller.enqueue(encoder.encode(JSON.stringify(e) + "\n"));
+          else controller.close();
         } catch {
-          closed = true; // client went away; keep running so the result is still saved
+          relay = null; // the viewer went away; the job keeps going
         }
       };
-      try {
-        const result = await runCheck(
-          {
-            text: version.body,
-            intent: record.submission.intent,
-            lang: record.submission.lang,
-            channel: record.submission.channel,
-            image,
-            imageAlt: version.image_alt,
-            lockedPhrases: record.submission.locked_phrases ?? [],
-            brand,
-            options: { cache: false }, // "Run check again" must really re-run (brand rules may have changed)
-          },
-          emit,
-        );
-        await saving;
-        await saveCheckResult(versionId, result.findings, result.summary);
-        emit({ type: "stage", stage: "done", message: `Saved to v${version.n}.` });
-      } catch (err) {
-        emit({ type: "error", message: err instanceof Error ? err.message : "The check stopped unexpectedly." });
-      } finally {
-        release();
-        if (!closed) {
-          closed = true;
-          try {
-            controller.close();
-          } catch {
-            /* already closed */
-          }
-        }
-      }
+    },
+    cancel() {
+      relay = null;
     },
   });
+
+  // Checkpoint partial results, so even a run that hits the platform time limit leaves its findings saved.
+  let rules: (CheckEvent & { type: "rules" }) | null = null;
+  let saving = Promise.resolve();
+  const checkpoint = (ai: Finding[]) => {
+    const findings = [...(rules?.findings ?? []), ...ai];
+    saving = saving.then(() => saveCheckResult(versionId, findings, null).catch(() => undefined));
+  };
+  const emit = (e: CheckEvent) => {
+    if (e.type === "rules") {
+      rules = e;
+      checkpoint([]);
+    }
+    if (e.type === "findings") checkpoint(e.findings);
+    relay?.(e);
+  };
+  const job = (async () => {
+    try {
+      const result = await runCheck(
+        {
+          text: version.body,
+          intent: record.submission.intent,
+          lang: record.submission.lang,
+          channel: record.submission.channel,
+          image,
+          imageAlt: version.image_alt,
+          lockedPhrases: record.submission.locked_phrases ?? [],
+          brand,
+          options: { cache: false }, // "Run check again" must really re-run (brand rules may have changed)
+        },
+        emit,
+      );
+      await saving;
+      await saveCheckResult(versionId, result.findings, result.summary);
+      emit({ type: "stage", stage: "done", message: `Saved to v${version.n}.` });
+    } catch (err) {
+      emit({ type: "error", message: err instanceof Error ? err.message : "The check stopped unexpectedly." });
+    } finally {
+      release();
+      relay?.(null);
+    }
+  })();
+  after(() => job);
 
   return new Response(stream, {
     headers: {
