@@ -210,7 +210,7 @@ const R142: SeedReader[] = [
     [["Dermatologists recommend this serum", "Dermatologist-loved", "endorsement"], ["Skin will visibly glow within 7 days", "Visible glow in 7 days", "efficacy"]]],
   ["College student on a budget", true, "Doctor-approved serum, fully natural, fast results: sounds worth the money.", ["salesy", "exciting"],
     [["Results are guaranteed in a week", "Visible glow in 7 days", "guarantee"], ["The formula has no chemicals at all", "zero chemicals", "environment"]]],
-  ["Skin-concern-focused reader, 35+", false, "Big claims: doctor-loved, 7-day glow, chemical-free. I'd want proof before buying.", ["exaggerated", "pushy"],
+  ["Skin-concern-focused reader, 35+", true, "A brightening serum, but doctor-loved, 7-day glow and chemical-free are big claims. I'd want proof.", ["exaggerated", "pushy"],
     [["Dermatologists endorse it", "Dermatologist-loved", "endorsement"], ["It is 100% natural", "100% natural", "environment"], ["Visible results in a week", "Visible glow in 7 days", "efficacy"]]],
   ["builtin-literal", true, "A serum doctors love that gives glowing skin in 7 days and has no chemicals.", ["urgent"],
     [["Doctors recommend it", "Dermatologist-loved", "endorsement"], ["Glow is guaranteed in 7 days", "Visible glow in 7 days", "guarantee"], ["Contains zero chemicals", "zero chemicals", "environment"]]],
