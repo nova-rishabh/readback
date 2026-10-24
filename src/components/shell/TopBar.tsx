@@ -60,12 +60,16 @@ export function TopBar({ user, brandName }: { user: { name: string; role: Role }
       >
         Skip to content
       </a>
-      <div className="flex h-14 items-center gap-6 px-6 lg:px-8">
+      {/* phones: logo and controls on the first row, the nav as its own scrollable row underneath */}
+      <div className="flex flex-wrap items-center gap-x-6 px-4 sm:px-6 md:h-14 md:flex-nowrap lg:px-8">
         <Link href="/app" className="flex items-baseline gap-2">
           <span className="font-display text-[21px] font-medium tracking-[-0.01em]">Readback</span>
           <span className="hidden text-[13px] text-muted sm:inline">{brandName}</span>
         </Link>
-        <nav aria-label="Main" className="flex min-w-0 flex-1 items-stretch gap-1 self-stretch overflow-x-auto">
+        <nav
+          aria-label="Main"
+          className="order-last -mx-4 flex h-11 w-[calc(100%+2rem)] min-w-0 items-stretch gap-1 overflow-x-auto border-t border-rule px-2 sm:-mx-6 sm:w-[calc(100%+3rem)] md:order-none md:mx-0 md:h-auto md:w-auto md:flex-1 md:self-stretch md:border-t-0 md:px-0"
+        >
           {NAV.map((n) => {
             const active = n.exact ? pathname === n.href || pathname.startsWith("/app/s/") : pathname.startsWith(n.href);
             return (
@@ -85,8 +89,9 @@ export function TopBar({ user, brandName }: { user: { name: string; role: Role }
           })}
         </nav>
 
-        <GeminiKeyBadge />
-        <TourButton />
+        <div className="ml-auto flex h-14 items-center gap-2">
+          <GeminiKeyBadge />
+          <TourButton />
         <details ref={menuRef} className="relative" data-tour="role-switch">
           <summary className="flex h-9 cursor-pointer list-none items-center gap-2 rounded-[5px] border border-rule-strong bg-sheet px-3 text-[13.5px] hover:border-ink [&::-webkit-details-marker]:hidden">
             <span className="hidden sm:inline">{user.name}</span>
@@ -134,7 +139,8 @@ export function TopBar({ user, brandName }: { user: { name: string; role: Role }
               </button>
             </form>
           </div>
-        </details>
+          </details>
+        </div>
       </div>
     </header>
   );
