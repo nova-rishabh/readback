@@ -180,6 +180,7 @@ export interface CheckSummary {
   model: string;
   mode: "cloud" | "mock";
   masked_tokens: number; // how many PII/embargo items were masked before model calls
+  partial?: boolean; // the AI stage did not complete (quota, overload); only rule findings are reliable
 }
 
 // ---------- Workflow ----------
