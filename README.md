@@ -141,7 +141,7 @@ Set `READBACK_MOCK_AI=1` to run with deterministic mock readers and no API key.
 ## Disclosures
 
 - **Boilerplate:** the first commit is the unmodified `create-next-app` template (Next.js 15, TypeScript, Tailwind). It was entirely replaced in later commits.
-- **AI assistance:** substantial parts of the code, the seed content and the ASCI-Bench dataset collection were produced with AI coding assistance (Anthropic Claude, via Claude Code), directed, reviewed, tested and integrated by the participant. The product design and architecture follow the participant's Round 1 proposal.
+- **AI assistance and tooling (Rule 7):** product architecture, the dual-engine pipeline design, database schema, RLS and triggers, rule algorithms and testing were designed and integrated by Rishabh Kataria. Claude Code (Anthropic) was used as an AI pair-programming and research assistant during the official 22–24 Oct build window, including generating code and collecting the ASCI-Bench cases under his direction and review.
 - **External services:** Google Gemini API (generation and embeddings), Supabase, Vercel.
 - **Data:** ASCI rulings are public records from ascionline.in, cited per record. "Velura" and all demo people and products are fictional.
 
