@@ -204,7 +204,7 @@ export const FindingCard = forwardRef<HTMLElement, FindingCardProps>(function Fi
           <div className="flex flex-wrap items-center gap-2">
             <BeliefMeter k={b.readers} of={b.of} tone={sevMeter[f.severity]} />
             {f.drift_kind ? (
-              <Badge tone="proof">{f.drift_kind === "new_belief" ? "Not in the English master" : "Stronger than the English master"}</Badge>
+              <Badge tone="proof">{f.drift_kind === "new_belief" ? "Not in the English master" : f.drift_kind === "dropped_qualifier" ? "Qualifier dropped" : "Stronger than the English master"}</Badge>
             ) : (
               <VerdictBadge verdict={b.verdict} factCode={b.fact_code} split={`${b.readers} / ${b.of - b.readers}`} />
             )}

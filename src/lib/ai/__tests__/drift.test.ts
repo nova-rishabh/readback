@@ -43,3 +43,15 @@ describe("driftFindings", () => {
     expect(f[0].suggestion).toBeNull();
   });
 });
+
+describe("dropped qualifiers", () => {
+  it("become a finding when the translation leaves out a disclaimer", () => {
+    const f = driftFindings({
+      of: 6, model: "m", mode: "cloud", clause: { code: "G-13", title: "t" },
+      rows: [{ kind: "dropped", category: "efficacy", master: { belief: "Results vary", quote: "*Results may vary.", strength: 1, readers: 3 }, variant: null, explanation: "" }],
+    }, "Velura सीरम।", 145, "hi", "m");
+    expect(f).toHaveLength(1);
+    expect(f[0].drift_kind).toBe("dropped_qualifier");
+    expect(f[0].title).toContain("*Results may vary.");
+  });
+});

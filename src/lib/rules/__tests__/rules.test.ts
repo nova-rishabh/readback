@@ -177,3 +177,15 @@ describe("runRules image", () => {
     expect(v[0].measured?.delta_e).toBeGreaterThan(20);
   });
 });
+
+describe("medical claims", () => {
+  it("are caught by code on every draft", async () => {
+    const { runRules } = await import("../index");
+    const brand = { terms: [], clauses: [], palette: [], facts: [{ id: "f", code: "F-16", statement: "Velura is a cosmetic, not a medicine.", source: "", owner: "", expires_on: null, version: 1, status: "active" }] } as never;
+    const f = await runRules({ text: "Cures acne overnight, 100% guaranteed. Also heals eczema.", brand, channel: "instagram" });
+    const med = f.filter((x) => x.id.startsWith("rule-medical"));
+    expect(med.map((x) => x.span?.text)).toEqual(["Cures acne", "heals eczema"]);
+    expect(med[0].citation?.code).toBe("F-16");
+    expect((await runRules({ text: "Gentle on skin, made for daily use.", brand, channel: "instagram" })).length).toBe(0);
+  });
+});

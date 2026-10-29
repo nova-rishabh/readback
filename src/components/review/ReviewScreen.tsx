@@ -269,7 +269,7 @@ export function ReviewScreen(props: {
             )}
           </div>
           <div data-tour="decision">
-          <DecisionBar submission={submission} user={user} versionN={current.n} isLatest={isLatest} items={items} />
+          <DecisionBar submission={submission} user={user} versionN={current.n} isLatest={isLatest} items={items} aiIncomplete={!current.summary || !!current.summary.partial} />
           </div>
         </div>
 
@@ -347,7 +347,7 @@ export function ReviewScreen(props: {
           <span>
             <span className="font-medium">Partial check.</span>{" "}
             {current.summary?.partial
-              ? "The AI readers could not finish (Gemini was at its limit or overloaded), so only the rule findings are complete. Run the check again later, or add your own Gemini key from the top bar."
+              ? `The AI readers did not finish (${current.summary.partial_reason ?? "the free Gemini key was at its limit or overloaded"}), so only the rule findings are complete and the AI risks below are not assessed. Run the check again later, or add your own Gemini key from the top bar.`
               : "This check is still running or stopped early; the findings below are the ones saved so far. Refresh in a minute, or run the check again."}
           </span>
           <Button size="sm" onClick={() => void rerun()}>

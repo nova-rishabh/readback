@@ -109,7 +109,7 @@ with intervals and the per-ground breakdown, is on **/app/bench**.
 
 **Evaluation**
 - ASCI-Bench: 100 real rulings, evidence ledger, CLI runner, in-app results page with every case.
-- 70 unit tests (Vitest), a migration test in an in-memory Postgres, and logged end-to-end journeys ([docs/TESTING.md](docs/TESTING.md)).
+- 72 unit tests (Vitest), a migration test in an in-memory Postgres, and logged end-to-end journeys ([docs/TESTING.md](docs/TESTING.md)).
 
 ---
 
@@ -162,7 +162,7 @@ ASCI-Bench         scripts/asci-bench.ts → data/*.json → src/lib/bench/metri
 | Libraries | sharp (pixels), diff (word diffs), mammoth (DOCX), unpdf (PDF), lucide-react (icons), clsx |
 | Scheduling | Vercel Cron (daily recall sweep and demo reset) |
 | Fonts | Newsreader, Inter Tight, JetBrains Mono (Google Fonts via `next/font`) |
-| Testing | Vitest (70 unit tests), PGlite migration test, ASCI-Bench CLI, logged end-to-end journeys (see [docs/TESTING.md](docs/TESTING.md)) |
+| Testing | Vitest (72 unit tests), PGlite migration test, ASCI-Bench CLI, logged end-to-end journeys (see [docs/TESTING.md](docs/TESTING.md)) |
 | Data | ASCI Complaint Outcomes (public rulings), see [`data/asci-bench.README.md`](data/asci-bench.README.md) |
 | Hosting | Vercel (Mumbai region, next to the database) |
 
@@ -184,7 +184,7 @@ cp .env.example .env.local
 ```bash
 pnpm seed      # Velura brand, 4 demo users, 11 drafts with saved checks, facts (+ embeddings), demo store pages
 pnpm dev       # http://localhost:3000, then use the "Enter as ..." buttons
-pnpm test      # 70 unit tests
+pnpm test      # 72 unit tests
 pnpm test:db   # applies the migrations to an in-memory Postgres and checks the guards
 pnpm bench     # ASCI-Bench: 100 cases x 3 runs (add --ledger for evidence-aware scoring; --limit 20, --mock, --fresh)
 ```
@@ -195,7 +195,7 @@ URLs point). Deploying to Vercel needs only the same variables; `vercel.json` se
 
 ## Privacy, security, accessibility and responsible design
 
-- **What leaves the server:** draft text and image go to Google Gemini only after the Privacy Gate replaces emails, phone numbers, PAN, Aadhaar, card numbers and embargoed product names with tokens; fact statements sent for embedding pass the same gate. Recall checks fetch only the URL recorded on a post. All of this is disclosed on the landing page and in the app footer.
+- **What leaves the server:** draft text goes to Google Gemini only after the Privacy Gate replaces emails, phone numbers, PAN, Aadhaar, card numbers and embargoed product names with tokens. The image is sent as uploaded: text, faces or logos inside it are **not** masked (redacting images is on the roadmap), and the upload form says so; fact statements sent for embedding pass the same gate. Recall checks fetch only the URL recorded on a post. All of this is disclosed on the landing page and in the app footer.
 - **Access control:** row-level security plus triggers that enforce the workflow for anyone calling the database directly (allowed status changes, no self-approval, immutable versions, translation links that cannot be re-pointed, image-only uploads up to 8 MB). Images live in a private bucket behind short-lived signed URLs. The service-role key stays on the server.
 - **Prompt-injection hardening:** draft text is fenced in prompts and cannot close its fence; a finding needs a quote from the draft or a confirmed image element, so injected text cannot invent or hide findings on its own.
 - **Human control:** Readback never edits content automatically, never publishes, and never blocks a human override. Every finding is labelled `[RULE]` or `[AI]` with the model and the cited clause, fact or WCAG criterion; disputes are recorded with a note; approving with open high-severity findings is recorded as accepted risk.

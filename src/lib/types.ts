@@ -119,7 +119,7 @@ export interface Finding {
     visual_element: string | null;
   };
   // translations only: how the belief changed from the English master
-  drift_kind?: "new_belief" | "strengthened";
+  drift_kind?: "new_belief" | "strengthened" | "dropped_qualifier";
   // measured values for rule findings (e.g. contrast)
   measured?: Record<string, string | number>;
   suggestion: Suggestion | null;
@@ -186,6 +186,7 @@ export interface CheckSummary {
   readers?: ReaderResult[]; // each reader's takeaway from this check, so the panel survives a reload
   own_key?: boolean; // ran on the viewer's own Gemini key rather than the shared free one
   partial?: boolean; // the AI stage did not complete (quota, overload); only rule findings are reliable
+  partial_reason?: string; // why, in plain words
   drift?: DriftSummary; // translations only: what readers believe from the master versus this version
   embeddings?: string; // embedding model that grouped the beliefs, or "lexical" when every model was out of quota
 }

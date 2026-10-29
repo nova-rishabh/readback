@@ -51,6 +51,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
   const out = (e: CheckEvent) => (events.push(e), emit(e));
   const tracker: Tracker = { models: new Set(), calls: 0, deadline: t0 + 100_000, apiKey: input.options?.apiKey }; // keep a check under ~2 min
   let partial = false;
+  let partialReason: string | undefined;
   let driftSummary: CheckSummary["drift"];
   return withTracker(tracker, async () => {
   try {
@@ -185,14 +186,18 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
     } catch (e) {
       // any AI-stage failure keeps the rule findings: they are saved and the reason is shown
       partial = true;
-      out({
-        type: "error",
-        message: !(e instanceof QuotaError)
-          ? `The AI check stopped (${e instanceof Error ? e.message.slice(0, 120) : "unknown error"}). Rule findings are saved; run the check again.`
-          : e.reason === "quota"
-            ? `Gemini free-tier limit reached (5 requests per minute per model). Rule findings are saved; run the AI check again in ${e.retryAfterSeconds}s.`
-            : `Gemini is overloaded right now (HTTP 503 on every model). Rule findings are saved; run the AI check again in a minute.`,
-      });
+      const raw = e instanceof Error ? e.message : "";
+      // say what actually happened: a long wait means a daily limit, not the per-minute one
+      partialReason = !(e instanceof QuotaError)
+        ? /quota|rate.?limit|429/i.test(raw)
+          ? "the free Gemini key reached its daily limit"
+          : `the AI call failed (${raw.slice(0, 100) || "unknown error"})`
+        : e.reason === "overloaded"
+          ? "Gemini was overloaded (HTTP 503 on every model)"
+          : e.retryAfterSeconds > 600
+            ? "the free Gemini key reached its daily limit on every model"
+            : `the free Gemini key reached its per-minute limit (retry in ${e.retryAfterSeconds}s)`;
+      out({ type: "error", message: `The AI readers did not finish: ${partialReason}. Rule findings are saved; run the check again later, or add your own Gemini key from the top bar.` });
     }
     const of = readers.length;
 
@@ -209,6 +214,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       mode,
       masked_tokens: masked.count,
       partial: partial || readers.length === 0 || undefined,
+      partial_reason: partialReason ?? (readers.length === 0 ? "no reader answered" : undefined),
       own_key: !!input.options?.apiKey || undefined,
       readers: readers.length ? readers : undefined,
       drift: driftSummary,

@@ -149,8 +149,36 @@ async function paletteFindings(input: RunRulesInput, image: Buffer): Promise<Fin
   return out;
 }
 
+// Medical and disease claims are never acceptable for a cosmetic (Drugs and Magic Remedies Act; ASCI health-claim
+// guidelines), so they are caught by code on every draft, whatever the AI readers report or however busy the AI is.
+const MEDICAL_RX = new RegExp(
+  [
+    String.raw`\b(cures?|cured|curing|heals?|healing|treats?|treatment for|remed(?:y|ies) for|prevents?|eliminates?|reverses?|gets? rid of|clears? up)\b[^.!?\n]{0,40}?\b(acne|pimples?|eczema|psoriasis|rosacea|melasma|pigmentation|dark spots?|scars?|wrinkles?|hair ?fall|hair ?loss|baldness|dandruff|infections?|diseases?|disorders?|diabetes|cancer|covid)`,
+    String.raw`\b(acne|eczema|psoriasis|melasma|hair ?fall|dandruff|infection)[- ](?:cure|treatment|free forever)\b`,
+    String.raw`\b(medically|clinically) (?:proven|approved) to (?:cure|treat|heal)`,
+  ].join("|"),
+  "gi",
+);
+
+function medicalFindings(text: string, brand: BrandSpace): Finding[] {
+  const notMedicine = brand.facts.find((f) => /not a medicine|does not treat|cosmetic/i.test(f.statement));
+  const clause = brand.clauses.find((c) => /clinical|medical|health/i.test(c.title));
+  const citation: Finding["citation"] = notMedicine
+    ? { kind: "fact", code: notMedicine.code, text: notMedicine.statement }
+    : clause ? { kind: "clause", code: clause.code, text: clause.title } : null;
+  return [...text.matchAll(MEDICAL_RX)].map((m) =>
+    base({
+      id: `rule-medical-${m.index}`, category: "claim", severity: "high",
+      title: `Medical claim: “${m[0]}”`,
+      explanation: "Copy for a cosmetic must not claim to cure, treat or prevent a disease or skin condition. In India such claims fall under the Drugs and Magic Remedies Act and ASCI's health-claim guidelines, whatever evidence is held.",
+      citation, clause_code: clause?.code ?? null,
+      span: { start: m.index!, end: m.index! + m[0].length, text: m[0] },
+    }),
+  );
+}
+
 export async function runRules(input: RunRulesInput): Promise<Finding[]> {
-  const findings = [...termFindings(input.text, input.brand), ...disclaimerFindings(input.text, input.brand)];
+  const findings = [...termFindings(input.text, input.brand), ...disclaimerFindings(input.text, input.brand), ...medicalFindings(input.text, input.brand)];
   if (input.image) {
     const alt = altFinding(input.imageAlt);
     if (alt) findings.push(alt);

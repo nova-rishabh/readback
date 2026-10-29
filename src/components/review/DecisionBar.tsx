@@ -16,7 +16,9 @@ export function DecisionBar({
   versionN,
   isLatest,
   items,
+  aiIncomplete = false,
 }: {
+  aiIncomplete?: boolean; // the AI readers did not finish on this version: their risks are unassessed
   submission: Submission;
   user: { id: string; role: Role };
   versionN: number;
@@ -26,6 +28,7 @@ export function DecisionBar({
   const router = useRouter();
   const [mode, setMode] = useState<"none" | "approve" | "changes" | "url">("none");
   const [note, setNote] = useState("");
+  const [ackPartial, setAckPartial] = useState(false);
   const [url, setUrl] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, start] = useTransition();
@@ -115,7 +118,7 @@ export function DecisionBar({
           className="flex w-full flex-col gap-2 rounded-md border border-moss/40 bg-sheet p-3 sm:w-[380px]"
           onSubmit={(e) => {
             e.preventDefault();
-            act("approved", note);
+            act("approved", aiIncomplete ? `${note ? `${note} ` : ""}[Approved without a complete AI check]`.trim() : note);
           }}
         >
           {openHigh > 0 && (
@@ -124,13 +127,22 @@ export function DecisionBar({
               {openHigh === 1 ? "it" : "them"} as accepted risk in the audit log.
             </p>
           )}
+          {aiIncomplete && (
+            <label className="flex items-start gap-2 rounded-[4px] border border-ochre/40 bg-ochre-tint px-2.5 py-2 text-[12.5px]">
+              <input type="checkbox" checked={ackPartial} onChange={(e) => setAckPartial(e.target.checked)} className="mt-0.5 size-4 accent-ink" />
+              <span>
+                The AI readers did not finish on v{versionN}, so implied claims, tone and translation risks were not assessed. I approve
+                on the rule findings and my own reading. (Recorded in the audit log.)
+              </span>
+            </label>
+          )}
           {disputed > 0 && <p className="text-[12.5px] text-ochre">{disputed} disputed finding{disputed === 1 ? "" : "s"} on this version.</p>}
           <label htmlFor="approve-note" className="text-[12.5px] text-muted">
             Note for the record (optional). The audit entry also stores the fact versions this draft relies on.
           </label>
           <Textarea id="approve-note" rows={2} value={note} onChange={(e) => setNote(e.target.value)} autoFocus />
           <div className="flex gap-2">
-            <Button type="submit" size="sm" variant="approve" disabled={pending}>
+            <Button type="submit" size="sm" variant="approve" disabled={pending || (aiIncomplete && !ackPartial)}>
               {pending ? "Approving" : `Approve v${versionN}`}
             </Button>
             <Button size="sm" variant="ghost" onClick={() => setMode("none")}>

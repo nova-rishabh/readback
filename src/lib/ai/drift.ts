@@ -48,6 +48,8 @@ export function labelPair(p: { master: DriftRow["master"]; variant: DriftRow["va
 }
 
 export const isDrift = (k: DriftKind) => k === "new_belief" || k === "strengthened";
+/** A hedge or disclaimer (strength 1, e.g. "*Results may vary") the translation leaves out: the claim reads stronger. */
+export const isDroppedQualifier = (r: Pick<DriftRow, "kind" | "master">) => r.kind === "dropped" && !!r.master && r.master.strength <= 1;
 
 // words that make a claim absolute, across the supported languages
 const ABSOLUTE = /पक्का|पक्की|गारंटी|हमेशा|नक्की|खात्री|निश्चित|நிச்சயம்|உறுதி|கண்டிப்பாக|pakka|guarantee|100%|always/i;
@@ -95,7 +97,7 @@ export async function compareInContext(i: { master: string; variant: string; var
           prompt: [
             `ENGLISH MASTER:\n"""\n${i.master}\n"""`,
             `${lang.toUpperCase()} VERSION:\n"""\n${i.variant}\n"""`,
-            "List every distinct belief a reader forms from either version, including implied ones. Pair the same belief across versions; use null on the side where it does not appear.",
+            "List every distinct belief a reader forms from either version, including implied ones, and every disclaimer or qualifier (such as '*Results may vary') as its own belief with strength 1. Pair the same belief across versions; use null on the side where it does not appear.",
             `For each side give the belief in English, the exact quote from that version that causes it (copied character for character, in its own script), ${STRENGTH} and readers = how many of the ${panel.length} readers would form it.`,
             "note: one sentence on what changed, naming the translated word and its English meaning when the strength differs (for example a word meaning 'guaranteed').",
             `fix: only when the ${lang} version adds a belief or makes it stronger, the ${lang} wording that should replace that version's quote so it says no more than the English master; otherwise null.`,
@@ -129,6 +131,17 @@ export function driftFindings(
 ): Finding[] {
   const out: Finding[] = [];
   for (const [i, r] of result.rows.entries()) {
+    if (isDroppedQualifier(r)) {
+      out.push({
+        id: `drift-${i + 1}-dropped`, engine: "ai", category: "language_drift", severity: "medium",
+        title: `Left out of the ${LANG_NAME[lang]}: “${r.master!.quote || r.master!.belief}”`,
+        explanation: `The English master (#${masterNumber}) qualifies its claim (${r.master!.belief.toLowerCase()}); the ${LANG_NAME[lang]} version drops that qualifier, so its claim reads stronger. ${r.explanation}`.trim(),
+        citation: result.clause ? { kind: "clause", code: result.clause.code, text: result.clause.title } : null,
+        clause_code: result.clause?.code ?? null, span: null, model, drift_kind: "dropped_qualifier",
+        suggestion: null, status: "open",
+      });
+      continue;
+    }
     if (!isDrift(r.kind) || !r.variant) continue;
     const span = r.variant.quote ? locateQuote(variantText, r.variant.quote, 0.7) : null;
     const severity: Severity = SEVERE.includes(r.category) || r.variant.strength >= 3 ? "high" : "medium";

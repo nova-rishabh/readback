@@ -15,7 +15,7 @@ export function MasterComparison({
   checked: boolean;
 }) {
   const changed = drift && master && drift.master_version !== master.version;
-  const flagged = drift?.rows.filter((r) => r.kind === "new_belief" || r.kind === "strengthened").length ?? 0;
+  const flagged = drift?.rows.filter((r) => r.kind === "new_belief" || r.kind === "strengthened" || (r.kind === "dropped" && (r.master?.strength ?? 2) <= 1)).length ?? 0;
   return (
     <section aria-labelledby="master-h" className="flex flex-col gap-3 rounded-md border border-rule bg-sheet px-4 py-4">
       <div className="flex flex-wrap items-baseline justify-between gap-2">

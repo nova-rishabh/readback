@@ -77,7 +77,8 @@ export function Tour() {
 
   // auto-start once per page type, after the page has painted its anchors
   useEffect(() => {
-    if (!name || seen(name)) return;
+    // only the inbox tour starts by itself; the review tour waits for the Tour button so it never interrupts work
+    if (!name || name !== "inbox" || seen(name)) return;
     const t = setTimeout(() => setI(0), 600);
     return () => clearTimeout(t);
   }, [name]);

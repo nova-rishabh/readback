@@ -14,9 +14,9 @@ import { GeminiKeyBadge } from "./GeminiKey";
 const NAV = [
   { href: "/app", label: "Inbox", exact: true },
   { href: "/app/new", label: "New draft" },
-  { href: "/app/compare", label: "Compare translations" },
-  { href: "/app/brand", label: "Brand Space" },
-  { href: "/app/recall", label: "Recall queue" },
+  { href: "/app/compare", label: "Compare" },
+  { href: "/app/brand", label: "Brand" },
+  { href: "/app/recall", label: "Recall" },
   { href: "/app/insights", label: "Insights" },
   { href: "/app/audit", label: "Audit log" },
   { href: "/app/bench", label: "Benchmark" },

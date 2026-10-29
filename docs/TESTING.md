@@ -8,7 +8,7 @@ How Readback was tested for Round 3, what the tests found, and what was fixed as
 4. **End-to-end journeys**: every main journey driven in a browser, including bad input, empty states, reloads,
    repeated actions, quota exhaustion and phone width.
 
-## 1. Unit tests: 70 tests in 10 files
+## 1. Unit tests: 72 tests in 10 files
 
 `pnpm test`
 
@@ -93,6 +93,20 @@ Driven in a real browser against a local build with the production database, the
 8. Saving a fact while embeddings were out of quota **erased its stored vector**, silently dropping it from fact matching, after a 3× retry delay.
 9. The in-app demo reset **signed everyone out**.
 10. A Round 2 regex contained literal backspace characters, so **tone findings never cited the brand's voice clause**.
+
+## Independent judge-style review (29 October)
+
+A separate AI agent was given only the live link, the repository and the Round 3 rubric, and asked to test Readback as
+a judge (prompt in the hackk folder). It scored 77/100 and raised these points, all addressed the same day:
+
+| Finding | Fix |
+|---|---|
+| A custom draft (“Cures acne overnight…”) completed without flagging the medical claim when the AI ran in fallback mode | Medical and disease claims (cure, treat, heal, prevent + acne, eczema, hair fall, infections…) are now a **rule**, caught by code on every draft and cited to the “not a medicine” fact. |
+| A translation that dropped the disclaimer showed it in the comparison but did not raise a finding | A dropped qualifier or disclaimer is now a G-13 finding (“Qualifier dropped”); the comparison prompt lists disclaimers explicitly. |
+| Image privacy was described more strongly than implemented | Disclosure, README and the upload field now say plainly that images are sent as uploaded and are not masked. |
+| Partial-check messages blamed the per-minute limit when the daily limit was the cause | The real reason is stored with the check and shown (“daily limit”, “overloaded”, “per-minute limit, retry in N s”). |
+| A reviewer could approve after a partial check without acknowledging the unassessed AI risks | Approval then requires a checkbox, and the audit note records “Approved without a complete AI check”. |
+| Tours interrupted; navigation crowded | Only the inbox tour starts by itself; nav labels shortened. |
 
 ## How to reproduce
 

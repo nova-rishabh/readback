@@ -341,7 +341,7 @@ export function NewDraftForm({ master = null }: { master?: MasterInfo | null }) 
                   <span className="text-ink underline underline-offset-4">Choose an image</span> to check contrast, palette and
                   what readers see in it
                 </span>
-                <span className="text-[12.5px]">PNG, JPEG or WebP, up to 8 MB</span>
+                <span className="text-[12.5px]">PNG, JPEG or WebP, up to 8 MB. Sent to the AI as is: avoid images showing personal data.</span>
               </label>
             )}
             <input
