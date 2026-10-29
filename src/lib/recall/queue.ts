@@ -6,6 +6,7 @@ import type { Fact, Finding, Role, Submission } from "../types";
 import { mapFact, mapSubmission, todayISO, type Row } from "../db/mappers";
 import { writeAudit } from "../db/queries";
 import { createAdmin } from "../db/server";
+import { embedText, toVectorLiteral } from "../db/embed";
 import { checkLive, claimPhrases, type LiveCheck, type LiveOutcome } from "./live";
 
 const SUBMISSION_SELECT = "*, author:profiles!submissions_author_id_fkey(name, role)";
@@ -158,7 +159,7 @@ export async function dailySweep(opts: { budgetMs?: number; resetOrigin?: string
   const budgetMs = opts.budgetMs ?? 50_000;
   const t0 = Date.now();
   const admin = createAdmin();
-  const out = { brands: 0, expired: 0, alerts: 0, checked: 0, closed: 0, reset: 0 };
+  const out = { brands: 0, expired: 0, alerts: 0, checked: 0, closed: 0, reset: 0, embedded: 0 };
   // at most once a day, however often the endpoint is called
   const { data: lastReset } = await admin.from("audit_log").select("created_at").eq("action", "demo_reset").order("id", { ascending: false }).limit(1).maybeSingle();
   if (opts.resetOrigin && (!lastReset || Date.now() - Date.parse(lastReset.created_at) > 20 * 3600_000)) {
@@ -177,6 +178,17 @@ export async function dailySweep(opts: { budgetMs?: number; resetOrigin?: string
       if (error) continue;
       out.expired++;
       await writeAudit(SCHEDULER, { action: "fact_expired", fact_versions: { [f.code]: f.version }, detail: { code: f.code, expires_on: f.expires_on } });
+    }
+
+    // facts edited in the last day (or never embedded) get a fresh vector; a no-op when embeddings are unavailable
+    const since = new Date(Date.now() - 26 * 3600_000).toISOString();
+    const { data: stale } = await admin.from("facts").select("code, statement").eq("brand_id", b.id).or(`embedding.is.null,updated_at.gte.${since}`);
+    const { data: emb } = await admin.from("terms").select("phrase").eq("brand_id", b.id).eq("kind", "embargo");
+    for (const f of stale ?? []) {
+      const v = await embedText(f.statement, (emb ?? []).map((t: { phrase: string }) => t.phrase));
+      if (!v) break;
+      await admin.from("facts").update({ embedding: toVectorLiteral(v) }).eq("brand_id", b.id).eq("code", f.code);
+      out.embedded++;
     }
 
     const state = await recallState(admin, b.id, 14);

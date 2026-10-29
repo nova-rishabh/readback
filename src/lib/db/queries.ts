@@ -494,8 +494,11 @@ export async function upsertFact(f: Partial<Fact> & { statement: string }): Prom
   };
   if (!existing || existing.statement !== f.statement) {
     const { data: emb_terms } = await sb.from("terms").select("phrase").eq("brand_id", a.brand_id).eq("kind", "embargo");
-    const emb = await embedText(f.statement, (emb_terms ?? []).map((t: { phrase: string }) => t.phrase)); // null when no key
-    row.embedding = emb ? toVectorLiteral(emb) : null;
+    const emb = await embedText(f.statement, (emb_terms ?? []).map((t: { phrase: string }) => t.phrase)); // null when no key or out of quota
+    // without a new vector an edited fact keeps its previous one (close to the new wording) rather than dropping out of
+    // fact matching; the daily sweep re-embeds recently edited facts once the quota allows
+    if (emb) row.embedding = toVectorLiteral(emb);
+    else if (!existing) row.embedding = null;
   }
   must(await sb.from("facts").upsert(row, { onConflict: "brand_id,code" }).select("id").single(), "upsertFact");
 

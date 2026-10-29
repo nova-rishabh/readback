@@ -14,7 +14,8 @@ export async function embedText(text: string, embargo: string[] = []): Promise<n
   if (!embeddingsEnabled()) return null;
   try {
     const { masked } = mask(text, embargo);
-    const { embedding } = await embed({ model: google.textEmbeddingModel("gemini-embedding-001", { outputDimensionality: 768 }), value: masked });
+    // no retries: a used-up daily quota will not recover in seconds, and the caller keeps the previous vector
+    const { embedding } = await embed({ model: google.textEmbeddingModel("gemini-embedding-001", { outputDimensionality: 768 }), value: masked, maxRetries: 0 });
     return embedding.length === 768 ? embedding : null;
   } catch (e) {
     console.warn("[readback] embedding skipped:", e instanceof Error ? e.message : e);
