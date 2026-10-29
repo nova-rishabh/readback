@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
+import { headers } from "next/headers";
 import { recheckFact } from "@/lib/recall/queue";
 import {
   deleteTerm,
@@ -109,4 +110,21 @@ export async function savePersonaAction(p: { id?: string; name: string; descript
   if (!p.name.trim() || !p.description.trim()) return { ok: false, error: "A persona needs a name and a description." };
   const persona: Partial<Persona> & { name: string; description: string } = { ...p, builtin: false };
   return wrap(() => upsertPersona(persona), "The persona was not saved.");
+}
+
+/** Owner only: reset the seeded demo drafts and brand content (see lib/demo/reset.ts). */
+export async function resetDemoAction(): Promise<BrandResult> {
+  const actor = await getActor();
+  if (!actor || actor.role !== "owner") return { ok: false, error: "Only the brand owner can reset the demo." };
+  try {
+    const h = await headers();
+    const host = h.get("x-forwarded-host") ?? h.get("host");
+    const proto = h.get("x-forwarded-proto") ?? (host?.startsWith("localhost") ? "http" : "https");
+    const { resetDemo } = await import("@/lib/demo/reset");
+    await resetDemo(`${proto}://${host}`, actor);
+    revalidatePath("/app", "layout");
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "The demo was not reset." };
+  }
 }

@@ -6,8 +6,10 @@ import { FactsTab } from "@/components/brand/FactsTab";
 import { TermsTab } from "@/components/brand/TermsTab";
 import { VoiceTab } from "@/components/brand/VoiceTab";
 import { PersonasTab } from "@/components/brand/PersonasTab";
+import { ResetDemo } from "@/components/ResetDemo";
 
 export const metadata = { title: "Brand Space" };
+export const maxDuration = 60; // the demo reset action runs from this page
 
 const TABS = ["clauses", "facts", "terms", "voice", "personas"] as const;
 type Tab = (typeof TABS)[number];
@@ -42,6 +44,7 @@ export default async function BrandPage({ searchParams }: { searchParams: Promis
             ? "The rules every draft is checked against. Changes apply to the next check; facts are versioned so past approvals stay traceable."
             : "The rules every draft is checked against. Only the brand owner can edit them."
         }
+        actions={canEdit ? <ResetDemo /> : undefined}
       />
       <Tabs label="Brand Space sections" items={items} value={tab} />
       <p className="mt-4 text-[13.5px] text-muted">{PURPOSE[tab]}</p>

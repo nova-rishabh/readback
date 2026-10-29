@@ -253,7 +253,13 @@ export function NewDraftForm({ master = null }: { master?: MasterInfo | null }) 
                   {imported.note && `: ${imported.note}`}. Check the copy below before saving.
                 </>
               ) : (
-                "Written in Word or exported as PDF? Import it instead of pasting."
+                <>
+                  Written in Word or exported as PDF? Import it instead of pasting (try the{" "}
+                  <a href="/demo/velura-diwali-email.docx" download className="underline underline-offset-2 hover:text-ink">
+                    sample DOCX
+                  </a>
+                  ).
+                </>
               )}
             </p>
             <Button size="sm" variant="ghost" onClick={() => docRef.current?.click()} disabled={importing || submitting}>

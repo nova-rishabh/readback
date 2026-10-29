@@ -79,7 +79,9 @@ export async function recallState(sb: SupabaseClient, brandId: string, alertDays
     const cur = latest.get(v.submission_id);
     if (!cur || v.n > cur.n) latest.set(v.submission_id, { n: v.n, body: v.body, findings: v.findings ?? [] });
   }
-  const events = (audit.data ?? []) as Row[];
+  // checks and closures recorded before the last demo reset belong to the old demo state
+  const { data: reset } = await sb.from("audit_log").select("id").eq("action", "demo_reset").order("id", { ascending: false }).limit(1).maybeSingle();
+  const events = ((audit.data ?? []) as Row[]).filter((e) => !reset || Number(e.id) > Number(reset.id));
 
   const items: RecallItem[] = raw.map(({ submission, fact, reason }) => {
     const v = latest.get(submission.id);
@@ -149,13 +151,20 @@ export async function recheckFact(brandId: string, factCode: string, actor: Acto
 }
 
 /**
- * The daily job (Vercel Cron, /api/cron/recall): mark facts past their expiry date as expired, raise a one-time
+ * The daily job (Vercel Cron, /api/cron/recall): reset the shared demo drafts, mark facts past their expiry date as expired, raise a one-time
  * alert for facts expiring within 14 days, and re-check every open recall's live page not checked in the last 20 hours.
  */
-export async function dailySweep(budgetMs = 50_000): Promise<Record<string, number>> {
+export async function dailySweep(opts: { budgetMs?: number; resetOrigin?: string } = {}): Promise<Record<string, number>> {
+  const budgetMs = opts.budgetMs ?? 50_000;
   const t0 = Date.now();
   const admin = createAdmin();
-  const out = { brands: 0, expired: 0, alerts: 0, checked: 0, closed: 0 };
+  const out = { brands: 0, expired: 0, alerts: 0, checked: 0, closed: 0, reset: 0 };
+  // at most once a day, however often the endpoint is called
+  const { data: lastReset } = await admin.from("audit_log").select("created_at").eq("action", "demo_reset").order("id", { ascending: false }).limit(1).maybeSingle();
+  if (opts.resetOrigin && (!lastReset || Date.now() - Date.parse(lastReset.created_at) > 20 * 3600_000)) {
+    const { resetDemo } = await import("../demo/reset");
+    await resetDemo(opts.resetOrigin, SCHEDULER).then(() => (out.reset = 1)).catch(() => undefined);
+  }
   const { data: brands } = await admin.from("brands").select("id");
   for (const b of brands ?? []) {
     out.brands++;
