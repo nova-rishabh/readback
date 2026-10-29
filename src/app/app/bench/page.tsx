@@ -93,7 +93,9 @@ export default async function BenchPage({ searchParams }: { searchParams: Promis
   const cases = load<BenchCase[]>("asci-bench.json") ?? [];
   const evidenceList = load<CaseEvidence[]>("asci-evidence.json") ?? [];
   const evidence = new Map(evidenceList.map((e) => [e.id, e]));
-  const plain = load<ResultFile>("asci-bench-results.json");
+  // the latest complete run, or (while the full run waits on the daily quota) the latest partial one
+  const full = load<ResultFile>("asci-bench-results.json");
+  const plain = full ?? load<ResultFile>("asci-bench-results-v3.1-partial.json");
   const ledger = load<ResultFile>("asci-bench-results-ledger.json");
   const r2 = load<{ metrics: { readback: { recall: number; false_alarm: number }; baseline: { recall: number; false_alarm: number } } }>("asci-bench-results-round2.json");
   const mPlain = plain ? computeMetrics(plain.rows, cases, evidence) : null;
@@ -132,6 +134,13 @@ export default async function BenchPage({ searchParams }: { searchParams: Promis
         </p>
       ) : (
         <div className="flex flex-col gap-6">
+          {plain && plain.rows.length < cases.length && (
+            <p className="rounded-md border border-ochre/40 bg-ochre-tint px-4 py-2.5 text-[13.5px]">
+              <span className="font-medium">Partial run.</span> {plain.rows.length} of {cases.length} cases so far: the free Gemini tier allows
+              1,000 embedding requests per model per day, and the run resumes where it stopped when the quota resets. Cases not yet run
+              show “not run” below.
+            </p>
+          )}
           <Headline
             title="Without the advertiser's evidence"
             lede="The brand's Fact Ledger is empty, as for a brand that has not recorded its substantiation yet. Every checkable claim is then unsupported, so this is the strictest setting and its false-alarm rate is an upper bound."
