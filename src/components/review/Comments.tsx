@@ -126,6 +126,17 @@ const actionText: Record<string, string> = {
   published: "recorded the published URL",
   recalled: "recalled",
   check_run: "ran the check",
+  submission_created: "created the draft",
+  submitted_for_review: "sent it for review",
+  published_url_recorded: "recorded the published URL",
+  returned_to_draft: "saved a new version, so it went back to draft",
+  finding_accepted: "accepted a fix",
+  finding_edited: "edited a fix",
+  finding_disputed: "disputed a finding",
+  finding_open: "reopened a finding",
+  recall_enqueued: "queued it for recall after a fact changed",
+  recall_url_checked: "checked the live page",
+  recall_closed: "closed the recall",
 };
 
 export function History({ audit }: { audit: AuditEntry[] }) {

@@ -6,6 +6,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Badge, StatusPill, statusLabel } from "@/components/ui/Badge";
 import { Tabs } from "@/components/ui/Tabs";
 import { STATUSES, channelLabel, langLabel, fmtDateTime, roleLabel } from "@/components/format";
+import { DemoPath, type DemoStep } from "@/components/DemoPath";
 
 export const metadata = { title: "Inbox" };
 
@@ -21,8 +22,18 @@ export default async function Inbox({ searchParams }: { searchParams: Promise<{ 
     ...STATUSES.map((s) => ({ id: s, label: statusLabel[s], href: `/app?status=${s}`, count: counts[s] })),
   ];
 
+  // shortcuts to the seeded drafts that show each part of the product (only those this role can see)
+  const byNumber = (n: number) => all.find((s) => s.number === n);
+  const demo: DemoStep[] = [
+    byNumber(142) && { href: `/app/s/${byNumber(142)!.id}`, label: "A checked draft", detail: "#142: rule and reader findings, citations, the six readers, suggested fixes." },
+    byNumber(146) && { href: `/app/s/${byNumber(146)!.id}`, label: "A translation that says more", detail: "#146: the Hindi version adds पक्का (“guaranteed”) to the English master." },
+    { href: "/app/recall", label: "Live fact recall", detail: "Check a published post's live page for a claim whose fact expired." },
+    { href: "/app/bench", label: "How accurate is it?", detail: "ASCI-Bench: 100 real regulator rulings, three runs each." },
+  ].filter(Boolean) as DemoStep[];
+
   return (
     <Page>
+      <DemoPath steps={demo} />
       <PageHeader
         title="Inbox"
         lede={
