@@ -43,7 +43,7 @@ export function toneFinding(readers: ReaderResult[], brand: BrandSpace, text: st
   if (!c.majority) return null;
   const m = text.match(PUSHY_RX);
   const adj = c.adjectives.join(", ");
-  const voice = brand.clauses.find((cl) => /(voice|tone)/i.test(cl.title)) ?? null;
+  const voice = brand.clauses.find((cl) => /\b(voice|tone)\b/i.test(cl.title)) ?? null;
   return {
     id: "ai-tone",
     engine: "ai",

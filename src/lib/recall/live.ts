@@ -117,14 +117,27 @@ export async function fetchLivePage(raw: string): Promise<{ http: number; text: 
   throw new Error("Too many redirects");
 }
 
+// Sites that show automated visitors a sign-in wall or bot check instead of the post: a missing claim proves nothing.
+const WALLED = /(^|\.)(instagram\.com|facebook\.com|fb\.com|x\.com|twitter\.com|linkedin\.com|amazon\.[a-z.]+|amzn\.[a-z]+|flipkart\.com|nykaa\.com|myntra\.com|youtube\.com|tiktok\.com|threads\.net|whatsapp\.com)$/i;
+const WALL_TEXT = /\b(log ?in|sign ?in|sign up|captcha|are you a robot|verify you are human|enable javascript|access denied|unusual traffic)\b/i;
+
+/** True when an absent claim cannot be trusted: a walled site, or a short page that reads like a login or bot check. */
+export function cannotConfirmAbsence(url: string, pageText: string): string | null {
+  const host = new URL(url).hostname;
+  if (WALLED.test(host)) return `${host} shows automated visitors a sign-in or bot check, so the claim's absence cannot be confirmed; check the post by hand`;
+  if (pageText.length < 200) return "The page returned almost no readable text (it may need JavaScript or block automated checks)";
+  if (pageText.length < 3000 && WALL_TEXT.test(pageText)) return "The page looks like a sign-in or bot check rather than the post; check it by hand";
+  return null;
+}
+
 export async function checkLive(url: string, phrases: string[]): Promise<LiveCheck> {
   try {
     const page = await fetchLivePage(url);
     if (page.http >= 400) return { outcome: "unreachable", url, http: page.http, matched: [], looked_for: phrases, error: `The page answered HTTP ${page.http}` };
     if (!phrases.length) return { outcome: "inconclusive", url, http: page.http, matched: [], looked_for: phrases, error: "No claim wording was recorded for this fact, so there is nothing to look for" };
     const matched = findOnPage(page.text, phrases);
-    if (!matched.length && page.text.length < 200)
-      return { outcome: "inconclusive", url, http: page.http, matched, looked_for: phrases, error: "The page returned almost no readable text (it may need JavaScript or block automated checks)" };
+    const doubt = matched.length ? null : cannotConfirmAbsence(url, page.text);
+    if (doubt) return { outcome: "inconclusive", url, http: page.http, matched, looked_for: phrases, error: doubt };
     return { outcome: matched.length ? "still_live" : "removed", url, http: page.http, matched, looked_for: phrases };
   } catch (e) {
     const msg = e instanceof Error ? (e.name === "TimeoutError" ? "The page did not answer within 12 seconds" : e.message) : "The page could not be fetched";

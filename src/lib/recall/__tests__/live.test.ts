@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Finding } from "@/lib/types";
-import { claimPhrases, findOnPage, htmlToText, isPrivateAddress } from "../live";
+import { cannotConfirmAbsence, claimPhrases, findOnPage, htmlToText, isPrivateAddress } from "../live";
 
 const finding = (code: string, text: string): Finding => ({
   id: "x", engine: "ai", category: "claim", severity: "medium", title: "t", explanation: "e",
@@ -36,5 +36,13 @@ describe("live recall", () => {
       expect(isPrivateAddress(ip)).toBe(true);
     }
     expect(isPrivateAddress("76.76.21.21")).toBe(false);
+  });
+  it("never treats a sign-in wall or a walled site as proof the claim is gone", () => {
+    const article = "Velura serum. ".repeat(40);
+    expect(cannotConfirmAbsence("https://www.instagram.com/p/abc/", article)).toMatch(/instagram/);
+    expect(cannotConfirmAbsence("https://www.amazon.in/dp/B0X", article)).toMatch(/amazon/);
+    expect(cannotConfirmAbsence("https://velura.in/serum", "Please log in to continue. " + "x ".repeat(120))).toMatch(/sign-in/);
+    expect(cannotConfirmAbsence("https://velura.in/serum", "tiny")).toMatch(/almost no readable text/);
+    expect(cannotConfirmAbsence("https://readback-virid.vercel.app/store/x", article)).toBeNull();
   });
 });
