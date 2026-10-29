@@ -34,4 +34,10 @@ describe("grounding", () => {
     expect(levenshteinRatio("kitten", "kitten")).toBe(1);
     expect(levenshteinRatio("abc", "xyz")).toBe(0);
   });
+  it("keeps Indic vowel signs inside the span", () => {
+    const hi = "Velura Vitamin C सीरम। 4 हफ्तों में पक्का निखार।";
+    expect(locateQuote(hi, "पक्का निखार")?.text).toBe("पक्का निखार");
+    const ta = "நான்கு வாரங்களில் நிச்சயம் பொலிவு";
+    expect(locateQuote(ta, "நிச்சயம் பொலிவு")?.text).toBe("நிச்சயம் பொலிவு");
+  });
 });

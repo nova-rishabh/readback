@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type {
-  BeliefCategory, CheckSummary, Finding, FindingCategory, PaletteColor, Role, Severity, Span, Verdict, ReaderResult,
+  BeliefCategory, CheckSummary, DriftRow, Finding, FindingCategory, PaletteColor, Role, Severity, Span, Verdict, ReaderResult,
 } from "../src/lib/types";
 import { embedText, toVectorLiteral } from "../src/lib/db/embed";
 
@@ -20,7 +20,9 @@ if (!URL_ || !KEY || !PASSWORD) {
   console.error("Missing NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY or DEMO_PASSWORD (see supabase/README.md).");
   process.exit(1);
 }
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+// published demo posts point at the app's own demo storefront, so Live Fact Recall has real pages to fetch
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL || "https://readback-virid.vercel.app").replace(/\/$/, "");
 const admin: SupabaseClient = createClient(URL_, KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -224,6 +226,7 @@ interface SeedVersion { n: number; body: string; image?: boolean; alt?: string |
 interface SeedSub {
   number: number; title: string; channel: string; lang: string; intent: string; status: string; author: Role;
   locked: string[]; url?: string; versions: SeedVersion[]; cites: { code: string; version: number }[]; ageDays: number;
+  master?: number; // translations: the number of the English master
 }
 
 function buildSubmissions(): SeedSub[] {
@@ -236,7 +239,7 @@ function buildSubmissions(): SeedSub[] {
       F({ id: "f137-1", engine: "ai", category: "claim", severity: "low", title: "Belief supported: hydration gain in two weeks", explanation: "5 of 6 readers took away that skin is measurably more hydrated after two weeks. Fact F-06 supports it, including the sample size.", citation: fa("F-06"), span: sp(body, "skin hydration rose 24%"), belief: { statement: "Skin is measurably more hydrated after two weeks of daily use", category: "efficacy", k: 5, verdict: "supported", fact_code: "F-06" } }),
       F({ id: "f137-2", engine: "ai", category: "claim", severity: "low", title: "Belief supported: fragrance-free", explanation: "4 of 6 readers noticed the fragrance-free claim. Fact F-02 supports it.", citation: fa("F-02"), span: sp(body, "Fragrance-free"), belief: { statement: "The product contains no added fragrance", category: "health", k: 4, verdict: "supported", fact_code: "F-02" } }),
     ];
-    subs.push({ number: 137, title: "Hydra-Dew launch reel caption", channel: "instagram", lang: "en", intent: "Hydra-Dew measurably hydrates skin in two weeks.", status: "published", author: "creator", locked: ["*Results may vary"], url: "https://www.instagram.com/p/Cz9velura137/", cites: [{ code: "F-06", version: 1 }, { code: "F-02", version: 1 }], ageDays: 26,
+    subs.push({ number: 137, title: "Hydra-Dew launch reel caption", channel: "instagram", lang: "en", intent: "Hydra-Dew measurably hydrates skin in two weeks.", status: "published", author: "creator", locked: ["*Results may vary"], url: `${SITE}/store/velura-hydra-dew-reel`, cites: [{ code: "F-06", version: 1 }, { code: "F-02", version: 1 }], ageDays: 26,
       versions: [{ n: 1, body, alt: null, findings: fs, summary: summary(fs, 6, 9100), ageDays: 26 }] });
   }
 
@@ -258,7 +261,7 @@ function buildSubmissions(): SeedSub[] {
       F({ id: "f139-1", engine: "ai", category: "claim", severity: "medium", title: "Belief supported at check time: #1 on Nykaa", explanation: "6 of 6 readers believed Velura is the top-ranked Vitamin C serum on Nykaa. Fact F-10 supported this on the day of the check; the ranking covers January to March 2026 only.", citation: fa("F-10"), span: sp(body, "#1 rated Vitamin C serum on Nykaa"), belief: { statement: "Velura is currently the top-ranked Vitamin C serum on Nykaa", category: "comparison", k: 6, verdict: "supported", fact_code: "F-10" } }),
       F({ id: "f139-2", engine: "ai", category: "claim", severity: "low", title: "Belief supported: 4.6 star rating", explanation: "5 of 6 readers noted the rating. Fact F-11 supports both the score and the review count.", citation: fa("F-11"), span: sp(body, "2,310 verified buyers (4.6 stars)"), belief: { statement: "Buyers rate the serum 4.6 out of 5", category: "endorsement", k: 5, verdict: "supported", fact_code: "F-11" } }),
     ];
-    subs.push({ number: 139, title: "Nykaa banner: top-rated Vitamin C", channel: "nykaa", lang: "en", intent: "Velura is the top-rated Vitamin C serum on Nykaa.", status: "published", author: "creator", locked: ["2,310 verified buyers"], url: "https://www.nykaa.com/velura/velura-vitamin-c-serum/p/10042", cites: [{ code: "F-10", version: 1 }, { code: "F-11", version: 1 }], ageDays: 21,
+    subs.push({ number: 139, title: "Nykaa banner: top-rated Vitamin C", channel: "nykaa", lang: "en", intent: "Velura is the top-rated Vitamin C serum on Nykaa.", status: "published", author: "creator", locked: ["2,310 verified buyers"], url: `${SITE}/store/velura-vitamin-c-nykaa`, cites: [{ code: "F-10", version: 1 }, { code: "F-11", version: 1 }], ageDays: 21,
       versions: [{ n: 1, body, alt: null, findings: fs, summary: summary(fs, 6, 8300), ageDays: 21 }] });
   }
 
@@ -338,6 +341,57 @@ function buildSubmissions(): SeedSub[] {
       versions: [{ n: 1, body, alt: null, findings: fs, summary: summary(fs, 5, 9900), ageDays: 30 }] });
   }
 
+  // #145-147: an approved English master and two translations linked to it (Round 3: cross-language consistency)
+  const MASTER_145 = "Velura Vitamin C serum. 71% saw more radiant skin in 4 weeks.* Gentle enough for daily use.\n*Results may vary.";
+  {
+    const body = MASTER_145;
+    const findings = [
+      F({ id: "f145-1", engine: "ai", category: "claim", severity: "low", title: "Belief supported: 71% saw more radiant skin at week 4", explanation: "6 of 6 readers took away that most, not all, users saw more radiant skin after four weeks. Fact F-07 supports it, including the timeframe.", citation: fa("F-07"), span: sp(body, "71% saw more radiant skin in 4 weeks"), belief: { statement: "Most users saw more radiant skin after four weeks", category: "efficacy", k: 6, verdict: "supported", fact_code: "F-07" } }),
+    ];
+    subs.push({ number: 145, title: "Website banner: Vitamin C results", channel: "website", lang: "en", intent: "Most users see more radiant skin after four weeks of Velura Vitamin C serum.", status: "approved", author: "creator", locked: ["*Results may vary."], cites: [{ code: "F-07", version: 1 }], ageDays: 6,
+      versions: [{ n: 1, body, findings, summary: summary(findings, 6, 41_200), ageDays: 6 }] });
+  }
+  {
+    const body = "Velura विटामिन C सीरम। 4 हफ्तों में पक्का निखार।* रोज़ इस्तेमाल के लिए सौम्य।\n*परिणाम अलग हो सकते हैं।";
+    const drift = (o: { id: string; kind: "new_belief" | "strengthened"; title: string; explanation: string; span: Span; statement: string; category: BeliefCategory; k: number; fix: string }): Finding => ({
+      ...F({ id: o.id, engine: "ai", category: "language_drift", severity: "high", title: o.title, explanation: o.explanation, citation: cl("G-13"), span: o.span, belief: { statement: o.statement, category: o.category, k: o.k, verdict: "unsupported" } }),
+      clause_code: "G-13", drift_kind: o.kind,
+      suggestion: { replacement: o.fix, rationale: "Keeps the translation at the strength of the English master.", source: "translation", reread: { passed: true, unsupported_before: 2, unsupported_after: 0, new_unsupported: 0, still_held: false, intent_kept: 6, of: 6 } },
+    });
+    const findings = [
+      drift({ id: "drift-1-guarantee", kind: "new_belief", title: "Added in Hindi: The glow is guaranteed", explanation: "6 of 6 readers believe this from the Hindi version. The English master (#145) does not say this at all. पक्का means “certain” or “guaranteed”; the English never promises a result.", span: sp(body, "पक्का निखार"), statement: "The glow is guaranteed", category: "guarantee", k: 6, fix: "निखार दिख सकता है" }),
+      drift({ id: "drift-2-efficacy", kind: "strengthened", title: "Made stronger in Hindi: Everyone gets glowing skin in 4 weeks", explanation: "5 of 6 readers believe this from the Hindi version. The English master only says “71% of users saw more radiant skin after 4 weeks”. The Hindi drops “71% saw”, so the result reads as certain for everyone.", span: sp(body, "4 हफ्तों में"), statement: "Everyone gets glowing skin within 4 weeks", category: "efficacy", k: 5, fix: "71% लोगों को 4 हफ्तों में" }),
+    ];
+    const rows: DriftRow[] = [
+      { kind: "new_belief", category: "guarantee", master: null, variant: { belief: "The glow is guaranteed", quote: "पक्का निखार", strength: 3, readers: 6 }, explanation: "पक्का means “certain” or “guaranteed”; the English never promises a result.", fix: "निखार दिख सकता है" },
+      { kind: "strengthened", category: "efficacy", master: { belief: "71% of users saw more radiant skin after 4 weeks", quote: "71% saw more radiant skin in 4 weeks", strength: 2, readers: 6 }, variant: { belief: "Everyone gets glowing skin within 4 weeks", quote: "4 हफ्तों में पक्का निखार", strength: 3, readers: 5 }, explanation: "The Hindi drops “71% saw” and adds पक्का, so the result reads as certain for everyone.", fix: "71% लोगों को 4 हफ्तों में" },
+      { kind: "same", category: "health", master: { belief: "Gentle enough to use every day", quote: "Gentle enough for daily use", strength: 2, readers: 5 }, variant: { belief: "Gentle enough to use every day", quote: "रोज़ इस्तेमाल के लिए सौम्य", strength: 2, readers: 5 }, explanation: "Same claim in both." },
+      { kind: "same", category: "efficacy", master: { belief: "Results differ from person to person", quote: "*Results may vary.", strength: 1, readers: 3 }, variant: { belief: "Results differ from person to person", quote: "*परिणाम अलग हो सकते हैं।", strength: 1, readers: 3 }, explanation: "The disclaimer is translated faithfully." },
+    ];
+    const R146: SeedReader[] = [
+      ["Urban working woman, 25-34", true, "A Vitamin C serum that will definitely make my skin glow in four weeks.", ["confident"], [["Glowing skin is certain in 4 weeks", "4 हफ्तों में पक्का निखार", "guarantee"]]],
+      ["College student on a budget", true, "Pakka glow in a month, gentle for daily use.", ["confident", "salesy"], [["The glow is guaranteed", "पक्का निखार", "guarantee"]]],
+      ["Skin-concern-focused reader, 35+", true, "Promises a sure glow in 4 weeks; the fine print says results vary, which contradicts it.", ["overpromising"], [["Results are guaranteed in 4 weeks", "4 हफ्तों में पक्का निखार", "guarantee"]]],
+      ["builtin-literal", true, "Use it for 4 weeks and you will surely glow.", ["certain"], [["Everyone glows within 4 weeks", "4 हफ्तों में", "efficacy"]]],
+      ["builtin-hindi", true, "पक्का निखार sounds like a promise: the glow will definitely come.", ["pushy"], [["A glow is promised", "पक्का निखार", "guarantee"]]],
+      ["builtin-asci", false, "An absolute efficacy promise that the approved English claim does not make.", ["misleading"], [["Guaranteed result claim", "पक्का निखार", "guarantee"]]],
+    ];
+    const sum: CheckSummary = { ...summary(findings, 5, 52_800, 0, R146), drift: { master_id: "", master_number: 145, master_version: 1, master_lang: "en", master_body: MASTER_145, rows, of: 6 } };
+    subs.push({ number: 146, title: "Website banner: Vitamin C results (Hindi)", channel: "website", lang: "hi", intent: "Most users see more radiant skin after four weeks of Velura Vitamin C serum.", status: "in_review", author: "agency", locked: [], master: 145, cites: [], ageDays: 3,
+      versions: [{ n: 1, body, findings, summary: sum, ageDays: 3 }] });
+  }
+  {
+    const body = "Velura வைட்டமின் C சீரம். 71% பேர் 4 வாரங்களில் சருமம் அதிக பொலிவாக இருப்பதைக் கண்டனர்.* தினசரி பயன்பாட்டுக்கு மென்மையானது.\n*முடிவுகள் மாறுபடலாம்.";
+    const rows: DriftRow[] = [
+      { kind: "same", category: "efficacy", master: { belief: "71% of users saw more radiant skin after 4 weeks", quote: "71% saw more radiant skin in 4 weeks", strength: 2, readers: 6 }, variant: { belief: "71% of users saw more radiant skin after 4 weeks", quote: "71% பேர் 4 வாரங்களில் சருமம் அதிக பொலிவாக இருப்பதைக் கண்டனர்", strength: 2, readers: 6 }, explanation: "The percentage and the timeframe are kept." },
+      { kind: "same", category: "health", master: { belief: "Gentle enough to use every day", quote: "Gentle enough for daily use", strength: 2, readers: 5 }, variant: { belief: "Gentle enough to use every day", quote: "தினசரி பயன்பாட்டுக்கு மென்மையானது", strength: 2, readers: 5 }, explanation: "Same claim in both." },
+      { kind: "same", category: "efficacy", master: { belief: "Results differ from person to person", quote: "*Results may vary.", strength: 1, readers: 3 }, variant: { belief: "Results differ from person to person", quote: "*முடிவுகள் மாறுபடலாம்.", strength: 1, readers: 3 }, explanation: "The disclaimer is translated faithfully." },
+    ];
+    const sum: CheckSummary = { ...summary([], 6, 47_900), drift: { master_id: "", master_number: 145, master_version: 1, master_lang: "en", master_body: MASTER_145, rows, of: 6 } };
+    subs.push({ number: 147, title: "Website banner: Vitamin C results (Tamil)", channel: "website", lang: "ta", intent: "Most users see more radiant skin after four weeks of Velura Vitamin C serum.", status: "draft", author: "creator", locked: [], master: 145, cites: [], ageDays: 2,
+      versions: [{ n: 1, body, findings: [], summary: sum, ageDays: 2 }] });
+  }
+
   return subs;
 }
 
@@ -404,18 +458,26 @@ async function main() {
   } else console.warn("  public/demo/velura-142.png missing; run: pnpm tsx scripts/make-demo-image.ts");
 
   // submissions
-  const subs = buildSubmissions();
+  // translations need migration 0003 (master_id, Tamil/Marathi); without it they are skipped with a warning
+  const migrated = !(await admin.from("submissions").select("master_id").limit(1)).error;
+  const subs = buildSubmissions().filter((s) => migrated || !s.master);
+  if (!migrated) console.warn("  translations #146-147 skipped: run supabase/migrations/0003_round3.sql, then seed again");
   const subIds = new Map<number, string>();
   const verHash = new Map<string, string>();
   for (const s of subs) {
+    const masterId = s.master ? subIds.get(s.master)! : null;
     const row = must(await admin.from("submissions").upsert({
       brand_id: brandId, number: s.number, title: s.title, channel: s.channel, lang: s.lang, intent: s.intent,
       status: s.status, author_id: users[s.author].id, locked_phrases: s.locked, published_url: s.url ?? null,
       created_at: daysFromNow(-s.ageDays), updated_at: daysFromNow(-Math.max(0, s.ageDays - 1)),
+      ...(migrated ? { master_id: masterId } : {}),
     }, { onConflict: "number" }).select("id").single(), `submission ${s.number}`);
     subIds.set(s.number, row.id);
+    // a reset removes versions visitors added on top of the seeded ones
+    must(await admin.from("versions").delete().eq("submission_id", row.id).gt("n", s.versions.length), `trim versions ${s.number}`);
 
     for (const v of s.versions) {
+      if (v.summary.drift && masterId) v.summary.drift.master_id = masterId;
       const hash = sha(`${v.body}\n${v.image ? "velura-142" : ""}\n${v.alt ?? ""}`);
       verHash.set(`${s.number}:${v.n}`, hash);
       must(await admin.from("versions").upsert({
@@ -433,6 +495,14 @@ async function main() {
   if (cites.length) must(await admin.from("fact_citations").insert(cites), "citations");
   console.log(`  ${subs.length} submissions, ${cites.length} fact citations`);
 
+  // demo storefront pages (migration 0003): the published demo posts link to them, so recall checks can fetch them
+  {
+    const { DEMO_PAGES } = await import("../src/lib/recall/demo-pages");
+    const { error } = await admin.from("live_pages").upsert(
+      Object.entries(DEMO_PAGES).map(([slug, p]) => ({ slug, brand_id: brandId, title: p.title, body: p.body })), { onConflict: "slug" });
+    console.log(error ? `  demo store pages skipped (${error.message})` : `  ${Object.keys(DEMO_PAGES).length} demo store pages`);
+  }
+
   // comments
   const S = (n: number) => subIds.get(n)!;
   const v1 = subs.find((s) => s.number === 140)!.versions[0].body;
@@ -448,13 +518,19 @@ async function main() {
     { n: 142, ver: 1, who: "reviewer" as Role, body: "Lab coat plus “Dermatologist-loved” reads as a doctor's endorsement to half the readers. Needs a decision.", anchor: sp(v142, "Dermatologist-loved"), age: 1 },
     { n: 142, ver: 1, who: "agency" as Role, body: "The lab coat is in the approved brief. Happy to swap the headline to “Dermatologist-tested”.", anchor: null, age: 1 },
     { n: 144, ver: 1, who: "owner" as Role, body: "Recalled: clinical and dermatologist claims were not substantiated. Do not repost.", anchor: null, age: 14 },
+    ...(subIds.has(146) ? [{ n: 146, ver: 1, who: "reviewer" as Role, body: "पक्का reads as a guarantee, and the 71% has disappeared. Please match the English master (#145).", anchor: sp(subs.find((x) => x.number === 146)!.versions[0].body, "पक्का निखार"), age: 2 }] : []),
   ].map((c) => ({ submission_id: S(c.n), version_n: c.ver, author_id: users[c.who].id, body: c.body, anchor: c.anchor, created_at: daysFromNow(-c.age) }));
   must(await admin.from("comments").insert(comments), "comments");
   console.log(`  ${comments.length} comments`);
 
   // audit log (append-only: only seed once)
   const { count } = await admin.from("audit_log").select("id", { count: "exact", head: true }).eq("detail->>seed", "true");
-  if ((count ?? 0) > 0) {
+  // submissions added to the seed later (e.g. the Round 3 translations) still get their own history
+  const { data: had } = await admin.from("audit_log").select("submission_id").in("submission_id", ids);
+  const hasAudit = new Set((had ?? []).map((r: { submission_id: string }) => r.submission_id));
+  const seededBefore = (count ?? 0) > 0;
+  const auditSubs = seededBefore ? subs.filter((s) => !hasAudit.has(subIds.get(s.number)!)) : subs;
+  if (seededBefore && !auditSubs.length) {
     console.log(`  audit log already seeded (${count} entries), skipping`);
   } else {
     const actor = (r: Role) => ({ actor_id: users[r].id, actor_name: users[r].name, actor_role: r });
@@ -472,14 +548,16 @@ async function main() {
         },
       });
     };
-    for (const f of FACTS.filter((x) => ["F-03", "F-07", "F-12", "F-10"].includes(x.code))) {
-      push(60, null, "owner", "fact_created", { code: f.code, to_version: 1 }, { facts: { [f.code]: 1 } });
+    if (!seededBefore) {
+      for (const f of FACTS.filter((x) => ["F-03", "F-07", "F-12", "F-10"].includes(x.code))) {
+        push(60, null, "owner", "fact_created", { code: f.code, to_version: 1 }, { facts: { [f.code]: 1 } });
+      }
+      push(40, null, "owner", "fact_edited", { code: "F-03", from_version: 1, to_version: 2, status: "active" }, { facts: { "F-03": 2 } });
+      push(12, null, "owner", "fact_edited", { code: "F-12", from_version: 1, to_version: 2, status: "active", note: "Re-ran ISO 16128 calculation with new supplier data" }, { facts: { "F-12": 2 } });
     }
-    push(40, null, "owner", "fact_edited", { code: "F-03", from_version: 1, to_version: 2, status: "active" }, { facts: { "F-03": 2 } });
-    push(12, null, "owner", "fact_edited", { code: "F-12", from_version: 1, to_version: 2, status: "active", note: "Re-ran ISO 16128 calculation with new supplier data" }, { facts: { "F-12": 2 } });
-    for (const s of subs) {
+    for (const s of auditSubs) {
       const who = s.author;
-      push(s.ageDays, s.number, who, "submission_created", { title: s.title, version: 1 }, { v: 1, facts: null });
+      push(s.ageDays, s.number, who, "submission_created", { title: s.title, version: 1, ...(s.master ? { translation_of: s.master, lang: s.lang } : {}) }, { v: 1, facts: null });
       for (const v of s.versions) {
         if (v.n > 1) push(v.ageDays, s.number, who, "version_added", { version: v.n }, { v: v.n, facts: null });
         push(v.ageDays - 0.01, s.number, who, "check_run", { version: v.n, rule_count: v.summary.rule_count, ai_count: v.summary.ai_count, high: v.summary.high, mode: "cloud", model: MODEL }, { v: v.n });
@@ -492,8 +570,10 @@ async function main() {
       if (["published", "recalled"].includes(s.status)) push(age - 0.25, s.number, "creator", "published_url_recorded", { url: s.url, from: "approved", to: "published" }, { v: last });
       if (s.status === "recalled") push(14, s.number, "owner", "recalled", { from: "published", to: "recalled", note: "Unsubstantiated clinical claims." }, { v: last });
     }
-    push(6, 139, "owner", "recall_enqueued", { fact_code: "F-10", reason: "F-10 expired" }, { facts: { "F-10": 1 } });
-    push(12, 138, "owner", "recall_enqueued", { fact_code: "F-12", reason: "F-12 changed (cited v1, now v2)" }, { facts: { "F-12": 2 } });
+    if (!seededBefore) {
+      push(6, 139, "owner", "recall_enqueued", { fact_code: "F-10", reason: "F-10 expired" }, { facts: { "F-10": 1 } });
+      push(12, 138, "owner", "recall_enqueued", { fact_code: "F-12", reason: "F-12 changed (cited v1, now v2)" }, { facts: { "F-12": 2 } });
+    }
 
     ev.sort((a, b) => a.t - b.t);
     // insert in chronological order; the DB trigger assigns ids and chains hashes in that order

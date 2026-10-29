@@ -7,6 +7,7 @@ import type { Channel, Lang } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Select, Textarea } from "@/components/ui/Field";
 import { channelLabel, langLabel } from "@/components/format";
+import { LANG_TAG } from "@/lib/lang";
 
 const EXAMPLE = {
   title: "Vitamin C serum launch, Instagram post",
@@ -20,14 +21,25 @@ const EXAMPLE = {
 
 type Errors = Partial<Record<"title" | "body" | "intent" | "channel" | "lang" | "locked" | "image" | "form", string>>;
 
-export function NewDraftForm() {
+const TRANSLATION_EXAMPLE: Partial<Record<Lang, string>> = {
+  hi: "Velura विटामिन C सीरम। 4 हफ्तों में पक्का निखार। रोज़ इस्तेमाल के लिए सौम्य।",
+  hinglish: "Velura Vitamin C serum. 4 hafte mein pakka glow. Daily use ke liye gentle.",
+  ta: "Velura வைட்டமின் C சீரம். 4 வாரங்களில் நிச்சயம் பொலிவு. தினசரி பயன்பாட்டுக்கு மென்மையானது.",
+  mr: "Velura व्हिटॅमिन C सीरम. 4 आठवड्यांत नक्की तेज. रोजच्या वापरासाठी सौम्य.",
+};
+
+export interface MasterInfo {
+  id: string; number: number; title: string; body: string; version: number; channel: Channel; intent: string; lang: Lang;
+}
+
+export function NewDraftForm({ master = null }: { master?: MasterInfo | null }) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
-  const [title, setTitle] = useState("");
-  const [channel, setChannel] = useState<Channel>("instagram");
-  const [lang, setLang] = useState<Lang>("en");
+  const [title, setTitle] = useState(master ? `${master.title} (Hindi)` : "");
+  const [channel, setChannel] = useState<Channel>(master?.channel ?? "instagram");
+  const [lang, setLang] = useState<Lang>(master ? "hi" : "en");
   const [body, setBody] = useState("");
-  const [intent, setIntent] = useState("");
+  const [intent, setIntent] = useState(master?.intent ?? "");
   const [locked, setLocked] = useState("");
   const [alt, setAlt] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -101,6 +113,7 @@ export function NewDraftForm() {
     fd.set("locked", locked);
     fd.set("alt", alt);
     if (file) fd.set("image", file);
+    if (master) fd.set("master", master.id);
     try {
       const res = await fetch("/api/submissions", { method: "POST", body: fd });
       const json = (await res.json().catch(() => ({}))) as {
@@ -125,6 +138,28 @@ export function NewDraftForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate>
+      {master ? (
+        <div className="mb-8 flex flex-col gap-3 rounded-md border border-rule bg-sheet px-5 py-4">
+          <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <p className="text-[14px] font-medium">
+              Translating <span className="font-mono text-[12.5px]">#{master.number}</span> {master.title}{" "}
+              <span className="font-normal text-muted">(English, v{master.version})</span>
+            </p>
+            {TRANSLATION_EXAMPLE[lang] && (
+              <Button size="sm" onClick={() => setBody(TRANSLATION_EXAMPLE[lang]!)} disabled={submitting}>
+                Fill in a sample {langLabel[lang]} translation
+              </Button>
+            )}
+          </div>
+          <p className="whitespace-pre-wrap rounded-[4px] border border-rule bg-paper px-3 py-2 font-display text-[16px] leading-relaxed">
+            {master.body}
+          </p>
+          <p className="text-[12.5px] text-muted">
+            The sample is a realistic agency translation that quietly makes a claim stronger, so you can see the comparison
+            catch it.
+          </p>
+        </div>
+      ) : (
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-md border border-rule bg-sheet px-5 py-4">
         <div>
           <p className="text-[14px] font-medium">Trying Readback for the first time?</p>
@@ -138,6 +173,7 @@ export function NewDraftForm() {
           Fill in the demo draft
         </Button>
       </div>
+      )}
 
       <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <div className="flex flex-col gap-5">
@@ -158,8 +194,16 @@ export function NewDraftForm() {
             </Field>
             <Field label="Language" error={errors.lang}>
               {(p) => (
-                <Select {...p} value={lang} onChange={(e) => setLang(e.target.value as Lang)}>
-                  {(Object.keys(langLabel) as Lang[]).map((l) => (
+                <Select
+                  {...p}
+                  value={lang}
+                  onChange={(e) => {
+                    const next = e.target.value as Lang;
+                    if (master && title === `${master.title} (${langLabel[lang]})`) setTitle(`${master.title} (${langLabel[next]})`);
+                    setLang(next);
+                  }}
+                >
+                  {(Object.keys(langLabel) as Lang[]).filter((l) => !master || l !== "en").map((l) => (
                     <option key={l} value={l}>
                       {langLabel[l]}
                     </option>
@@ -179,6 +223,7 @@ export function NewDraftForm() {
                 required
                 aria-required
                 rows={7}
+                lang={LANG_TAG[lang]}
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 className="font-display text-[18px] leading-[1.6]"
@@ -257,7 +302,11 @@ export function NewDraftForm() {
           {submitting && <LoaderCircle size={16} className="animate-spin" aria-hidden />}
           {submitting ? "Saving draft" : "Save and run check"}
         </Button>
-        <p className="text-[13px] text-muted">Next: the checks run and findings appear as they arrive.</p>
+        <p className="text-[13px] text-muted">
+          {master
+            ? "Next: the checks run, then readers compare this translation with the English master."
+            : "Next: the checks run and findings appear as they arrive."}
+        </p>
         {errors.form && (
           <p role="alert" className="w-full text-[13.5px] text-proof">
             {errors.form}

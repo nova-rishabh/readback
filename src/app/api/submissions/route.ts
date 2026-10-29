@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { createSubmission, getSessionUser } from "@/lib/db/queries";
 import type { Channel, Lang } from "@/lib/types";
+import { isLang } from "@/lib/lang";
 
 export const runtime = "nodejs";
 
 const CHANNELS: Channel[] = ["instagram", "website", "amazon", "nykaa", "whatsapp", "email", "other"];
-const LANGS: Lang[] = ["en", "hi", "hinglish"];
 const MAX_IMAGE = 8 * 1024 * 1024;
 
 function sniffImage(b: Buffer): string | null {
@@ -42,6 +42,7 @@ export async function POST(req: Request) {
     .map((s) => s.trim())
     .filter(Boolean);
   const altRaw = String(form.get("alt") ?? "").trim();
+  const masterId = String(form.get("master") ?? "").trim() || null;
 
   const errors: Record<string, string> = {};
   if (!title) errors.title = "Give the draft a title your reviewer will recognise.";
@@ -51,7 +52,9 @@ export async function POST(req: Request) {
   if (body.length > 5000) errors.body = "Keep the copy under 5,000 characters; split longer pieces into separate drafts.";
   if (intent.length > 300) errors.intent = "Keep the intended takeaway to one line (under 300 characters).";
   if (!CHANNELS.includes(channel)) errors.channel = "Pick a channel.";
-  if (!LANGS.includes(lang)) errors.lang = "Pick a language.";
+  if (!isLang(lang)) errors.lang = "Pick a language.";
+  if (masterId && lang === "en") errors.lang = "A translation needs a language other than English.";
+  if (masterId && !/^[0-9a-f-]{36}$/i.test(masterId)) errors.form = "The master draft link is not valid.";
   for (const p of lockedPhrases) {
     if (!body.toLowerCase().includes(p.toLowerCase())) errors.locked = `Locked phrase “${p}” does not appear in the copy.`;
   }
@@ -72,9 +75,12 @@ export async function POST(req: Request) {
   if (Object.keys(errors).length) return NextResponse.json({ errors }, { status: 422 });
 
   try {
-    const ids = await createSubmission({ title, channel, lang, intent, body, lockedPhrases, image });
+    const ids = await createSubmission({ title, channel, lang, intent, body, lockedPhrases, image, masterId });
     return NextResponse.json(ids);
   } catch (e) {
-    return NextResponse.json({ error: e instanceof Error ? e.message : "Could not save the draft." }, { status: 500 });
+    const msg = e instanceof Error ? e.message : "Could not save the draft.";
+    if (/master_id|submissions_lang_check/.test(msg))
+      return NextResponse.json({ error: "Translations need the Round 3 database update (supabase/migrations/0003_round3.sql). Ask the workspace admin to run it." }, { status: 503 });
+    return NextResponse.json({ error: msg }, { status: /not found|translation|English master|language/i.test(msg) ? 422 : 500 });
   }
 }

@@ -2,7 +2,7 @@
 
 import { clsx } from "clsx";
 import { Check, LoaderCircle, X } from "lucide-react";
-import type { BrandSpace, Persona, ReaderResult } from "@/lib/types";
+import type { BrandSpace, Lang, Persona, ReaderResult } from "@/lib/types";
 import { panelFor } from "@/lib/ai/personas";
 import { Button } from "@/components/ui/Button";
 import { STAGES, type StreamState } from "./useCheckStream";
@@ -66,10 +66,10 @@ function ReaderCard({ name, builtin, result, waiting }: { name: string; builtin:
   );
 }
 
-export function StageTrack({ state }: { state: StreamState }) {
+export function StageTrack({ state, translation = false }: { state: StreamState; translation?: boolean }) {
   return (
     <ol className="flex flex-wrap gap-x-3 gap-y-1 text-[12px]" aria-label="Check progress">
-      {STAGES.map((s) => {
+      {STAGES.filter((s) => translation || s.id !== "drift").map((s) => {
         const reached = state.reached.includes(s.id);
         const current = state.status === "running" && state.stage === s.id;
         return (
@@ -99,15 +99,17 @@ export function ReaderPanel({
   onRun,
   canRun,
   saved,
+  lang,
 }: {
   personas: Persona[];
+  lang?: Lang; // a Tamil or Marathi draft swaps in that language's native reader
   state: StreamState;
   onRun: () => void;
   canRun: boolean;
   saved?: ReaderResult[]; // readers stored with the last finished check, shown when no check is running
 }) {
   // same panel the engine reads with: up to 3 brand personas plus the 3 built-in readers
-  const slots: { id: string; name: string; builtin: boolean }[] = panelFor({ personas } as BrandSpace).map((p) => ({ id: p.id, name: p.name, builtin: p.builtin }));
+  const slots: { id: string; name: string; builtin: boolean }[] = panelFor({ personas } as BrandSpace, lang).map((p) => ({ id: p.id, name: p.name, builtin: p.builtin }));
   const live = state.status !== "idle";
   const readers = live ? state.readers : (saved ?? []);
   const show = live || readers.length > 0;

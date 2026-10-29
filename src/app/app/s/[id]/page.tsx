@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getBrand, getSessionUser, getSubmission, signedImageUrl } from "@/lib/db/queries";
+import { getBrand, getMaster, getSessionUser, getSubmission, listVariants, signedImageUrl } from "@/lib/db/queries";
 import { ReviewScreen } from "@/components/review/ReviewScreen";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -27,6 +27,11 @@ export default async function ReviewPage({
   const current = requested ?? latest;
   const previous = versions.find((v) => v.n === current.n - 1) ?? null;
 
+  const [master, variants] = await Promise.all([
+    record.submission.master_id ? getMaster(record.submission.master_id).catch(() => null) : Promise.resolve(null),
+    record.submission.master_id ? Promise.resolve([]) : listVariants(record.submission.id).catch(() => []),
+  ]);
+
   const imageUrl = current.image_path ? await signedImageUrl(current.image_path).catch(() => null) : null;
 
   const neverChecked = !current.summary && current.findings.length === 0;
@@ -48,6 +53,8 @@ export default async function ReviewPage({
       facts={brand.facts}
       imageUrl={imageUrl}
       autoRun={autoRun}
+      master={master ? { ...master } : null}
+      variants={variants}
     />
   );
 }

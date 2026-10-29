@@ -1,17 +1,23 @@
 // ASCI-Bench runner: scores Readback's Impression Engine against real ASCI rulings and a single-prompt baseline.
 //
-//   pnpm bench                       20 stratified cases, 1 run, stability re-runs on 5 of them
-//   pnpm bench --limit 100           every case (free-tier Gemini: expect hours and daily-quota stops)
-//   pnpm bench --stability 0         skip the stability re-runs
+//   pnpm bench                       all 100 cases, Readback 3 runs each, baseline once, no fact ledger
+//   pnpm bench --ledger              same, but each case's brand gets the substantiation ASCI accepted
+//                                    (data/asci-evidence.json) as its Fact Ledger, and the baseline sees it too
+//   pnpm bench --limit 20            a stratified slice (keeps the upheld / not-upheld ratio)
+//   pnpm bench --runs 1              fewer Readback runs per case (stability needs 2 or more)
+//   pnpm bench --concurrency 2       cases in flight at once (free-tier Gemini: keep this at 1 or 2)
 //   pnpm bench --mock                deterministic mock readers, no API calls (pipeline smoke test)
 //   pnpm bench --fresh               ignore saved results instead of resuming
 //
-// Per case, Readback "flags" a claim when the panel forms a grounded belief (>= 2 readers) that is contradicted or
-// unsupported. The benchmark brand has an empty Fact Ledger: we do not have each advertiser's evidence, so every
-// checkable claim is "unsupported" and the false-alarm rate is an upper bound. Results are written after every case
-// to data/asci-bench-results.json so a run stopped by quota resumes where it left off.
-import { readFileSync, writeFileSync, existsSync } from "fs";
+// Per run, Readback "flags" a case when the panel forms a grounded belief (>= 2 of 6 readers) that the fact judge
+// finds contradicted or unsupported. The case verdict is the majority of its runs. Results are written after every
+// case, so a run stopped by quota resumes where it left off. Scoring lives in src/lib/bench/metrics.ts and is shared
+// with the in-app results page.
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { z } from "zod";
+import {
+  computeMetrics, majority, pct, type BenchCase, type BenchRow, type CaseEvidence, type Rate,
+} from "../src/lib/bench/metrics";
 
 for (const f of [".env.local", ".env"]) {
   if (!existsSync(f)) continue;
@@ -21,49 +27,42 @@ for (const f of [".env.local", ".env"]) {
   }
 }
 
-interface Case {
-  id: string;
-  advertiser: string;
-  product: string;
-  category: string;
-  medium: string;
-  claim_text: string;
-  outcome: "upheld" | "not_upheld";
-}
-interface Row {
-  id: string;
-  outcome: Case["outcome"];
-  readback: boolean | null; // null = the check failed (quota/overload)
-  baseline: boolean | null;
-  beliefs: string[];
-  repeats: boolean[]; // stability re-runs of Readback
-  ms: number;
-  error?: string;
-}
-
 const arg = (name: string, dflt: number) => {
   const i = process.argv.indexOf(`--${name}`);
   return i >= 0 ? Number(process.argv[i + 1]) : dflt;
 };
-const LIMIT = arg("limit", 20);
-const STABILITY = arg("stability", 5);
-const OUT = "data/asci-bench-results.json";
+const LIMIT = arg("limit", 100);
+const RUNS = Math.max(1, arg("runs", 3));
+const CONCURRENCY = Math.max(1, arg("concurrency", 1));
+const LEDGER = process.argv.includes("--ledger");
+const OUT = LEDGER ? "data/asci-bench-results-ledger.json" : "data/asci-bench-results.json";
 if (process.argv.includes("--mock")) process.env.READBACK_MOCK_AI = "1";
 
 /** Keep the upheld / not-upheld ratio of the full set in the first N cases. */
-function stratified(all: Case[], n: number): Case[] {
+function stratified(all: BenchCase[], n: number): BenchCase[] {
+  if (n >= all.length) return all;
   const up = all.filter((c) => c.outcome === "upheld");
   const no = all.filter((c) => c.outcome === "not_upheld");
   const nNo = Math.round((n * no.length) / all.length);
-  const pick = [...up.slice(0, n - nNo), ...no.slice(0, nNo)];
-  return pick.sort((a, b) => a.id.localeCompare(b.id));
+  return [...up.slice(0, n - nNo), ...no.slice(0, nNo)].sort((a, b) => a.id.localeCompare(b.id));
+}
+
+function loadEvidence(): Map<string, CaseEvidence> {
+  const path = "data/asci-evidence.json";
+  if (!existsSync(path)) return new Map();
+  return new Map((JSON.parse(readFileSync(path, "utf8")) as CaseEvidence[]).map((e) => [e.id, e]));
 }
 
 async function main() {
   const { runCheck } = await import("../src/lib/ai/pipeline");
-  const { callObject, isMock } = await import("../src/lib/ai/provider");
+  const { callObject, isMock, MODEL_NAME } = await import("../src/lib/ai/provider");
   const { BUILTIN_PERSONAS } = await import("../src/lib/ai/personas");
   type Brand = Parameters<typeof runCheck>[0]["brand"];
+
+  const all = JSON.parse(readFileSync("data/asci-bench.json", "utf8")) as BenchCase[];
+  const evidence = loadEvidence();
+  if (LEDGER && !evidence.size) throw new Error("--ledger needs data/asci-evidence.json");
+  const ledgerOf = (c: BenchCase) => (LEDGER ? evidence.get(c.id)?.ledger ?? [] : []);
 
   // Three neutral audience personas + the three built-ins = the usual six-reader panel.
   const audience = [
@@ -71,12 +70,16 @@ async function main() {
     { id: "bench-budget", name: "Budget-conscious student", description: "Compares prices, trusts strong claims if they sound specific.", lang: "en" as const, builtin: false },
     { id: "bench-parent", name: "Parent, 35-45", description: "Buys for the family; cautious about health and safety claims.", lang: "en" as const, builtin: false },
   ];
-  const brandFor = (c: Case): Brand => ({
-    id: "bench", name: c.advertiser, voice_traits: ["accurate", "measured"], palette: [], clauses: [], facts: [], terms: [],
+  const brandFor = (c: BenchCase): Brand => ({
+    id: "bench", name: c.advertiser, voice_traits: ["accurate", "measured"], palette: [], clauses: [], terms: [],
+    facts: ledgerOf(c).map((statement, i) => ({
+      id: `${c.id}-F${i + 1}`, code: `E-${String(i + 1).padStart(2, "0")}`, statement, source: "Substantiation accepted by ASCI",
+      owner: c.advertiser, expires_on: null, version: 1, status: "active" as const,
+    })),
     personas: [...audience, ...BUILTIN_PERSONAS],
   });
 
-  const readback = async (c: Case): Promise<{ flagged: boolean | null; beliefs: string[]; error?: string }> => {
+  const readbackOnce = async (c: BenchCase): Promise<{ flagged: boolean | null; beliefs: string[]; error?: string }> => {
     let error: string | undefined;
     const r = await runCheck(
       {
@@ -87,18 +90,23 @@ async function main() {
         if (e.type === "error") error = e.message;
       },
     ).catch((e: unknown) => ((error = e instanceof Error ? e.message : String(e)), null));
-    if (!r || !r.readers.length) return { flagged: null, beliefs: [], error: error ?? "no readers answered" };
+    if (!r || !r.readers.length || r.summary.partial) return { flagged: null, beliefs: [], error: error ?? "no readers answered" };
     const bad = r.findings.filter((f) => f.belief && (f.belief.verdict === "contradicted" || f.belief.verdict === "unsupported"));
-    return { flagged: bad.length > 0, beliefs: bad.map((f) => `${f.belief!.readers}/${f.belief!.of} ${f.belief!.statement}`), error };
+    return { flagged: bad.length > 0, beliefs: bad.map((f) => `${f.belief!.readers}/${f.belief!.of} ${f.belief!.statement} [${f.belief!.verdict}]`), error };
   };
 
-  const baseline = async (c: Case): Promise<boolean | null> => {
-    if (isMock()) return /\d+%|guarantee|best|#1|cure|instant|100%|proven/i.test(c.claim_text);
+  const baseline = async (c: BenchCase): Promise<boolean | null> => {
+    const ledger = ledgerOf(c);
+    if (isMock()) return /\d+%|guarantee|best|#1|cure|instant|100%|proven/i.test(c.claim_text) && !ledger.length;
     try {
       const o = await callObject({
         schema: z.object({ misleading: z.boolean() }),
         system: "You are an advertising compliance checker for India.",
-        prompt: `Advertiser: ${c.advertiser}. Product: ${c.product}.\nAd claim:\n"""\n${c.claim_text}\n"""\nIs this ad likely to be found misleading under the ASCI Code?`,
+        prompt: [
+          `Advertiser: ${c.advertiser}. Product: ${c.product}.\nAd claim:\n"""\n${c.claim_text}\n"""`,
+          ledger.length ? `The advertiser holds this substantiation:\n${ledger.map((l) => `- ${l}`).join("\n")}` : "",
+          "Is this ad likely to be found misleading under the ASCI Code?",
+        ].filter(Boolean).join("\n\n"),
         temperature: 0,
       });
       return o.misleading;
@@ -107,57 +115,66 @@ async function main() {
     }
   };
 
-  const all = JSON.parse(readFileSync("data/asci-bench.json", "utf8")) as Case[];
   const cases = stratified(all, Math.min(LIMIT, all.length));
   const mode = isMock() ? "mock" : "cloud";
   const prev = !process.argv.includes("--fresh") && existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : null;
-  const rows = new Map<string, Row>(prev?.mode === mode ? (prev.rows as Row[]).map((r) => [r.id, r]) : []);
+  const rows = new Map<string, BenchRow>(
+    prev?.mode === mode && prev?.version === 3 ? (prev.rows as BenchRow[]).map((r) => [r.id, r]) : [],
+  );
+  const started = prev?.started_at ?? new Date().toISOString();
   const save = () =>
-    writeFileSync(OUT, JSON.stringify({ generated_at: new Date().toISOString(), mode, limit: LIMIT, metrics: metrics([...rows.values()]), rows: [...rows.values()] }, null, 2));
+    writeFileSync(OUT, JSON.stringify({
+      version: 3, mode, ledger: LEDGER, runs: RUNS, model: MODEL_NAME, started_at: started, generated_at: new Date().toISOString(),
+      cases: cases.length, metrics: computeMetrics([...rows.values()], cases, evidence), rows: [...rows.values()],
+    }, null, 2));
 
-  console.log(`ASCI-Bench: ${cases.length} cases (${mode} mode), stability re-runs on ${Math.min(STABILITY, cases.length)}\n`);
-  for (const [i, c] of cases.entries()) {
-    const done = rows.get(c.id);
-    const wantRepeats = i < STABILITY ? 2 : 0;
-    if (done && done.readback !== null && done.baseline !== null && done.repeats.length >= wantRepeats) continue;
+  console.log(`ASCI-Bench: ${cases.length} cases, ${RUNS} Readback run(s) each, ${LEDGER ? "with" : "without"} evidence ledger (${mode})\n`);
+  const done = (r: BenchRow | undefined) =>
+    !!r && r.baseline !== null && r.runs.length >= RUNS && r.runs.filter((x) => x !== null).length >= Math.min(RUNS, 2);
+  const todo = cases.filter((c) => !done(rows.get(c.id)));
+
+  const one = async (c: BenchCase) => {
     const t = Date.now();
-    const r = await readback(c);
-    const b = await baseline(c);
-    const repeats: boolean[] = [];
-    for (let k = 0; k < wantRepeats && r.flagged !== null; k++) {
-      const again = await readback(c);
-      if (again.flagged !== null) repeats.push(again.flagged);
+    const old = rows.get(c.id);
+    const runs = (old?.runs ?? []).filter((x) => x !== null);
+    let beliefs = old?.beliefs ?? [];
+    let error: string | undefined;
+    for (let tries = 0; runs.length < RUNS && tries < RUNS + 2; tries++) {
+      const r = await readbackOnce(c);
+      if (r.flagged === null) {
+        error = r.error;
+        if (/quota|overloaded|503|429/i.test(r.error ?? "")) await new Promise((res) => setTimeout(res, 30_000));
+        continue;
+      }
+      if (!runs.length || !beliefs.length) beliefs = r.beliefs;
+      runs.push(r.flagged);
     }
-    const row: Row = { id: c.id, outcome: c.outcome, readback: r.flagged, baseline: b, beliefs: r.beliefs, repeats, ms: Date.now() - t, error: r.error };
+    const b = old?.baseline ?? (await baseline(c));
+    const row: BenchRow = { id: c.id, outcome: c.outcome, runs, readback: majority(runs), baseline: b, beliefs, ms: Date.now() - t, error: runs.length < RUNS ? error : undefined };
     rows.set(c.id, row);
     save();
     const mark = (v: boolean | null) => (v === null ? "ERR " : v ? "FLAG" : "pass");
-    console.log(`${c.id.padEnd(9)} ${c.outcome.padEnd(10)} readback ${mark(r.flagged)}  baseline ${mark(b)}  ${((Date.now() - t) / 1000).toFixed(1)}s${r.error ? `  (${r.error.slice(0, 60)})` : ""}`);
-  }
+    console.log(
+      `${c.id.padEnd(9)} ${c.outcome.padEnd(10)} readback ${mark(row.readback)} [${runs.map((x) => (x ? "F" : "p")).join("")}]  baseline ${mark(b)}  ${((Date.now() - t) / 1000).toFixed(1)}s${row.error ? `  (${row.error.slice(0, 60)})` : ""}`,
+    );
+  };
 
-  const m = metrics([...rows.values()].filter((r) => cases.some((c) => c.id === r.id)));
+  const queue = [...todo];
+  await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
+    for (let c = queue.shift(); c; c = queue.shift()) await one(c);
+  }));
+
   save();
-  const pct = (x: number | null) => (x === null ? "  n/a" : `${(x * 100).toFixed(1).padStart(5)}%`);
-  console.log(`\n                         Readback   Single-prompt baseline`);
-  console.log(`Recall on Upheld         ${pct(m.readback.recall)}     ${pct(m.baseline.recall)}`);
-  console.log(`False alarms, Not Upheld ${pct(m.readback.false_alarm)}     ${pct(m.baseline.false_alarm)}`);
-  console.log(`Run-to-run stability     ${pct(m.readback.stability)}       (not measured)`);
+  const m = computeMetrics([...rows.values()], cases, evidence);
+  const show = (r: Rate) => `${pct(r).padStart(6)} (${r.k}/${r.n})`;
+  console.log(`\n                          Readback            Single-prompt baseline`);
+  console.log(`Recall on upheld          ${show(m.readback.recall)}   ${show(m.baseline.recall)}`);
+  console.log(`False alarms, not upheld  ${show(m.readback.false_alarm)}   ${show(m.baseline.false_alarm)}`);
+  console.log(`Precision                 ${show(m.readback.precision)}   ${show(m.baseline.precision)}`);
+  console.log(`Run-to-run stability      ${show(m.readback.stability)}`);
+  for (const g of m.byGround) console.log(`  recall, ${g.ground.padEnd(16)} ${show(g.readback)}   ${show(g.baseline)}`);
   console.log(`\nScored ${m.scored} of ${cases.length} cases (${m.upheld} upheld, ${m.not_upheld} not upheld); ${m.errors} failed and are excluded.`);
   console.log(`Saved to ${OUT}`);
-}
-
-function metrics(rows: Row[]) {
-  const ok = rows.filter((r) => r.readback !== null && r.baseline !== null);
-  const up = ok.filter((r) => r.outcome === "upheld");
-  const no = ok.filter((r) => r.outcome === "not_upheld");
-  const rate = (xs: Row[], k: "readback" | "baseline") => (xs.length ? xs.filter((r) => r[k]).length / xs.length : null);
-  const reps = ok.filter((r) => r.repeats.length);
-  const stable = reps.filter((r) => r.repeats.every((x) => x === r.readback)).length;
-  return {
-    scored: ok.length, upheld: up.length, not_upheld: no.length, errors: rows.length - ok.length,
-    readback: { recall: rate(up, "readback"), false_alarm: rate(no, "readback"), stability: reps.length ? stable / reps.length : null },
-    baseline: { recall: rate(up, "baseline"), false_alarm: rate(no, "baseline") },
-  };
 }
 
 main().catch((e) => {

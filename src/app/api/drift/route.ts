@@ -2,6 +2,7 @@ import { getBrand, getSessionUser } from "@/lib/db/queries";
 import { compareVersions } from "@/lib/ai/drift";
 import { QuotaError } from "@/lib/ai/provider";
 import type { Lang } from "@/lib/types";
+import { isLang } from "@/lib/lang";
 import { keyFrom } from "@/lib/ai/key-header";
 
 export const runtime = "nodejs";
@@ -19,7 +20,7 @@ export async function POST(req: Request) {
   if (master.length > 4000 || variant.length > 4000) return Response.json({ error: "Each version can be at most 4,000 characters." }, { status: 400 });
   try {
     const brand = await getBrand();
-    return Response.json(await compareVersions({ master, variant, variantLang: body?.variantLang === "hinglish" ? "hinglish" : "hi", brand, apiKey: keyFrom(req) }));
+    return Response.json(await compareVersions({ master, variant, variantLang: isLang(body?.variantLang) && body.variantLang !== "en" ? body.variantLang : "hi", brand, apiKey: keyFrom(req) }));
   } catch (e) {
     const msg =
       e instanceof QuotaError

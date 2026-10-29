@@ -3,7 +3,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { cache } from "react";
 import type {
-  AuditEntry, BrandSpace, Channel, CheckSummary, Clause, Comment, Fact, Finding, Lang,
+  AuditEntry, BrandSpace, Channel, CheckSummary, Clause, Comment, Fact, Finding, Lang, LinkedSubmission,
   PaletteColor, Persona, Role, Span, Submission, SubmissionStatus, Term, TermKind, Version,
 } from "../types";
 import { createAdmin, createClient } from "./server";
@@ -26,7 +26,7 @@ const COMMENT_SELECT = "*, author:profiles!comments_author_id_fkey(name, role)";
 
 // ------------------------------------------------------------------ internals
 
-interface Actor { id: string; name: string; role: Role; email: string; brand_id: string }
+export interface Actor { id: string; name: string; role: Role; email: string; brand_id: string }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function must(res: { data: any; error: { message: string } | null }, what: string): any {
@@ -38,7 +38,7 @@ function sha256(s: string | Buffer): string {
   return createHash("sha256").update(s).digest("hex");
 }
 
-const getActor = cache(async (): Promise<Actor | null> => {
+export const getActor = cache(async (): Promise<Actor | null> => {
   const sb = await createClient();
   const { data } = await sb.auth.getUser();
   if (!data.user) return null;
@@ -55,8 +55,8 @@ async function requireActor(roles?: Role[]): Promise<Actor> {
 }
 
 /** The single place audit rows are written (service role; hash chain is computed by a DB trigger). */
-async function writeAudit(
-  actor: Pick<Actor, "id" | "name" | "role">,
+export async function writeAudit(
+  actor: { id: string | null; name: string; role: Role | "system" },
   e: {
     submission_id?: string | null; action: string; detail?: Record<string, unknown>;
     version_hash?: string | null; fact_versions?: Record<string, number> | null;
@@ -164,6 +164,46 @@ async function labelHiddenAuthors(rows: Row[], brandId: string): Promise<Row[]> 
   });
 }
 
+/** Open drift findings on the latest checked version; null when that version has not been checked. */
+function openDrift(versions: { n: number; findings: Finding[] | null; summary: unknown }[]): number | null {
+  if (!versions.length) return null;
+  const latest = versions.reduce((m, v) => (v.n > m.n ? v : m));
+  if (!latest.summary) return null;
+  return (latest.findings ?? []).filter((f) => f.category === "language_drift" && f.status === "open").length;
+}
+
+/** Translations of a master that the viewer can see (RLS), newest first. */
+export async function listVariants(masterId: string): Promise<LinkedSubmission[]> {
+  await requireActor();
+  const sb = await createClient();
+  const { data, error } = await sb.from("submissions").select("id, number, title, lang, status, versions(n, findings, summary)")
+    .eq("master_id", masterId).order("number", { ascending: false });
+  if (error) return []; // before migration 0003 there is no master_id column: no translations yet
+  return (data ?? []).map((r) => ({
+    id: r.id, number: r.number, title: r.title, lang: r.lang as Lang, status: r.status as SubmissionStatus,
+    flagged: openDrift((r.versions ?? []) as { n: number; findings: Finding[]; summary: unknown }[]),
+  }));
+}
+
+/**
+ * The master a translation points at, read with the service client: an agency may translate a master it cannot
+ * otherwise open (RLS hides other authors' work), and needs its number, title and latest copy to do the job.
+ */
+export async function getMaster(masterId: string): Promise<(LinkedSubmission & { body: string; version: number; version_id: string; channel: Channel; intent: string }) | null> {
+  const a = await requireActor();
+  const admin = createAdmin();
+  const { data } = await admin.from("submissions").select("id, brand_id, number, title, lang, status, channel, intent, master_id, versions(id, n, body)")
+    .eq("id", masterId).maybeSingle();
+  if (!data || data.brand_id !== a.brand_id) return null;
+  const versions = (data.versions ?? []) as { id: string; n: number; body: string }[];
+  if (!versions.length) return null;
+  const latest = versions.reduce((m, v) => (v.n > m.n ? v : m));
+  return {
+    id: data.id, number: data.number, title: data.title, lang: data.lang as Lang, status: data.status as SubmissionStatus,
+    flagged: null, body: latest.body, version: latest.n, version_id: latest.id, channel: data.channel as Channel, intent: data.intent ?? "",
+  };
+}
+
 export async function getSubmission(id: string): Promise<{
   submission: Submission; versions: Version[]; comments: Comment[]; audit: AuditEntry[];
 } | null> {
@@ -195,9 +235,20 @@ function extFromMime(mime: string): string {
 export async function createSubmission(input: {
   title: string; channel: Channel; lang: Lang; intent: string; body: string; lockedPhrases: string[];
   image?: { data: Buffer; mime: string; alt: string | null };
+  masterId?: string | null; // set when this draft translates another submission
 }): Promise<{ submissionId: string; versionId: string }> {
   const a = await requireActor();
   const sb = await createClient();
+
+  let master: Awaited<ReturnType<typeof getMaster>> = null;
+  if (input.masterId) {
+    master = await getMaster(input.masterId);
+    if (!master) throw new Error("The master draft was not found.");
+    if (master.lang !== "en") throw new Error("Translations are made from an English master.");
+    if (input.lang === "en") throw new Error("Pick the language of the translation.");
+    const { data: m } = await createAdmin().from("submissions").select("master_id").eq("id", master.id).maybeSingle();
+    if (m?.master_id) throw new Error("That draft is itself a translation; translate its English master instead.");
+  }
 
   let imagePath: string | null = null;
   let imageKey = "";
@@ -214,6 +265,7 @@ export async function createSubmission(input: {
     await sb.from("submissions").insert({
       brand_id: a.brand_id, title: input.title, channel: input.channel, lang: input.lang,
       intent: input.intent, status: "draft", author_id: a.id, locked_phrases: input.lockedPhrases,
+      ...(master ? { master_id: master.id } : {}),
     }).select("id").single(),
     "createSubmission",
   );
@@ -227,7 +279,10 @@ export async function createSubmission(input: {
   );
   await writeAudit(a, {
     submission_id: sub.id, action: "submission_created", version_hash: hash,
-    detail: { title: input.title, channel: input.channel, version: 1 },
+    detail: {
+      title: input.title, channel: input.channel, version: 1,
+      ...(master ? { translation_of: master.number, lang: input.lang } : {}),
+    },
   });
   return { submissionId: sub.id, versionId: ver.id };
 }
@@ -394,7 +449,8 @@ export async function recordPublishedUrl(submissionId: string, url: string): Pro
 
 // ------------------------------------------------------------------ brand space writes
 
-export async function upsertFact(f: Partial<Fact> & { statement: string }): Promise<void> {
+/** Returns the fact code when something changed (callers re-check live pages that cite it), or null when unchanged. */
+export async function upsertFact(f: Partial<Fact> & { statement: string }): Promise<string | null> {
   const a = await requireActor(["owner"]);
   const sb = await createClient();
 
@@ -416,7 +472,7 @@ export async function upsertFact(f: Partial<Fact> & { statement: string }): Prom
   if (
     existing && existing.statement === f.statement && existing.status === status && (existing.expires_on ?? null) === expires_on &&
     (f.source ?? existing.source) === existing.source && (f.owner ?? existing.owner) === existing.owner
-  ) return;
+  ) return null;
   const version = existing ? existing.version + 1 : 1;
 
   const row: Record<string, unknown> = {
@@ -456,6 +512,7 @@ export async function upsertFact(f: Partial<Fact> & { statement: string }): Prom
       });
     }
   }
+  return code;
 }
 
 export async function upsertClause(c: Partial<Clause> & { code: string; title: string; body: string }): Promise<void> {
@@ -522,30 +579,11 @@ export async function importGuidelineClauses(clauses: Omit<Clause, "id">[]): Pro
 
 // ------------------------------------------------------------------ recall / insights
 
-export async function listRecallQueue(): Promise<{ submission: Submission; fact_code: string; reason: string; url: string | null }[]> {
+/** Recall queue, live-page checks and expiry alerts for the viewer's brand (RLS applies). See lib/recall/queue.ts. */
+export async function getRecallState(): Promise<import("../recall/queue").RecallState> {
   const a = await requireActor();
-  const sb = await createClient();
-  const [cites, facts] = await Promise.all([
-    sb.from("fact_citations")
-      .select(`fact_code, fact_version, submission:submissions!inner(${SUBMISSION_SELECT})`)
-      .in("submission.status", ["approved", "published"]),
-    sb.from("facts").select("id, code, statement, source, owner, expires_on, version, status").eq("brand_id", a.brand_id),
-  ]);
-  const byCode = new Map<string, Fact>((must(facts, "recall facts") as Record<string, any>[]).map((r) => [r.code as string, mapFact(r)])) // eslint-disable-line @typescript-eslint/no-explicit-any
-  ;
-  const out: { submission: Submission; fact_code: string; reason: string; url: string | null }[] = [];
-  for (const c of must(cites, "recall citations") as any[]) { // eslint-disable-line @typescript-eslint/no-explicit-any
-    const fact = byCode.get(c.fact_code);
-    if (!fact) continue;
-    let reason: string | null = null;
-    if (fact.status === "expired") reason = `${fact.code} expired${fact.expires_on ? ` on ${fact.expires_on}` : ""}: "${fact.statement}"`;
-    else if (fact.status === "retired") reason = `${fact.code} was retired`;
-    else if (fact.version > c.fact_version) reason = `${fact.code} changed from v${c.fact_version} to v${fact.version}: "${fact.statement}"`;
-    if (!reason) continue;
-    const submission = mapSubmission(c.submission);
-    out.push({ submission, fact_code: fact.code, reason, url: submission.published_url });
-  }
-  return out.sort((x, y) => y.submission.number - x.submission.number);
+  const { recallState } = await import("../recall/queue");
+  return recallState(await createClient(), a.brand_id);
 }
 
 export async function getInsights(): Promise<{

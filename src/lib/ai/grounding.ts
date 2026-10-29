@@ -8,7 +8,8 @@ interface Tok {
 }
 
 export function tokenize(s: string): Tok[] {
-  return [...s.matchAll(/[\p{L}\p{N}%]+/gu)].map((m) => ({
+  // \p{M} keeps Indic vowel signs and viramas inside the word (पक्का, நிச்சயம்), so spans are not cut short
+  return [...s.matchAll(/[\p{L}\p{M}\p{N}%]+/gu)].map((m) => ({
     w: m[0].toLowerCase(),
     start: m.index ?? 0,
     end: (m.index ?? 0) + m[0].length,

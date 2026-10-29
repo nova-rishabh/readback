@@ -4,13 +4,14 @@ import { keyHeaders } from "@/lib/client/gemini-key";
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import type { CheckEvent, CheckSummary, Finding, ReaderResult } from "@/lib/types";
 
-export type StageId = "mask" | "rules" | "readers" | "group" | "verify" | "fix" | "done";
+export type StageId = "mask" | "rules" | "readers" | "group" | "verify" | "drift" | "fix" | "done";
 export const STAGES: { id: StageId; label: string }[] = [
   { id: "mask", label: "Mask personal data" },
   { id: "rules", label: "Rule engine" },
   { id: "readers", label: "Six readers" },
   { id: "group", label: "Group beliefs" },
   { id: "verify", label: "Check Fact Ledger" },
+  { id: "drift", label: "Compare with master" }, // translations only
   { id: "fix", label: "Test fixes" },
   { id: "done", label: "Saved" },
 ];

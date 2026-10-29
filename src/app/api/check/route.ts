@@ -1,6 +1,6 @@
 import { after } from "next/server";
 import { keyFrom } from "@/lib/ai/key-header";
-import { getBrand, getSessionUser, getSubmission, saveCheckResult, signedImageUrl } from "@/lib/db/queries";
+import { getBrand, getMaster, getSessionUser, getSubmission, saveCheckResult, signedImageUrl } from "@/lib/db/queries";
 import { createClient } from "@/lib/db/server";
 import { runCheck } from "@/lib/ai/pipeline";
 import type { CheckEvent, Finding } from "@/lib/types";
@@ -74,6 +74,9 @@ export async function POST(req: Request) {
     return json(500, { error: "Could not load the brand rules. Try again." });
   }
 
+  // a translation is compared with the latest version of its English master
+  const master = record.submission.master_id ? await getMaster(record.submission.master_id).catch(() => null) : null;
+
   let image: { data: Buffer; mime: string } | null = null;
   if (version.image_path) {
     try {
@@ -138,6 +141,7 @@ export async function POST(req: Request) {
           imageAlt: version.image_alt,
           lockedPhrases: record.submission.locked_phrases ?? [],
           brand,
+          master: master ? { id: master.id, number: master.number, version: master.version, body: master.body, lang: master.lang } : null,
           // "Run check again" must really re-run; a viewer's own Gemini key, if sent, is used for this check only
           options: { cache: false, apiKey: keyFrom(req) },
         },

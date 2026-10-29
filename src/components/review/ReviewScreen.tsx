@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, Lock, RotateCw, TriangleAlert } from "lucide-react";
-import type { AuditEntry, Clause, Comment, Fact, Finding, Persona, Role, Span, Submission, Version } from "@/lib/types";
+import type { AuditEntry, Clause, Comment, Fact, Finding, LinkedSubmission, Persona, Role, Span, Submission, Version } from "@/lib/types";
+import { MasterComparison, TranslationList } from "./Translations";
 import { StatusPill } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Field";
@@ -51,6 +52,8 @@ export function ReviewScreen(props: {
   facts: Fact[];
   imageUrl: string | null;
   autoRun: boolean;
+  master: (LinkedSubmission & { version: number; body: string }) | null; // set on a translation
+  variants: LinkedSubmission[]; // set on an English master
 }) {
   const { submission, current, previous, isLatest, user } = props;
   const router = useRouter();
@@ -241,7 +244,16 @@ export function ReviewScreen(props: {
               <StatusPill status={submission.status} />
             </div>
             <p className="mt-1.5 text-[13.5px] text-muted">
-              {channelLabel[submission.channel]}, {langLabel[submission.lang]}. By {submission.author_name} (
+              {channelLabel[submission.channel]}, {langLabel[submission.lang]}
+              {props.master && (
+                <>
+                  {" "}translation of{" "}
+                  <Link href={`/app/s/${props.master.id}`} className="underline underline-offset-2 hover:text-ink">
+                    #{props.master.number}
+                  </Link>
+                </>
+              )}
+              . By {submission.author_name} (
               {roleLabel[submission.author_role].toLowerCase()}).{" "}
               <span className="text-ink">Intended takeaway:</span> {submission.intent}
             </p>
@@ -300,7 +312,7 @@ export function ReviewScreen(props: {
           )}
         </div>
 
-        {live && <StageTrack state={state} />}
+        {live && <StageTrack state={state} translation={!!submission.master_id} />}
       </div>
 
       {summary?.mode === "mock" && (
@@ -488,6 +500,14 @@ export function ReviewScreen(props: {
 
         {/* Middle: findings */}
         <div data-tour="findings" className="flex flex-col gap-8">
+          {submission.master_id && (
+            <MasterComparison
+              master={props.master}
+              drift={summary?.drift ?? current.summary?.drift}
+              lang={submission.lang}
+              checked={!!(summary ?? current.summary)}
+            />
+          )}
           {!live && items.length === 0 && !current.summary ? (
             <div className="rounded-md border border-dashed border-rule-strong px-5 py-8 text-center text-[14px] text-muted">
               This version has not been checked yet.
@@ -509,8 +529,11 @@ export function ReviewScreen(props: {
 
         {/* Right: readers and comments */}
         <div className="flex flex-col gap-8 lg:col-span-2 lg:grid lg:grid-cols-2 xl:col-span-1 xl:flex">
-          <div data-tour="readers"><ReaderPanel personas={props.personas} state={state} onRun={() => void rerun()} canRun={isLatest} saved={current.summary?.readers} /></div>
+          <div data-tour="readers"><ReaderPanel personas={props.personas} lang={submission.lang} state={state} onRun={() => void rerun()} canRun={isLatest} saved={current.summary?.readers} /></div>
           <div className="flex flex-col gap-8">
+            {!submission.master_id && submission.lang === "en" && (
+              <TranslationList masterId={submission.id} variants={props.variants} canAdd={user.role !== "agency" || submission.author_id === user.id} />
+            )}
             <Comments
               submissionId={submission.id}
               versionN={current.n}

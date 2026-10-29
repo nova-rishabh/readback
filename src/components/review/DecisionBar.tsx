@@ -58,7 +58,8 @@ export function DecisionBar({
   }
 
   const canSend = (s === "draft" || s === "changes_requested") && (isAuthor || user.role === "creator" || user.role === "agency");
-  const canDecide = reviewer && isLatest && (s === "in_review" || s === "changes_requested" || s === "draft");
+  // matches the server's allowed transitions: a reviewer decides only on a draft that was sent for review
+  const canDecide = reviewer && isLatest && s === "in_review";
 
   return (
     <div className="flex w-full max-w-[420px] flex-col items-stretch gap-2 sm:w-auto sm:items-end">
@@ -73,10 +74,19 @@ export function DecisionBar({
             <Button variant="danger" disabled={pending} onClick={() => setMode(mode === "changes" ? "none" : "changes")} aria-expanded={mode === "changes"}>
               Request changes
             </Button>
-            <Button variant="approve" disabled={pending} onClick={() => setMode(mode === "approve" ? "none" : "approve")} aria-expanded={mode === "approve"}>
-              Approve v{versionN}
-            </Button>
+            {isAuthor ? (
+              <span className="max-w-[26ch] text-right text-[12.5px] text-muted">You wrote this draft, so another reviewer must approve it.</span>
+            ) : (
+              <Button variant="approve" disabled={pending} onClick={() => setMode(mode === "approve" ? "none" : "approve")} aria-expanded={mode === "approve"}>
+                Approve v{versionN}
+              </Button>
+            )}
           </>
+        )}
+        {reviewer && !canSend && isLatest && (s === "draft" || s === "changes_requested") && (
+          <p className="max-w-[34ch] text-right text-[12.5px] text-muted">
+            {s === "draft" ? "Not sent for review yet. The author sends it when it is ready." : "Waiting for the author to revise and send it back."}
+          </p>
         )}
         {!reviewer && s === "in_review" && (
           <p className="max-w-[34ch] text-right text-[12.5px] text-muted">

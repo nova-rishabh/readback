@@ -91,6 +91,11 @@ export default async function Inbox({ searchParams }: { searchParams: Promise<{ 
                   <td className="py-2.5 pr-3 text-muted">
                     {channelLabel[s.channel]}
                     <span className="ml-1.5 text-[12px]">{langLabel[s.lang]}</span>
+                    {s.master_id && (
+                      <div className="text-[12px]">
+                        translation of #{all.find((m) => m.id === s.master_id)?.number ?? "master"}
+                      </div>
+                    )}
                   </td>
                   <td className="py-2.5 pr-3">
                     {s.author_name}

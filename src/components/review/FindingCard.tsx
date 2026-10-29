@@ -99,6 +99,25 @@ function failReason(r: Reread): string {
 
 function RereadLine({ s }: { s: NonNullable<Finding["suggestion"]> }) {
   const r = s.reread;
+  if (s.source === "translation") {
+    if (r?.passed)
+      return (
+        <p className="flex items-start gap-1.5 text-[12.5px] text-moss">
+          <Check size={14} aria-hidden className="mt-px shrink-0" />
+          <span>Re-compared with the English master: with this wording the translation no longer adds or strengthens the belief.</span>
+        </p>
+      );
+    return (
+      <p className="flex items-start gap-1.5 text-[12.5px] text-proof">
+        <CircleAlert size={14} aria-hidden className="mt-px shrink-0" />
+        <span>
+          {r
+            ? `No safe wording found: ${r.untested ? "it overlaps another fix, so it was not re-compared on its own" : r.still_held ? "readers still read the stronger claim in the re-comparison" : "the new wording added another belief"}. Ask a native speaker to rewrite this line.`
+            : "Not re-compared with the master yet. Run the check again, or ask a native speaker to confirm it."}
+        </span>
+      </p>
+    );
+  }
   if (!r) return <p className="text-[12.5px] text-muted">Replacement from the brand term list. No re-read needed.</p>;
   if (r.passed) {
     return (
@@ -184,7 +203,11 @@ export const FindingCard = forwardRef<HTMLElement, FindingCardProps>(function Fi
           </p>
           <div className="flex flex-wrap items-center gap-2">
             <BeliefMeter k={b.readers} of={b.of} tone={sevMeter[f.severity]} />
-            <VerdictBadge verdict={b.verdict} factCode={b.fact_code} split={`${b.readers} / ${b.of - b.readers}`} />
+            {f.drift_kind ? (
+              <Badge tone="proof">{f.drift_kind === "new_belief" ? "Not in the English master" : "Stronger than the English master"}</Badge>
+            ) : (
+              <VerdictBadge verdict={b.verdict} factCode={b.fact_code} split={`${b.readers} / ${b.of - b.readers}`} />
+            )}
             {b.visual_element && <span className="text-[12.5px] text-muted">From the image: {b.visual_element}</span>}
           </div>
           {b.reader_names.length > 0 && (

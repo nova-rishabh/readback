@@ -12,6 +12,7 @@ import { embedTexts, isMock, MODEL_NAME, QuotaError, withTracker, type Img, type
 import { readPanel } from "./reader";
 import { toneFinding } from "./tone";
 import { buildClaimFindings, verifyGroups } from "./verify";
+import { compareInContext, driftFindings, gateDriftFixes } from "./drift";
 import { confirmVisuals, extractTextBoxes, type TextBox } from "./vision";
 
 export interface CheckInput {
@@ -23,6 +24,8 @@ export interface CheckInput {
   imageAlt?: string | null;
   lockedPhrases: string[];
   brand: BrandSpace;
+  // translations: the English master this draft translates; its beliefs are compared with this draft's
+  master?: { id: string; number: number; version: number; body: string; lang: Lang } | null;
   // benchmark knobs: skip span fixes, and bypass the content-hash cache so repeated runs measure stability
   options?: { fixes?: boolean; cache?: boolean; apiKey?: string };
 }
@@ -48,6 +51,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
   const out = (e: CheckEvent) => (events.push(e), emit(e));
   const tracker: Tracker = { models: new Set(), calls: 0, deadline: t0 + 100_000, apiKey: input.options?.apiKey }; // keep a check under ~2 min
   let partial = false;
+  let driftSummary: CheckSummary["drift"];
   return withTracker(tracker, async () => {
   try {
     const { text, brand } = input;
@@ -81,7 +85,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
     }
 
     // 4. the six-reader panel: ONE batched call (free-tier Gemini allows 5 requests/min per model)
-    const panel = panelFor(brand);
+    const panel = panelFor(brand, input.lang);
     out({ type: "stage", stage: "readers", message: `${panel.length} readers are reading the draft` });
     const ctx: ReadCtx = { text, intent: input.intent, lang: input.lang, channel: input.channel, image, brandName: brand.name, embargo };
     let readers: ReaderResult[] = [];
@@ -131,8 +135,34 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       if (answered) for (const f of ai) f.model = answered;
       out({ type: "findings", findings: ai });
 
+      // 6b. translations: compare with the English master (one call) and gate any suggested wording (one more)
+      if (input.master) {
+        out({ type: "stage", stage: "drift", message: `Comparing with the English master #${input.master.number}` });
+        const m = input.master;
+        try {
+          const res = await compareInContext({ master: m.body, variant: text, variantLang: input.lang, brand });
+          const answeredBy = [...tracker.models].join("+") || MODEL_NAME;
+          const drift = driftFindings(res, text, m.number, input.lang, answeredBy);
+          for (const f of drift) {
+            const s = f.span && trimSpan(text, f.span, input.lockedPhrases);
+            if (f.span && !s) f.suggestion = null; // the words are locked: flag, but never rewrite them
+            else if (s) f.span = s;
+          }
+          if (input.options?.fixes !== false) {
+            await gateDriftFixes(drift, { master: m.body, variant: text, variantLang: input.lang, brand }).catch(() => undefined);
+          }
+          ai.push(...drift);
+          driftSummary = { master_id: m.id, master_number: m.number, master_version: m.version, master_lang: m.lang, master_body: m.body, rows: res.rows, of: res.of };
+        } catch (e) {
+          const why = e instanceof QuotaError ? "Gemini was at its limit" : "the comparison call failed";
+          driftSummary = { master_id: m.id, master_number: m.number, master_version: m.version, master_lang: m.lang, master_body: m.body, rows: [], of: panel.length, failed: why };
+          out({ type: "stage", stage: "drift", message: `Could not compare with the master (${why}). Run the check again.` });
+        }
+        out({ type: "findings", findings: ai });
+      }
+
       // 7. span fixes (one call) + one combined re-read gate
-      const bad = ai.filter((f) => f.belief && (f.belief.verdict === "contradicted" || f.belief.verdict === "unsupported"));
+      const bad = ai.filter((f) => f.category !== "language_drift" && f.belief && (f.belief.verdict === "contradicted" || f.belief.verdict === "unsupported"));
       const flagged = bad.map((f) => f.belief!.statement);
       const targets: FixTarget[] = ai
         .filter((f) => fixable.has(f.id) && (f.category === "tone" || bad.includes(f)))
@@ -177,6 +207,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       partial: partial || readers.length === 0 || undefined,
       own_key: !!input.options?.apiKey || undefined,
       readers: readers.length ? readers : undefined,
+      drift: driftSummary,
     };
     out({ type: "stage", stage: "done", message: "Check complete" });
     out({ type: "summary", summary });

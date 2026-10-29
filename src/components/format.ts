@@ -1,4 +1,5 @@
 import type { Channel, FindingCategory, Lang, Role, SubmissionStatus } from "@/lib/types";
+import { LANG_NAME } from "@/lib/lang";
 
 export const ROLES: Role[] = ["owner", "creator", "reviewer", "agency"];
 
@@ -19,7 +20,7 @@ export const channelLabel: Record<Channel, string> = {
   other: "Other",
 };
 
-export const langLabel: Record<Lang, string> = { en: "English", hi: "Hindi", hinglish: "Hinglish" };
+export const langLabel: Record<Lang, string> = LANG_NAME;
 
 export const STATUSES: SubmissionStatus[] = ["draft", "in_review", "changes_requested", "approved", "published", "recalled"];
 

@@ -63,6 +63,7 @@ export function mapSubmission(r: Row): Submission {
     author_role: (a.role ?? "creator") as Role,
     locked_phrases: r.locked_phrases ?? [],
     published_url: r.published_url ?? null,
+    master_id: r.master_id ?? null,
     created_at: r.created_at,
     updated_at: r.updated_at,
   };

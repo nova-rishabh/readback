@@ -3,7 +3,7 @@
 export type Role = "owner" | "creator" | "reviewer" | "agency";
 
 export type Channel = "instagram" | "website" | "amazon" | "nykaa" | "whatsapp" | "email" | "other";
-export type Lang = "en" | "hi" | "hinglish";
+export type Lang = "en" | "hi" | "hinglish" | "ta" | "mr";
 
 export type ClauseKind = "rule" | "ai"; // rule = checked by deterministic code, ai = checked by Impression Engine
 
@@ -118,6 +118,8 @@ export interface Finding {
     fact_code: string | null;
     visual_element: string | null;
   };
+  // translations only: how the belief changed from the English master
+  drift_kind?: "new_belief" | "strengthened";
   // measured values for rule findings (e.g. contrast)
   measured?: Record<string, string | number>;
   suggestion: Suggestion | null;
@@ -129,6 +131,7 @@ export interface Finding {
 export interface Suggestion {
   replacement: string; // replaces finding.span.text only
   rationale: string;
+  source?: "translation"; // wording from the bilingual comparison; its gate is a re-comparison with the master
   // Re-read gate results; suggestion is only shown if passed === true
   reread: {
     passed: boolean;
@@ -162,7 +165,7 @@ export interface ReaderResult {
 
 // Streamed from POST /api/check as NDJSON, one event per line
 export type CheckEvent =
-  | { type: "stage"; stage: "mask" | "rules" | "readers" | "group" | "verify" | "fix" | "done"; message: string }
+  | { type: "stage"; stage: "mask" | "rules" | "readers" | "group" | "verify" | "drift" | "fix" | "done"; message: string }
   | { type: "rules"; findings: Finding[]; ms: number }
   | { type: "reader"; result: ReaderResult }
   | { type: "findings"; findings: Finding[] } // AI findings after group+verify
@@ -183,6 +186,39 @@ export interface CheckSummary {
   readers?: ReaderResult[]; // each reader's takeaway from this check, so the panel survives a reload
   own_key?: boolean; // ran on the viewer's own Gemini key rather than the shared free one
   partial?: boolean; // the AI stage did not complete (quota, overload); only rule findings are reliable
+  drift?: DriftSummary; // translations only: what readers believe from the master versus this version
+}
+
+// ---------- Translations ----------
+
+export type DriftKind = "new_belief" | "strengthened" | "weakened" | "dropped" | "same";
+
+export interface DriftSide {
+  belief: string;
+  quote: string;
+  strength: number; // 1 hedged, 2 plain claim, 3 absolute
+  readers: number;
+}
+
+export interface DriftRow {
+  kind: DriftKind;
+  category: BeliefCategory;
+  master: DriftSide | null;
+  variant: DriftSide | null;
+  explanation: string;
+  fix?: string | null; // variant-language wording that keeps the master's strength (flagged rows only)
+}
+
+/** Stored with a translation's check: the master it was compared with and the paired beliefs. */
+export interface DriftSummary {
+  master_id: string;
+  master_number: number;
+  master_version: number;
+  master_lang: Lang;
+  master_body: string;
+  rows: DriftRow[];
+  of: number;
+  failed?: string; // the drift call did not complete; the reason
 }
 
 // ---------- Workflow ----------
@@ -202,8 +238,19 @@ export interface Submission {
   author_role: Role;
   locked_phrases: string[];
   published_url: string | null;
+  master_id: string | null; // set on a translation: the submission it translates
   created_at: string;
   updated_at: string;
+}
+
+/** A translation as listed on its master, or the master as shown on a translation. */
+export interface LinkedSubmission {
+  id: string;
+  number: number;
+  title: string;
+  lang: Lang;
+  status: SubmissionStatus;
+  flagged: number | null; // drift findings still open on the latest checked version; null = not checked yet
 }
 
 export interface Version {

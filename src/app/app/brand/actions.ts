@@ -1,8 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { recheckFact } from "@/lib/recall/queue";
 import {
   deleteTerm,
+  getActor,
   importGuidelineClauses,
   updateBrand,
   upsertClause,
@@ -57,18 +60,20 @@ export async function saveFactAction(f: {
 }): Promise<BrandResult> {
   if (!f.statement.trim()) return { ok: false, error: "Write the fact as a full statement, with its numbers." };
   if (!f.source.trim()) return { ok: false, error: "Every fact needs a source, such as a study ID or certificate." };
-  return wrap(
-    () =>
-      upsertFact({
-        ...f,
-        code: f.code?.trim() || undefined,
-        statement: f.statement.trim(),
-        source: f.source.trim(),
-        owner: f.owner.trim(),
-        expires_on: f.expires_on || null,
-      }),
-    "The fact was not saved.",
-  );
+  return wrap(async () => {
+    const changed = await upsertFact({
+      ...f,
+      code: f.code?.trim() || undefined,
+      statement: f.statement.trim(),
+      source: f.source.trim(),
+      owner: f.owner.trim(),
+      expires_on: f.expires_on || null,
+    });
+    // a changed fact re-checks the live pages of every post that cited it, after the response is sent
+    const actor = await getActor();
+    if (changed && actor) after(() => recheckFact(actor.brand_id, changed, actor).catch(() => undefined));
+    revalidatePath("/app/recall");
+  }, "The fact was not saved.");
 }
 
 export async function saveTermAction(t: {

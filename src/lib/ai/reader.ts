@@ -2,7 +2,8 @@
 import { z } from "zod";
 import type { Persona, ReaderResult } from "../types";
 import { mockReader } from "./mock";
-import { readerPrompt, type ReadCtx } from "./personas";
+import { readerPrompt, readsIn, type ReadCtx } from "./personas";
+import { LANG_NAME } from "../lang";
 import { callObject, isMock } from "./provider";
 
 export const CATEGORIES = ["efficacy", "health", "environment", "price", "guarantee", "comparison", "endorsement", "urgency"] as const;
@@ -56,11 +57,11 @@ export async function readPanel(panel: Persona[], ctx: ReadCtx): Promise<ReaderR
       "Report what each reader BELIEVES after reading, not what is strictly stated.",
     ].join("\n"),
     prompt: [
-      `Brand: ${ctx.brandName}. Post language: ${ctx.lang}.${ctx.image ? " The post image is attached." : " There is no image."}`,
+      `Brand: ${ctx.brandName}. Post language: ${LANG_NAME[ctx.lang]}.${ctx.image ? " The post image is attached." : " There is no image."}`,
       `POST TEXT:\n"""\n${ctx.text}\n"""`,
       `The creator's declared intended takeaway: "${ctx.intent}"`,
       `READERS (return exactly one entry per persona_id):\n${panel
-        .map((p) => `- persona_id "${p.id}": ${p.name}. ${p.description}${p.lang !== "en" ? " Reads in Hindi/Hinglish; writes beliefs in English but copies trigger_quote exactly." : ""}`)
+        .map((p) => `- persona_id "${p.id}": ${p.name}. ${p.description}${p.lang !== "en" ? ` ${readsIn(p)}` : ""}`)
         .join("\n")}`,
       `For EACH reader, independently:\n${tasks.replace(/^Tasks:\n/, "")}`,
     ].join("\n\n"),

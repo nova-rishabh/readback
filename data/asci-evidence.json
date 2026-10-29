@@ -1,0 +1,2620 @@
+[
+ {
+  "id": "ASCI-001",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "NABL-accredited lab test in sealed room showed some increase in oxygen levels with the fan-mounted plasma-ion device running",
+    "source": "NABL lab test report (oxygen)",
+    "accepted": false
+   },
+   {
+    "statement": "Lab test on microbe plates in a closed room showed varying reduction across microbes and locations, highest at only one location",
+    "source": "NABL lab test report (microbial)",
+    "accepted": false
+   },
+   {
+    "statement": "Lab test showed reductions above 75% for only some gases; particulate reduction was below 75%",
+    "source": "NABL lab test report (gases/smoke/PM)",
+    "accepted": false
+   },
+   {
+    "statement": "Patent granted for the plasma-ion purifier device describing pollutant breakdown, microbe neutralisation and oxygen recovery",
+    "source": "Patent documents",
+    "accepted": false
+   },
+   {
+    "statement": "Website FAQs describing the technology and performance",
+    "source": "Website FAQs",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "90% Oxygen Recovery in 8 Hours",
+   "99.99% Microbe Neutralisation",
+   "75% Less Toxic Gases"
+  ],
+  "not_upheld_claims": [],
+  "note": "On review the panel found the sealed-room test reports unrepresentative of Indian homes, methodologically incomplete and not showing the claimed figures, while the patent covered the device not the fan.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-002",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Test reports showed removal of PM2.5 and PM10 under test conditions, but methodology, equipment, statistical significance and longevity were not provided",
+    "source": "Third-party particulate test reports",
+    "accepted": false
+   },
+   {
+    "statement": "Covid-19 antiviral test used contact deactivation in liquid suspension, not air passing through the filter",
+    "source": "Antiviral efficacy test report",
+    "accepted": false
+   },
+   {
+    "statement": "Filtration efficiency, product safety and split-AC purifier performance evaluations",
+    "source": "Technical evaluations",
+    "accepted": false
+   },
+   {
+    "statement": "No test report submitted for allergens or germs",
+    "source": "None",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Removes Harmful Particles - Covid-19, Bacteria, Pollen, PM 2.5, PM 10",
+   "AIRTH Filter for Split AC upgrades your AC into a HEPA purifier that removes 99% of PM2.5, allergens, and germs"
+  ],
+  "not_upheld_claims": [],
+  "note": "Tests partly showed PM removal but did not demonstrate removal of Covid-19, bacteria, pollen, allergens or a 99% HEPA-equivalent performance in real use.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-003",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "World's No. 1 Smart Nature-Based Air Purifier",
+   "Captures up to 99.97% of pollutants, particles as small as 0.3 microns"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no comparative market data for the No. 1 claim (source and date also missing) and no third-party test reports for the 99.97% capture claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-004",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "India's 1st Anti-Frost Single Door Refrigerator"
+  ],
+  "not_upheld_claims": [],
+  "note": "Advertiser did not respond, so the 'India's 1st' claim was held unsubstantiated.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-005",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "India's First Designer AC",
+   "Exclusive at Vijay Sales only*"
+  ],
+  "not_upheld_claims": [],
+  "note": "No response from advertiser or retailer; the 'first' and exclusivity claims were unsubstantiated, the asterisk had no disclaimer, and celebrity due diligence was not shown.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-006",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "Third-party lab tests showed the F27 Pro Plus met recognised standards for water and dust ingress and mechanical shock/drops",
+    "source": "Third-party IP and mechanical shock test reports",
+    "accepted": true
+   },
+   {
+    "statement": "Standard tests offered as proof the phone is damage-proof from all angles and in real-life scenarios",
+    "source": "Third-party IP and mechanical shock test reports",
+    "accepted": false
+   },
+   {
+    "statement": "No test reports covering pitch-roller or washing-machine scenarios",
+    "source": "None",
+    "accepted": false
+   }
+  ],
+  "ledger": [
+   "Third-party lab tests: OPPO F27 Pro Plus 5G met recognised water/dust ingress and mechanical shock (drop) test standards under controlled conditions"
+  ],
+  "upheld_claims": [
+   "DAMAGE-PROOF 360° ARMOUR BODY",
+   "Pitch Roller Proof",
+   "Phone was in the washing machine"
+  ],
+  "not_upheld_claims": [],
+  "note": "Standard ingress and drop tests were met but did not cover all angles, pitch rollers or washing machines, and the small, fleeting disclaimer did not flag dramatisation.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-007",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication",
+   "comparison"
+  ],
+  "evidence": [
+   {
+    "statement": "Independent expert opinion that larger filter pores extend filter life but remove fewer small particles",
+    "source": "Independent expert opinion",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Longer filter life means compromising on purity",
+   "to increase filter's life, its pores are made larger"
+  ],
+  "not_upheld_claims": [],
+  "note": "Filter life can be extended via anti-fouling membranes and back-flushing without larger pores, so the claims were unsubstantiated and denigrated long-life purifiers.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-008",
+  "grounds": [
+   "unsubstantiated",
+   "comparison",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Extra life, extra power and is for double life and double profit"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no comparative data versus other batteries and the basis of comparison was omitted.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-009",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Marksmen Daily - Most Trusted Brands of India - 5th EDITION – 2025-2026"
+  ],
+  "not_upheld_claims": [],
+  "note": "No response; no award selection criteria, survey methodology, participants or awarding-body details were provided for the award claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-010",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Your Skin, But 7 Years Younger",
+   "Bring Back Youthful Skin"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence for the 7-years-younger claim, and the before-and-after visual implied unsupported results.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-011",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Visibly reduces fine lines and wrinkles",
+   "Boosts collagen & skin elasticity",
+   "New Improved"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence for anti-wrinkle/collagen claims, and 'New Improved' did not say what was new or improved.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-012",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "In-vitro study on bleached hair tresses showed statistically significant gains in cuticle integrity, tensile strength, smoothness, softness and frizz control",
+    "source": "Third-party instrumental in-vitro study",
+    "accepted": true
+   },
+   {
+    "statement": "Results were obtained after four applications of 10 minutes each, offered as support for repair in 3 minutes",
+    "source": "Third-party instrumental in-vitro study",
+    "accepted": false
+   },
+   {
+    "statement": "Directions for use specify a 3-minute application",
+    "source": "Product packaging",
+    "accepted": false
+   }
+  ],
+  "ledger": [
+   "In-vitro study on bleached hair tresses (four 10-minute applications) showed statistically significant improvement in cuticle integrity, tensile strength, smoothness, softness and frizz control"
+  ],
+  "upheld_claims": [
+   "Repair YEARS of hair damage in just 3 minutes — not just maintain it!",
+   "Fix Damaged Hair in 3 Minutes"
+  ],
+  "not_upheld_claims": [],
+  "note": "The study supported hair repair under tested conditions but used four 10-minute applications, so the 3-minute timing was unsubstantiated.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-013",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Reverse signs of aging"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence that the sunscreen reverses signs of ageing.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-014",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "India's no. 1 skin-brightening serum with liposomal technology"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no comparative market data for the No. 1 claim and no source or date shown.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-015",
+  "grounds": [
+   "unsubstantiated"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "10,000 New Strands in 30 Days"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence that a wash-off shampoo yields 10,000 new strands in 30 days.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-016",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "In-vitro tensile test: hair treated with the shampoo and conditioner needed 7.4 times more force to break than untreated hair",
+    "source": "Third-party in-vitro tensile-strength study",
+    "accepted": true
+   },
+   {
+    "statement": "Tensile-strength result offered as a 7.4x reduction in hair fall",
+    "source": "Third-party in-vitro tensile-strength study",
+    "accepted": false
+   },
+   {
+    "statement": "Dermal papilla cells exposed to the shampoo for 24 hours showed an increased hair-cycle biomarker, reported as absorbance values",
+    "source": "Third-party in-vitro telogen-phase study",
+    "accepted": false
+   },
+   {
+    "statement": "In-vitro study showed 3.6-fold rise in a hair growth factor with Hairdian AP-GL; exposure duration withheld as proprietary",
+    "source": "Ingredient in-vitro study / technical dossier",
+    "accepted": false
+   },
+   {
+    "statement": "Manufacturer certification confirmed Hairdian AP-GL is present in the finished shampoo",
+    "source": "Licensed manufacturer certificate",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "In-vitro tensile-strength study: hair treated with Arata Anti-Hair Fall Shampoo plus Anti-Breakage Conditioner required 7.4x more force to break than untreated hair",
+   "Manufacturer certificate confirms Hairdian AP-GL is included in Arata Anti-Hair Fall Intensive Shampoo"
+  ],
+  "upheld_claims": [
+   "7.4X Hair Fall Reduction",
+   "4.5x reduction in Telogen Phase",
+   "3.6x boost in hair growth factors"
+  ],
+  "not_upheld_claims": [],
+  "note": "Breakage resistance cannot be equated with hair-fall reduction, the 24-hour cell exposure did not reflect rinse-off use, and missing exposure duration undermined the growth-factor figure.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-017",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Ex-vivo study on hair follicles treated with Redensyl measured follicle length at day 7 and day 10, not human hair growth",
+    "source": "Ex-vivo ingredient study (Redensyl)",
+    "accepted": false
+   },
+   {
+    "statement": "Dermatological safety study on human subjects found the product non-irritant",
+    "source": "Clinical research centre safety certificate and report",
+    "accepted": true
+   },
+   {
+    "statement": "Dermatological safety testing offered as support for 'Dermatologist Tested' beside a hair-growth efficacy claim",
+    "source": "Clinical research centre safety certificate and report",
+    "accepted": false
+   }
+  ],
+  "ledger": [
+   "Dermatological safety study on human subjects (clinical research centre) found Bare Anatomy hair formulation non-irritant"
+  ],
+  "upheld_claims": [
+   "214% Hair Growth in 10 Days*",
+   "Dermatologist Tested"
+  ],
+  "not_upheld_claims": [],
+  "note": "The 214% figure came from an ex-vivo follicle study, and 'Dermatologist Tested' next to it implied efficacy validation when only safety was tested.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-018",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Treats all our dark spots, pigmentation & uneven skin tone within a week",
+   "before-and-after visuals"
+  ],
+  "not_upheld_claims": [],
+  "note": "No response; the one-week claim and before-and-after visuals were unsubstantiated.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-019",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Remove 10 Years Old Tan",
+   "Brightens Skin and Reduces Dark spots"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence, and before-after skin transformation visuals were misleading.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-020",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Visible difference in 5 Days",
+   "Permanent Skin Whitening",
+   "Clears Tan."
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence, and before-after visuals were misleading.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-021",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "Study showed reduced sweat and odour at 48 hours, but only after five days of daily use under restricted, controlled conditions",
+    "source": "Sweat/odour efficacy study report",
+    "accepted": false
+   },
+   {
+    "statement": "Study population was not Indian",
+    "source": "Sweat/odour efficacy study report",
+    "accepted": false
+   },
+   {
+    "statement": "Participant usage and sensory reports found the product useful with no adverse effects",
+    "source": "Sensory test / PPD test report",
+    "accepted": false
+   },
+   {
+    "statement": "Antiperspirant active ingredient temporarily limits sweat release",
+    "source": "Ingredient literature",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Yardley's deodorant roll-ons provide 48-hour sweat protection"
+  ],
+  "not_upheld_claims": [],
+  "note": "The 48-hour result relied on five days of use under restrictive conditions in a non-Indian population, which the claim did not disclose.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-022",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Aqua Ace Lip Balm gives 24-hour hydration + UV protection in one swipe",
+   "Get hydrated lips in 7 days*"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence for hydration/UV claims and no source or date shown.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-023",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Clinical study on female subjects using the serum twice daily for 28 days showed decreased melanin in dark spots and reduced appearance of pigmentation",
+    "source": "Clinical study report (n=36 volunteers)",
+    "accepted": true
+   },
+   {
+    "statement": "Same study offered as proof that marks and pigmentation are fully deleted in 14 days",
+    "source": "Clinical study report (n=36 volunteers)",
+    "accepted": false
+   }
+  ],
+  "ledger": [
+   "Clinical study (female volunteers, twice-daily use for 28 days) showed decreased melanin in dark spots and visibly reduced pigmentation with Foxtale Niacinamide Clarifying Serum"
+  ],
+  "upheld_claims": [
+   "Delete marks and pigmentation in 14 days*"
+  ],
+  "not_upheld_claims": [],
+  "note": "The study showed reduction, not complete removal, of pigmentation, so 'delete' overstated it; celebrity due diligence was also missing.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-024",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "Small single-centre, single-arm proof-of-concept trial in adults with partially grey hair, with before-after photos taken at different angles",
+    "source": "Clinical study report and journal article",
+    "accepted": false
+   },
+   {
+    "statement": "No documentation confirming Arcolys, Arcedin, Biotin and Black Tea Extract are in the product",
+    "source": "None",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Say goodbye to premature greys",
+   "Reverse grey hair in 60 days",
+   "restore natural color and prevent hair greying"
+  ],
+  "not_upheld_claims": [],
+  "note": "A small single-arm study with unreliable photos could not show reversal of greying; any darkening was attributed to black tea extract and ingredient presence was undocumented.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-025",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Comparative listings from select online marketplaces, launch dates and declarations offered to show first-in-India ingredient combination",
+    "source": "Marketplace data, manufacturer and third-party declarations",
+    "accepted": false
+   },
+   {
+    "statement": "No clinical or comparative data for the 5X hair growth figure",
+    "source": "None",
+    "accepted": false
+   },
+   {
+    "statement": "Published clinical studies on individual ingredients offered for hair-fall reduction, with no finished-product study",
+    "source": "Published ingredient literature",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "India's First Hair Growth Serum Roll-On with 2% Aminexil, 3% Rosemary, 3% Redensyl & 2% Anagain",
+   "Boosts Hair Growth by 5X",
+   "Reduces Hair Fall",
+   "See Visible Results in Just 3 Months!"
+  ],
+  "not_upheld_claims": [],
+  "note": "Limited online listings could not prove a first-in-India claim, and ingredient literature without finished-product data could not support efficacy claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-026",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "1 sold every minute"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no sales data supporting one unit sold every minute.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-027",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "Clinical study of the MelaMe complex in an undisclosed formulation showed dark-spot reduction, but over longer than two weeks and not on the marketed serum",
+    "source": "Ingredient clinical study report",
+    "accepted": false
+   },
+   {
+    "statement": "Product packaging and manufacturing licence",
+    "source": "Packaging images, manufacturing licence",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Clinically proven to reduce dark spots in 2 Weeks"
+  ],
+  "not_upheld_claims": [],
+  "note": "The study covered one ingredient in a different formulation and showed results later than two weeks; source and date were also missing.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-028",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Ingredient list with concentrations redacted for confidentiality",
+    "source": "Ingredient list",
+    "accepted": false
+   },
+   {
+    "statement": "Third-party certificate of consumer-perception research across several products reporting share of users noticing reduced acne marks",
+    "source": "Third-party consumer research certificate",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "reduces dark spots and acne marks in 4 weeks",
+   "90% users noticed reduced acne marks in 4 Weeks*",
+   "before-and-after visuals"
+  ],
+  "not_upheld_claims": [],
+  "note": "Perception survey lacking methodology and no finished-product clinical study could not support the efficacy claims; before-after visuals implied clear skin.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-029",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "The only soap with 100% pure natural sandalwood oil"
+  ],
+  "not_upheld_claims": [],
+  "note": "No response; the 'only soap' claim on ad and pack was unsubstantiated.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-030",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "10X Active Collagen Formula",
+   "Restores Skin elasticity and glow",
+   "Reduction in Fine Lines & Wrinkles"
+  ],
+  "not_upheld_claims": [],
+  "note": "Advertiser agreed to withdraw but left claims live and gave no data: no comparative clinical tests for 10X or clinical efficacy evidence.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-031",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Proven Results Within 90 Days",
+   "Lungs Cleanse Tea Designed For Urban & Environmental Wellness, Smoke-Filled Settings, Environmental Stressors, Urban Air Pollution, Dusty Environments",
+   "Trusted & Loved By 5 Million Customers"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence, lung-transformation visuals implied restored lung health, and no survey data for 5 million customers.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-032",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "100% Clean Natural Ingredients",
+   "Isme jo protein hai vo bana hai 100% cow milk se jo direct source hua hai farm across Europe"
+  ],
+  "not_upheld_claims": [],
+  "note": "Influencer post lacked any ad/material-connection disclosure, and the advertiser supplied no data for the purity and sourcing claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-033",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Ruby Roti- India's most diabetic friendly roti",
+   "Overweight management and for better lifestyle with high protein and low GI."
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no comparative data for 'most diabetic friendly' (no source/date) and no evidence for high protein, low GI or weight management.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-034",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison"
+  ],
+  "evidence": [
+   {
+    "statement": "Advertiser asserted it developed a physical refining process without chemical neutralisation or acid treatment, with no technical or lab documentation",
+    "source": "Advertiser statement",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Only Gem's Gold Sunflower Oil is physically refined without using any chemicals"
+  ],
+  "not_upheld_claims": [],
+  "note": "No comparative data, process documentation or third-party tests supported the 'only' and chemical-free refining claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-035",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "statutory"
+  ],
+  "evidence": [
+   {
+    "statement": "FSSAI FAQ on consumption of oils and fats in the diet",
+    "source": "FSSAI FAQ reference",
+    "accepted": false
+   },
+   {
+    "statement": "US FDA communication on oleic acid health claims, which applies to high-oleic sunflower oils with higher MUFA than this product",
+    "source": "US FDA communication",
+    "accepted": false
+   },
+   {
+    "statement": "General literature that sunflower oil's MUFA, PUFA and vitamin E support heart health",
+    "source": "Advertiser narrative / general references",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Just like gold winner is clear and light tasty and healthy with all good things together"
+  ],
+  "not_upheld_claims": [],
+  "note": "FSSAI rules bar calling a food itself 'healthy', and the oil lacked omega-3 and the MUFA level needed for the FDA health claim it cited.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-036",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Advertiser argued 'Healthy snacks forever' was a puffery brand slogan and supplied no nutritional or test data",
+    "source": "Advertiser statement",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Healthy snacks forever"
+  ],
+  "not_upheld_claims": [],
+  "note": "The puffery defence failed because no clinical, test or nutritional data showed the snacks were healthy.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-037",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Made from Best wheat",
+   "better for health"
+  ],
+  "not_upheld_claims": [],
+  "note": "No sourcing, quality tests, nutrition or comparative data versus other atta brands, no source/date, and no celebrity due diligence.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-038",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Controls cholesterol level",
+   "Boosts heart health",
+   "Lowers blood pressure"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence for the groundnut oil health claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-039",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Increase immunity in your body with the great taste of home-made thandai"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence that the thandai masala increases immunity.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-040",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "World's First plant based Vitamins coffee"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no verifiable comparative data or third-party validation for the 'world's first' claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-041",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "The Food cooked in this oil is healthy"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no evidence that food cooked in the oil is healthy, no source given, and the oil-dripping visual was misleading.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-042",
+  "grounds": [
+   "statutory"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "TOMATO KETCHUP – Fresh & Pure"
+  ],
+  "not_upheld_claims": [],
+  "note": "Under FSSAI 2018 regulations 'pure' is only allowed for single-ingredient foods, so its use on ketchup was misleading.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-043",
+  "grounds": [
+   "implication",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "Product is plant based (vegetarian) and the pack name is qualified with 'Plant Based'",
+    "source": "Front and back of pack labelling, website page",
+    "accepted": true
+   },
+   {
+    "statement": "Pack image offered as clearly vegetarian, though the green dot was not clearly visible in the website advertisement",
+    "source": "Website pack image",
+    "accepted": false
+   }
+  ],
+  "ledger": [
+   "Imagine Meats Plant Based Mutton Seekh Kebab is a plant-based (vegetarian) product, labelled 'Plant Based' on pack"
+  ],
+  "upheld_claims": [
+   "Plant Based Mutton Seekh Kebab"
+  ],
+  "not_upheld_claims": [],
+  "note": "The product is plant based, but the green vegetarian dot was not clearly visible, so the word 'mutton' could mislead consumers into thinking it was non-vegetarian.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-044",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Six-month controlled trial in Indian premenopausal women showed small changes in bone turnover markers, not bone mineral density",
+    "source": "Randomised double-blind clinical study and publication",
+    "accepted": false
+   },
+   {
+    "statement": "Other calcium supplementation studies at similar doses showed small increases in bone mineral density",
+    "source": "Published calcium/BMD literature",
+    "accepted": false
+   },
+   {
+    "statement": "Literature on role of micronutrients in bone health",
+    "source": "Scientific references",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Increases bone strength in 6 months"
+  ],
+  "not_upheld_claims": [],
+  "note": "The trial measured only small changes in surrogate bone-turnover markers, not bone mineral density, so increased bone strength was not shown.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-045",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Animal study on Jamun in diabetic rats",
+    "source": "Preclinical animal study",
+    "accepted": false
+   },
+   {
+    "statement": "Uncontrolled clinical study of Dia Free Juice as an adjuvant alongside usual diabetes medication",
+    "source": "Published clinical study",
+    "accepted": false
+   },
+   {
+    "statement": "Acute oral toxicity test certificate on product safety",
+    "source": "Toxicity test certificate",
+    "accepted": false
+   },
+   {
+    "statement": "CA certificate recording new customer acquisition above 10 lakh, based on internal sales data",
+    "source": "Chartered accountant certificate",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "शुगर की जड़ पर करे वार",
+   "10 लाख + लोगों का भरोसा"
+  ],
+  "not_upheld_claims": [],
+  "note": "Preclinical and uncontrolled adjuvant studies could not support a root-cause sugar claim implied by the glucometer visual, and customer counts do not equal people who trust the product.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-046",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison"
+  ],
+  "evidence": [
+   {
+    "statement": "Open-label single-arm study with no control group, run as an adjunct to diabetes medication, measuring only blood glucose and HbA1c",
+    "source": "Published clinical study",
+    "accepted": false
+   },
+   {
+    "statement": "No gut-health or energy measurements and no Amazon ranking data submitted",
+    "source": "None",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "It is clinically proven to: Month 1: Improve Gut Health, Month 2: Improve Energy levels, Month 3: *Improve Sugar!",
+   "It is the No. 1 Rated sugar supplement on Amazon"
+  ],
+  "not_upheld_claims": [],
+  "note": "An uncontrolled adjuvant study could not attribute glucose gains to the juice and never measured gut health or energy; no ranking data backed the No. 1 claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-047",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Regulates cholesterol & blood sugar",
+   "Boosts immunity & skin health"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence for the prebiotic fibre health claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-048",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Detoxifies the Body",
+   "Clears blood from harmful components",
+   "Regulates blood clotting"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence for the detox capsule claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-049",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "12 हफ़्ते में मोटापा ख़त्म!",
+   "फ़ैट बर्न करे",
+   "वजन घटाए प्राकृतिक तरीके से"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence, and the before-after body visual implied extreme weight loss in 12 weeks.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-050",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Remove toxins from our body",
+   "Help in Colon Detox and cleaning"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical evidence for the detox claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-051",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Product formulated with natural Ayurvedic herbs traditionally used for sugar management",
+    "source": "advertiser statement",
+    "accepted": false
+   },
+   {
+    "statement": "General internet research on benefits of Ayurvedic ingredients for sugar management",
+    "source": "published literature (unspecified)",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Diabetes Control Powder",
+   "Diabetes control has now become easy with Vaidban Diabetes Control Powder",
+   "A natural Ayurvedic blend designed to support balanced blood sugar levels",
+   "Diabetes Control के उपाय",
+   "New Pack"
+  ],
+  "not_upheld_claims": [],
+  "note": "Advertiser refused to share supporting documents or AYUSH licence, citing confidentiality, so no efficacy evidence existed for diabetes-control claims; product name itself implied diabetes control.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-052",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Healthy insulin function",
+   "Healthy A1C levels",
+   "Controls Blood Sugar Levels"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no response or clinical/third-party efficacy evidence was submitted for blood-sugar claims of detox foot pads.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-053",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "Claims are based on functional benefits of the tea's ingredients; disclaimers to be added on future packs",
+    "source": "advertiser statement",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Complete 28 day liver cleanse",
+   "Metabolism Boost: Enhances metabolic rate & lower cholesterol",
+   "Digestive Health: Balanced enzyme levels, & limits fibrosis"
+  ],
+  "not_upheld_claims": [],
+  "note": "No clinical evidence of product efficacy was provided and claims stayed on the website despite an undertaking to modify; the liver-cleanse claim implied guaranteed results irrespective of lifestyle.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-054",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Reduces carb absorption",
+   "Controls cravings",
+   "Manages weight"
+  ],
+  "not_upheld_claims": [],
+  "note": "Advertiser withdrew the Facebook ad but provided no clinical efficacy data and the claim persisted on its website.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-055",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Participant testimonials and reported past results of the 90-day programme",
+    "source": "testimonials / webinar recordings",
+    "accepted": false
+   },
+   {
+    "statement": "Website content, YouTube videos and third-party articles explaining the methodology",
+    "source": "web content and external articles",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Calories are a fake concept",
+   "weight loss without calorie counting or calorie deficit",
+   "lose up to 20 kg and 14 inches of waist in 90 days without exercise",
+   "eat unlimited high-calorie foods and still lose weight"
+  ],
+  "not_upheld_claims": [],
+  "note": "Testimonials, videos and articles were not independently verifiable measurement data and could not scientifically support the no-calorie-deficit weight loss claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-056",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Enhances Vitality & Performance",
+   "Increases Sperm Count & Motility"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical efficacy evidence was submitted and the ad did not state the source and date of its claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-057",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Reduces Arm & Belly Fat",
+   "Removes Fat Cells",
+   "Burns Fat Tissue"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: fat-burning claims for a topical oil had no clinical efficacy evidence and no source/date was indicated.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-058",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "implication",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Get Your Dream Body Naturally In 90 Days",
+   "Burns Fat & Boosts Metabolism",
+   "Improves digestion & reduces bloating"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical efficacy evidence, and day 0-45-90 silhouette visuals implied guaranteed weight loss from the product alone.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-059",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison"
+  ],
+  "evidence": [
+   {
+    "statement": "Product sample and copy of product label",
+    "source": "product sample / label",
+    "accepted": false
+   },
+   {
+    "statement": "Product holds an FDA certificate and AYUSH licence",
+    "source": "regulatory licence documents",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "5-year-old frozen shoulder gone in just 30 days!",
+   "It heals nerve and tissue damage, reduces pain, and restores normal mobility",
+   "Its advanced healing formula goes 6x deeper into the muscles compared to other creams and oils"
+  ],
+  "not_upheld_claims": [],
+  "note": "Licences and labels are not efficacy evidence; no clinical data or independent comparative penetration test was supplied despite a request.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-060",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Increases Breastmilk in 7 days",
+   "Faster Postpartum Recovery",
+   "a natural way to boost breast milk supply"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: lactation and recovery claims had no clinical efficacy evidence and no source/date was indicated.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-061",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Blood Glucose Regulator",
+   "Regulates Glucose and Lipid Metabolism",
+   "Converts Proinsulin to Insulin",
+   "Improves Glucose Tolerance"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical efficacy evidence for glucose-regulation claims and no source/date indicated.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-062",
+  "grounds": [
+   "exaggeration",
+   "omission",
+   "unsubstantiated"
+  ],
+  "evidence": [
+   {
+    "statement": "Published, registered clinical study of the balm: onset and duration of relief vary by pain type, fastest and longest for headache",
+    "source": "published clinical study with trial registration",
+    "accepted": false
+   },
+   {
+    "statement": "Formulation unchanged since the clinical study",
+    "source": "product composition details",
+    "accepted": false
+   },
+   {
+    "statement": "Product licence and GMP certificate",
+    "source": "regulatory documents",
+    "accepted": false
+   }
+  ],
+  "ledger": [],
+  "upheld_claims": [
+   "Starts Working in 1 Minute",
+   "Relief Up To 8 Hours"
+  ],
+  "not_upheld_claims": [],
+  "note": "The clinical study supported 1-minute onset and 8-hour relief only for headache, but ad and pack applied them to all pain types without qualification, so the claims were inadequately substantiated.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-063",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "89% users saw fewer infections",
+   "72% felt more energy",
+   "69% experienced less bloating"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical or consumer-research data backed the percentage user claims and no source/date was given.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-064",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Reduce Cramps",
+   "Regularize Period Cycle",
+   "Improves Mood Swings"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: menstrual-health claims for a PCOS tea had no clinical efficacy evidence and no source/date.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-065",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "Regularises periods cycle",
+   "Improves energy level",
+   "Reduces body hair and acne"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte by the Secretariat: no clinical evidence of product efficacy was submitted.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-066",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission",
+   "implication"
+  ],
+  "evidence": [],
+  "ledger": [],
+  "upheld_claims": [
+   "It penetrates deep and defeats oldest of the old joint pain",
+   "celebrity endorsement (Varun Dhawan) without due diligence"
+  ],
+  "not_upheld_claims": [],
+  "note": "Decided ex parte: no clinical efficacy evidence for deep-penetration joint-pain claim, no source/date, and no proof of celebrity due diligence.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-067",
+  "grounds": [
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "'Secret of Mahi's Energy' is an aspirational celebrity tagline adapted from Boost's long-standing line, not a measurable performance claim",
+    "source": "advertiser statement",
+    "accepted": true
+   },
+   {
+    "statement": "'Consume alongside daily diet and exercise' is a consumption advisory; milkshake has nutritional value supporting 'nourishing'",
+    "source": "advertiser statement",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "'Meet the New Secret of Mahi's Energy' is acceptable as an aspirational brand expression that does not promise performance outcomes",
+   "Boost Milkshake may be described as a nourishing beverage to be consumed alongside daily diet and exercise, not as a replacement"
+  ],
+  "not_upheld_claims": [
+   "Meet the New Secret of Mahi's Energy",
+   "Boost Milkshake is a nourishing beverage to be consumed alongside your daily diet and exercise plan"
+  ],
+  "upheld_claims": [],
+  "note": "CCC read the celebrity line as aspirational puffery and the nourishing line as a complementary-use advisory, so neither implied a specific benefit.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-068",
+  "grounds": [
+   "unsubstantiated"
+  ],
+  "evidence": [
+   {
+    "statement": "Hot-room clinical study: once-daily use for 3 days gave significant wetness control at 72h and 96h after last application",
+    "source": "clinical antiperspirant study (female subjects)",
+    "accepted": true
+   },
+   {
+    "statement": "Single-application consumer study: significant odour reduction vs untreated underarm at 24h, 48h and 72h",
+    "source": "independent consumer odour study",
+    "accepted": true
+   },
+   {
+    "statement": "Comparative hot-room study showed significantly better wetness control at 72h than a competitor roll-on",
+    "source": "comparative clinical study",
+    "accepted": true
+   },
+   {
+    "statement": "Current product approval, formulation specs and chemical composition certificate confirm same active and concentration as tested",
+    "source": "regulatory approval / composition certificate",
+    "accepted": true
+   },
+   {
+    "statement": "Scientific literature linking sweat reduction, bacteria and odour",
+    "source": "published literature",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Hot-room clinical study: 3 days of once-daily use delivered significant wetness control at 72h and 96h after final application",
+   "Consumer study: single application significantly reduced underarm odour vs untreated side at 24h, 48h and 72h",
+   "Current formulation contains the same antiperspirant active and concentration as the clinically tested formulation"
+  ],
+  "not_upheld_claims": [
+   "72H Odour Protection"
+  ],
+  "upheld_claims": [],
+  "note": "Clinical sweat-control and consumer odour studies on the matching formulation substantiated 72-hour odour protection.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-069",
+  "grounds": [
+   "unsubstantiated",
+   "implication",
+   "comparison",
+   "statutory"
+  ],
+  "evidence": [
+   {
+    "statement": "One 50g serving contains 4 mg iron per FSSAI-notified, NABL-accredited lab analysis",
+    "source": "NABL lab test report",
+    "accepted": true
+   },
+   {
+    "statement": "4 mg iron equals about 50% and 36% of ICMR RDA for children aged 1-3 and 4-6",
+    "source": "ICMR dietary reference values / Dietary Guidelines 2024",
+    "accepted": true
+   },
+   {
+    "statement": "No added refined sugar (sucrose); sugars come from milk, wheat and fruit; maltodextrin is not sugar under FSS regulations",
+    "source": "formulation / FSS (Advertising and Claims) Regulations 2018",
+    "accepted": true
+   },
+   {
+    "statement": "Ad disclaimer recommends consumption with milk, fruits, vegetables and cereals",
+    "source": "ad disclaimer / product label",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent NABL/FSSAI lab: one 50g bowl of Ceregrow contains 4 mg iron (~35% of children's daily iron requirement per ICMR RDA)",
+   "Ceregrow contains no added refined sugar (sucrose) as defined under FSSAI regulations"
+  ],
+  "not_upheld_claims": [
+   "One bowl of Ceregrow has 35% of daily iron",
+   "Nestlé CEREGROW helps bridge that doubt since it delivers 35% of daily iron requirement in just one bowl",
+   "No Refined Sugar"
+  ],
+  "upheld_claims": [],
+  "note": "Lab-verified iron content against ICMR RDA substantiated the 35% claim, the ad did not disparage spinach, and 'refined sugar' was used per its FSSAI definition.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-070",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Third-party clinical study (28 days, twice daily, women with underarm hyperpigmentation) showed significant instrumental skin-lightness gain by Day 5",
+    "source": "independent clinical efficacy study",
+    "accepted": true
+   },
+   {
+    "statement": "Consumer perception study: subjects perceived recovery of natural underarm tone after 2 weeks of twice-daily use",
+    "source": "consumer perception study",
+    "accepted": true
+   },
+   {
+    "statement": "Claims qualified with disclaimers on twice-daily use and 2-week timeframe",
+    "source": "product label",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent clinical study: twice-daily use significantly improved instrumental underarm skin-lightness parameters by Day 5",
+   "Consumer perception study: users perceived recovery of natural underarm skin tone after 2 weeks of twice-daily use"
+  ],
+  "not_upheld_claims": [
+   "For visibly Brighter underarms in 5 days",
+   "Recovers natural skin tone"
+  ],
+  "upheld_claims": [],
+  "note": "Instrumental clinical data plus consumer perception data, with matching usage disclaimers, substantiated both claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-071",
+  "grounds": [
+   "unsubstantiated",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Independent CRO double-blind self-controlled study, twice-daily use, showed tan reduction, brightening, more even tone and lower melanin",
+    "source": "clinical study with ethics committee approval",
+    "accepted": true
+   },
+   {
+    "statement": "'PhD in reducing tan' is a creative metaphor, not a claim of academic qualification",
+    "source": "advertiser statement",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent ethics-approved clinical study: twice-daily use of the face wash reduced tan and melanin and improved brightness and skin-tone evenness (instrumental, dermatological and self-assessment)"
+  ],
+  "not_upheld_claims": [
+   "I hold PhD in reducing tan"
+  ],
+  "upheld_claims": [],
+  "note": "The clinical study substantiated tan reduction, and the 'PhD' wording was read as metaphorical puffery.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-072",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Product is classified as FSDU for weight management under FSS (Nutra) Regulations 2022, ~240 kcal per serving, replaces up to 2 meals/day",
+    "source": "FSSAI licence / product label",
+    "accepted": true
+   },
+   {
+    "statement": "National and international guidelines: 500-1,000 kcal daily deficit typically yields 0.5-1 kg weight loss per week",
+    "source": "published nutritional guidelines",
+    "accepted": true
+   },
+   {
+    "statement": "L-carnitine transports long-chain fatty acids into mitochondria for beta-oxidation; present in validated quantity, with activity disclaimer on pack",
+    "source": "published literature / pack disclaimer",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Horlicks Pro-Fitness is an FSSAI-classified FSDU for weight management (~240 kcal/serving) designed to replace up to 2 meals per day",
+   "A sustained 500-1,000 kcal daily deficit typically yields 0.5-1 kg weight loss per week per national/international guidelines",
+   "Contains L-carnitine, which transports fatty acids into mitochondria for energy; benefit realised with moderate physical activity"
+  ],
+  "not_upheld_claims": [
+   "BREAK UP with that Extra Weight",
+   "Meal Replacement for Weight Loss",
+   "L-Carnitine for Fat Burn"
+  ],
+  "upheld_claims": [],
+  "note": "Regulatory FSDU status, partial meal-replacement labelling and established nutrition science supported the claims; 'break up' was treated as marketing expression.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-073",
+  "grounds": [
+   "unsubstantiated",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "4-week twice-daily clinical study: instrumental skin hydration rose progressively and stayed elevated for days after stopping use",
+    "source": "clinical study (instrumental corneometry)",
+    "accepted": true
+   },
+   {
+    "statement": "Consumer study on oat lotion: large share of users perceived relief from dryness and itch within 20 seconds",
+    "source": "consumer perception study",
+    "accepted": true
+   },
+   {
+    "statement": "Published literature on anti-inflammatory and anti-itch properties of oat-derived ingredients",
+    "source": "peer-reviewed literature",
+    "accepted": true
+   },
+   {
+    "statement": "Advertiser admitted source and date of study were not in the ad and undertook to add them",
+    "source": "advertiser statement",
+    "accepted": false
+   }
+  ],
+  "ledger": [
+   "Clinical study: 4 weeks of twice-daily use gave sustained hydration lasting up to 72 hours after continuous use",
+   "Consumer study: most users perceived relief from dry, itchy skin within 20 seconds of applying the oat lotion",
+   "Formulation contains oat-derived ingredients with published anti-inflammatory, anti-itch properties"
+  ],
+  "not_upheld_claims": [
+   "clinically proven long-lasting intense hydration for 72 hours",
+   "relief dry, itchy skin in 20 seconds"
+  ],
+  "upheld_claims": [],
+  "note": "Instrumental hydration data plus consumer perception and oat literature substantiated the claims despite a single-ethnicity study population.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-074",
+  "grounds": [
+   "unsubstantiated",
+   "comparison",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Euromonitor 2026 certification ranks Optimum Nutrition Gold Standard Whey No. 1 in global sports protein powder sub-category",
+    "source": "Euromonitor market research certificate",
+    "accepted": true
+   },
+   {
+    "statement": "Valid agreements exist with featured celebrities who make no personal or medicinal claims",
+    "source": "advertiser statement",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Euromonitor (2026) independent certification: Optimum Nutrition Gold Standard Whey is the world's No. 1 brand in the sports protein powder sub-category"
+  ],
+  "not_upheld_claims": [
+   "World's No. 1 Whey Protein"
+  ],
+  "upheld_claims": [],
+  "note": "An independent Euromonitor certification with a detailed methodology supported the global No. 1 leadership claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-075",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison"
+  ],
+  "evidence": [
+   {
+    "statement": "Third-party swatch study: treated hair showed ten-fold reduction in breakage during repeated combing vs untreated hair",
+    "source": "independent lab report (hair strength)",
+    "accepted": true
+   },
+   {
+    "statement": "Third-party study: shine approximately doubled after treatment, statistically significant",
+    "source": "independent lab report (hair shine)",
+    "accepted": true
+   },
+   {
+    "statement": "Third-party study: combing force about halved vs untreated hair, i.e. ~2X smoothness",
+    "source": "independent lab report (hair smoothness)",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent lab swatch study: hair treated with the mask showed 10X strength (ten-fold less breakage on combing) vs untreated hair",
+   "Independent lab study: treated hair showed ~2X shine vs baseline, statistically significant",
+   "Independent lab study: treated hair needed ~half the combing force of untreated hair (~2X smoother)"
+  ],
+  "not_upheld_claims": [
+   "Enjoy 10X Stronger Hair / 10X Stronger Smoother Hair",
+   "Enjoy 2X Shinier, Smoother Hair"
+  ],
+  "upheld_claims": [],
+  "note": "Statistically significant third-party swatch tests against untreated hair supported the 10X and 2X figures.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-076",
+  "grounds": [
+   "unsubstantiated",
+   "implication",
+   "statutory"
+  ],
+  "evidence": [
+   {
+    "statement": "Pharmacology references and literature document onset of action of diphenhydramine and phenylephrine within about 15 minutes",
+    "source": "published literature / pharmacology textbook",
+    "accepted": true
+   },
+   {
+    "statement": "Product is a Schedule G drug, advertising permitted; statutory caution on pack; ad advises consulting a doctor if symptoms persist",
+    "source": "product licence / regulatory documents / pack",
+    "accepted": true
+   },
+   {
+    "statement": "Onset of action means start of therapeutic effect, not complete symptom relief",
+    "source": "pharmacology textbook",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Published pharmacology literature: the antihistamine component (diphenhydramine) of the P2DC formula begins pharmacological action within 15 minutes (onset, not full relief)",
+   "Cheston Cold is a Schedule G medicine whose advertising is permitted, with statutory caution on the pack"
+  ],
+  "not_upheld_claims": [
+   "Iska P2DC formula 15 minute mein asar dikhana shuru kare",
+   "It's P2DC formula starts action in 15 mins",
+   "काम सुरु 15 मिनिटांमध्ये"
+  ],
+  "upheld_claims": [],
+  "note": "Literature on the actives' onset supported 'starts action in 15 mins' read as onset rather than full relief, and the Schedule G drug was lawfully advertised with a consult-doctor disclaimer.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-077",
+  "grounds": [
+   "unsubstantiated",
+   "comparison"
+  ],
+  "evidence": [
+   {
+    "statement": "Controlled frying study across multiple foods: Fortune Sunlite absorbed significantly (17%) less oil than other sunflower oils tested",
+    "source": "independent research report",
+    "accepted": true
+   },
+   {
+    "statement": "NABL-accredited lab reports confirm product composition and identity match the tested product",
+    "source": "NABL lab test report",
+    "accepted": true
+   },
+   {
+    "statement": "FSSAI licence and FSSAI Edible Oil Survey 2020",
+    "source": "regulatory documents",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent controlled frying study: Fortune Sunlite Refined Sunflower Oil absorbed 17% less oil than other sunflower oils tested under standardized conditions",
+   "NABL-accredited lab reports confirm the marketed product's composition matches the tested product"
+  ],
+  "not_upheld_claims": [
+   "Absorbs 17% less oil"
+  ],
+  "upheld_claims": [],
+  "note": "A controlled comparative frying study on the same marketed product, with accredited lab confirmation, substantiated the 17% figure.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-078",
+  "grounds": [
+   "unsubstantiated",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "SMSRC prescription audit (MAT July 2024-June 2025) shows diabetologists prescribing/recommending Celevida among diabetes nutrition brands",
+    "source": "SMSRC prescription audit certificate",
+    "accepted": true
+   },
+   {
+    "statement": "SMSRC methodology for data collection and statistical weighting, with brand table",
+    "source": "SMSRC methodology note / database extracts",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "SMSRC prescription audit (MAT Jul 2024-Jun 2025) shows Celevida is recommended by diabetologists among diabetes nutrition supplement brands"
+  ],
+  "not_upheld_claims": [
+   "Diabetologist Recommended"
+  ],
+  "upheld_claims": [],
+  "note": "By majority, prescription-audit data from an established methodology, with the source disclosed in the ad, was held to support the professional-recommendation claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-079",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "EFSA opinions and peer-reviewed literature show iron, DHA, choline, iodine and zinc contribute to normal brain/cognitive function",
+    "source": "EFSA guidelines / Nutrients journal / WHO",
+    "accepted": true
+   },
+   {
+    "statement": "Systematic review of clinical trials of micronutrient and DHA interventions on preschool cognitive development",
+    "source": "systematic review",
+    "accepted": true
+   },
+   {
+    "statement": "Declared nutrient levels in product are adequate to deliver the benefit; iron paired with vitamin C for absorption",
+    "source": "product label / regulatory composition approval",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "DexoGrow contains iron, DHA, choline and iodine at levels appropriate to support normal brain development (nutrient function claim per EFSA and systematic review evidence)",
+   "Iron is combined with vitamin C to enhance iron absorption"
+  ],
+  "not_upheld_claims": [
+   "Not just height, weight, and strength. Now brain too"
+  ],
+  "upheld_claims": [],
+  "note": "Treated as an FSSAI nutrient-function claim adequately backed by EFSA references and a systematic review, with nutrients present at effective levels.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-080",
+  "grounds": [
+   "unsubstantiated",
+   "comparison"
+  ],
+  "evidence": [
+   {
+    "statement": "IQVIA MAT April 2025 data on leading paediatric supplement brands with methodology",
+    "source": "IQVIA market audit",
+    "accepted": true
+   },
+   {
+    "statement": "Competitor nutrient counts compiled from labels/ads, counting only nutrients meeting FSSAI source-claim conditions; competitors have fewer than 46",
+    "source": "competitor label analysis spreadsheet",
+    "accepted": true
+   },
+   {
+    "statement": "EFSA references support growth roles of bone and muscle nutrients in formula",
+    "source": "EFSA scientific opinions",
+    "accepted": true
+   },
+   {
+    "statement": "Clinical study on visual and cognitive performance in children",
+    "source": "clinical study",
+    "accepted": false
+   }
+  ],
+  "ledger": [
+   "Groviva Gold contains 46 nutrients; per IQVIA-identified leading paediatric supplement brands, competitors contain fewer key nutrients (FSSAI source-claim criteria)",
+   "Groviva Gold contains multiple nutrients recognised by EFSA as contributing to bone and muscle growth"
+  ],
+  "not_upheld_claims": [
+   "Only Groviva Gold has 46 growth and digestive nutrients",
+   "Not only Growth, Groviva growth"
+  ],
+  "upheld_claims": [],
+  "note": "Uniqueness claim was backed by IQVIA brand coverage and label-based nutrient counts using FSSAI criteria, and ingredient efficacy by EFSA data.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-081",
+  "grounds": [
+   "unsubstantiated",
+   "comparison",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Lab-measured B-vitamin content of Neurobion Forte compared with label-declared B-vitamin values of look-alike competitor products shows up to 3X more",
+    "source": "lab analysis + competitor pack declarations",
+    "accepted": true
+   },
+   {
+    "statement": "Bombay High Court orders against look-alike competitor trade dress",
+    "source": "court orders",
+    "accepted": false
+   },
+   {
+    "statement": "Celebrity's team approved the TV ad by email",
+    "source": "email approval",
+    "accepted": true
+   },
+   {
+    "statement": "Ad includes disclaimer that claim refers to comparative vitamin B levels",
+    "source": "ad disclaimer",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Lab-tested Neurobion Forte contains up to 3X more vitamin B than label-declared levels of ordinary look-alike B-vitamin products",
+   "Ad claim is qualified as a comparison of vitamin B content, not efficacy or absorption"
+  ],
+  "not_upheld_claims": [
+   "Upto 3X more Vitamin B",
+   "Teen guna Vitamin B ki shakti"
+  ],
+  "upheld_claims": [],
+  "note": "Lab data on own product versus regulated competitor label declarations justified a content (not efficacy) comparison; bloodstream visual was creative depiction.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-082",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Multi-region consumer survey: 97% agreed soap keeps them 12 HR deo fresh; 99% affirmed 12-hour freshness",
+    "source": "consumer survey",
+    "accepted": true
+   },
+   {
+    "statement": "Ex-vivo ASTM-standard study: soap reduced odour-causing S. hominis vs water at 0h and 16h post-wash",
+    "source": "ex-vivo lab study",
+    "accepted": true
+   },
+   {
+    "statement": "In-vitro cleansing test shows effective removal of pollution particles from skin",
+    "source": "lab cleansing efficacy test",
+    "accepted": true
+   },
+   {
+    "statement": "Fragrance house letter and formulation records confirm a bespoke lemon fragrance designed to neutralise sweat odour",
+    "source": "fragrance house letter / formulation recipe",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Consumer survey: 97% of users agreed Lifebuoy Lemon Aloe Fresh keeps them 12 HR deo fresh",
+   "Ex-vivo ASTM study: soap reduced odour-causing bacteria (S. hominis) vs water alone immediately and 16 hours after washing",
+   "Contains a bespoke fragrance developed to deliver lemon freshness and neutralise sweat odour"
+  ],
+  "not_upheld_claims": [
+   "12 Hour Deo Fresh",
+   "Ye badbu paida karne wale kitaanu se lade aur de 12 ganto ki taazki"
+  ],
+  "upheld_claims": [],
+  "note": "Improved multi-region consumer data plus ex-vivo bacterial-reduction tests and fragrance documentation substantiated the freshness and germ claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-083",
+  "grounds": [
+   "unsubstantiated",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "4-week in-use clinical study under dermatologist supervision: no significant change in inflammatory acne, closed comedones or blackheads, no irritation",
+    "source": "dermatologist-supervised clinical study",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Dermatologist-supervised 4-week in-use study: no significant increase in inflammatory acne, closed comedones or blackheads and no irritation (individual results may vary)"
+  ],
+  "not_upheld_claims": [
+   "Won't cause breakouts, won't clog pores (non-acnegenic)"
+  ],
+  "upheld_claims": [],
+  "note": "The dermatologist-assessed in-use study supported non-acnegenicity, though CCC advised adding a clinical-study / results-may-vary disclaimer.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-084",
+  "grounds": [
+   "unsubstantiated",
+   "statutory"
+  ],
+  "evidence": [
+   {
+    "statement": "CTRI-registered controlled human trial: statistically significant HbA1c reduction vs control, plus lower fasting and post-prandial glucose",
+    "source": "clinical study (CTRI-registered, ISO-certified CRO)",
+    "accepted": true
+   },
+   {
+    "statement": "Drug licence composition, certificate of analysis and declaration show no added sugar; detected sugar is naturally occurring",
+    "source": "drug licence / lab analysis / declaration",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "CTRI-registered controlled human clinical trial: Amrith Noni D Plus significantly reduced HbA1c, fasting and post-prandial blood glucose vs control",
+   "Formulation contains no added sugar per licensed composition and lab analysis; trace sugars are naturally occurring"
+  ],
+  "not_upheld_claims": [
+   "Clinically proven",
+   "Sugar-free",
+   "It has got successful results in human clinical trials"
+  ],
+  "upheld_claims": [],
+  "note": "A single but statistically sound controlled trial supported 'clinically proven', and composition plus lab data supported no added sugar.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-085",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Third-party radiolabelled lysine study found ingredient in endocuticle and cortex, i.e. at least 5 cuticle layers deep",
+    "source": "third-party penetration lab study",
+    "accepted": true
+   },
+   {
+    "statement": "Hair Life-Cycle Combing Rig test showed reduced breakage with 1-minute real-use application",
+    "source": "HLCR combing lab test",
+    "accepted": true
+   },
+   {
+    "statement": "Hair-structure literature: cuticle has 5-10 layers",
+    "source": "published literature",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Third-party radiolabel study: Clinic Plus ingredient (lysine) penetrates into the hair cortex, at least 5 layers deep",
+   "Combing-rig test: shampoo reduces hair breakage, so hair can reach longer length (not faster growth)"
+  ],
+  "not_upheld_claims": [
+   "Go 5 layers inside and makes the hair strong and long"
+  ],
+  "upheld_claims": [],
+  "note": "Penetration tracer data and breakage-reduction combing tests supported the claim, read as 'long because less breakage' rather than faster growth.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-086",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "In-vitro tests on Indian hair tresses: shampoo+conditioner significantly improved smoothness after colouring, bleaching, sebum and UV damage",
+    "source": "lab study (smoothness)",
+    "accepted": true
+   },
+   {
+    "statement": "Combing and chemical-damage tests: significantly less breakage vs non-conditioning shampoo after single and repeated use",
+    "source": "lab study (breakage)",
+    "accepted": true
+   },
+   {
+    "statement": "Hair treated with Vegan Fibre Actives formula had higher denaturation temperature than virgin hair",
+    "source": "lab study (denaturation)",
+    "accepted": true
+   },
+   {
+    "statement": "99% of consumers agreed or strongly agreed the product repairs damaged hair",
+    "source": "consumer perception study",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "In-vitro tests on Indian hair: Dove Intense Repair shampoo+conditioner significantly reduced breakage and improved smoothness of damaged hair vs non-conditioning shampoo",
+   "Hair treated with the VFA formulation withstood a higher denaturation temperature than virgin hair",
+   "Consumer study: 99% agreed the product repairs damaged hair"
+  ],
+  "not_upheld_claims": [
+   "Gives up to 100% Damage Repair",
+   "No Damage"
+  ],
+  "upheld_claims": [],
+  "note": "By majority, lab smoothness, breakage and denaturation data plus 99% consumer agreement substantiated the repair claims, with 'No Damage' read as perceived repair.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-087",
+  "grounds": [
+   "unsubstantiated",
+   "comparison"
+  ],
+  "evidence": [
+   {
+    "statement": "Published HPLC data: 2 cups almonds contain about 12-13 mcg biotin; 15 avocados about 22 mcg",
+    "source": "published research papers / food conversion data",
+    "accepted": true
+   },
+   {
+    "statement": "Certificate of analysis: each gummy contains 34 mcg biotin (label 30 mcg)",
+    "source": "certificate of analysis",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Certificate of analysis: each Nourish hair gummy contains ~30-34 mcg biotin",
+   "Published food data: 2 cups of almonds contain ~12-13 mcg biotin and 15 avocados ~22 mcg, less than one gummy"
+  ],
+  "not_upheld_claims": [
+   "As much Biotin as 2 cups of almonds in every gummy",
+   "Biotin in 1 Hair Gummy > 15 Avocados"
+  ],
+  "upheld_claims": [],
+  "note": "An analytical certificate confirming 34 mcg biotin per gummy, against published food biotin values, substantiated the food comparisons.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-088",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Independent 42-day in-vivo study on volunteers aged 20-30: 94% showed reduced dark-circle darkness (statistically significant)",
+    "source": "independent lab clinical study",
+    "accepted": true
+   },
+   {
+    "statement": "Same study: dermatologist scale and image analysis showed puffiness reduction in 100% of subjects by day 14",
+    "source": "independent lab clinical study",
+    "accepted": true
+   },
+   {
+    "statement": "Dermatologist grading correlated with image analysis showing fine-line reduction in all subjects at days 14, 28 and 42",
+    "source": "independent lab clinical study (image analysis)",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent 42-day clinical study: 94% of users showed reduced under-eye dark circles with mCaffeine Coffee Under Eye Cream",
+   "Clinical study: under-eye puffiness reduced in 100% of subjects by day 14 (dermatologist scale and image analysis)",
+   "Clinical study: fine lines under the eyes reduced in all subjects at days 14, 28 and 42"
+  ],
+  "not_upheld_claims": [
+   "94% users saw reduced dark circles",
+   "Roll away dark circles, fine lines, and under-eye puffiness"
+  ],
+  "upheld_claims": [],
+  "note": "A finished-product clinical study with statistically significant dark-circle, puffiness and fine-line results supported the claims.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-089",
+  "grounds": [
+   "unsubstantiated"
+  ],
+  "evidence": [
+   {
+    "statement": "In-vitro transpore-tape test: sunscreen retained 93.75% of SPF after 80 minutes water immersion",
+    "source": "in-vitro water resistance lab report",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "In-vitro transpore-tape test: Dot & Key Vitamin C+E Super Bright Sunscreen retained 93.75% of its SPF after 80 minutes of water immersion"
+  ],
+  "not_upheld_claims": [
+   "80 min Water Resistant"
+  ],
+  "upheld_claims": [],
+  "note": "An adequately sampled in-vitro water-resistance test showed SPF largely retained after 80 minutes immersion.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-090",
+  "grounds": [
+   "implication",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Supplier certificates show Vitamin C (3-O-ethyl ascorbic acid) and Vitamin E acetate ingredients are over 98% pure",
+    "source": "supplier certificate of analysis/authenticity",
+    "accepted": true
+   },
+   {
+    "statement": "Stability reports: vitamin C stable over 3 months and serum shelf-life stable for 2 years",
+    "source": "purity stability and shelf-life test reports",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Supplier certificates: the Vitamin C (3-O-ethyl ascorbic acid) and Vitamin E acetate complex in Lakmé 9to5 serum is more than 98% pure (purity, not concentration)",
+   "Stability tests confirm vitamin C stability over 3 months and 2-year shelf-life stability"
+  ],
+  "not_upheld_claims": [
+   "98% Pure Vitamin C Complex"
+  ],
+  "upheld_claims": [],
+  "note": "CCC held the claim refers to raw-material purity of the disclosed complex, not 98% concentration, and certificates plus stability data supported it.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-091",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Independent Hi Physix Laboratory test (Feb 2022) measured Ozeo fan air delivery at 237.8 CMM, above the declared 225",
+    "source": "third-party lab test report",
+    "accepted": true
+   },
+   {
+    "statement": "Declared specifications based on internal and independent testing per standard protocol",
+    "source": "internal test data",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent lab test (Hi Physix, Feb 2022): Atomberg Ozeo fan air delivery measured 237.8 CMM, above the declared 225 CMM"
+  ],
+  "not_upheld_claims": [
+   "Air delivery-(CMM-m3/min)- 225",
+   "Power Input-W – 28",
+   "Service value (CMM/W) – 8"
+  ],
+  "upheld_claims": [],
+  "note": "Advertiser's independent lab report followed the test protocol and validated the specs; the complainant's differing result from the same lab was attributed to normal product and measurement variation.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-092",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "Two NABL-accredited labs (EMC Testing, Delhi Test House) measured air delivery better than the declared value",
+    "source": "NABL lab test reports",
+    "accepted": true
+   },
+   {
+    "statement": "BEE letter and energy-efficiency award listing for Efficiencia Neo",
+    "source": "Bureau of Energy Efficiency letter / award list",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Two NABL-accredited labs measured Havells Efficiencia Neo fan air delivery above the declared 220 CMM at 26 W input (service value 8.46 CMM/W)"
+  ],
+  "not_upheld_claims": [
+   "Air delivery-(CMM-m3/min) – 220",
+   "Power Input-W:26",
+   "Service value (CMM/W) – 8.46"
+  ],
+  "upheld_claims": [],
+  "note": "Test reports from two NABL labs exceeding declared values outweighed the complainant's single contrary report.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-093",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "EFRAC lab: ozone refresh cycle reduced three bacterial species on clothing by 99.99%",
+    "source": "EFRAC lab test report",
+    "accepted": true
+   },
+   {
+    "statement": "Odournet/Sensenet sensory panel: cigarette and cooking odours reduced from level 3 to imperceptible level 0",
+    "source": "Odournet sensory lab report",
+    "accepted": true
+   },
+   {
+    "statement": "Odournet/Sensenet: sweat, damp/musty and alcohol odours reduced from distinct to weak or very weak",
+    "source": "Odournet sensory lab report",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "EFRAC lab test: Whirlpool Xpert Care ozone refresh cycle reduced three bacterial species on clothes by 99.99% without detergent or water",
+   "Odournet sensory test: ozone cycle reduced cigarette and cooking odours to imperceptible and sweat/musty/alcohol odours to weak levels"
+  ],
+  "not_upheld_claims": [
+   "This gently sanitizes and removes odours without detergent or water"
+  ],
+  "upheld_claims": [],
+  "note": "Third-party bacterial reduction and sensory odour tests on the ozone cycle substantiated the sanitising and odour-removal claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-094",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "comparison",
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "NABL lab (Hi-Physix) measured cooling efficiency of 84.91% vs BIS minimum of 65%",
+    "source": "NABL lab test report",
+    "accepted": true
+   },
+   {
+    "statement": "Test report: 18-inch blade delivers about 30% more air than a 16-inch blade",
+    "source": "lab test report / BIS airflow theory",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "NABL lab test: Crompton Optimus 65 air cooler cooling efficiency 84.91%, well above the 65% BIS minimum",
+   "Lab test: Crompton's 18-inch ultrawide blade delivers ~30% higher air delivery than a 16-inch blade"
+  ],
+  "not_upheld_claims": [
+   "Early cooling even on hottest day",
+   "Higher air delivery"
+  ],
+  "upheld_claims": [],
+  "note": "Lab cooling-efficiency and blade air-delivery data supported the claims; the balcony and freezing-juice visuals were acceptable creative exaggeration.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-095",
+  "grounds": [
+   "unsubstantiated",
+   "statutory"
+  ],
+  "evidence": [
+   {
+    "statement": "Independent RGCB lab test: 99.99% SARS-CoV-2 reduction within 60 minutes in a 3x3x4 ft closed chamber",
+    "source": "RGCB third-party lab certificate",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent RGCB lab test: Burge Ion Dome achieved 99.99% SARS-CoV-2 reduction in 60 minutes in a closed 3x3x4 ft chamber"
+  ],
+  "not_upheld_claims": [
+   "Kills viruses for healthy air"
+  ],
+  "upheld_claims": [],
+  "note": "Initially upheld for non-response, but on re-examination an independent virus-reduction chamber test substantiated the claim under ASCI's Covid-19 advisory.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-096",
+  "grounds": [
+   "implication"
+  ],
+  "evidence": [
+   {
+    "statement": "Print ad is split into separate atta and biscuit sections with different backgrounds and a thick yellow dividing line",
+    "source": "advertisement layout / advertiser statement",
+    "accepted": true
+   },
+   {
+    "statement": "Each product carries its own ingredient list on pack",
+    "source": "product packaging",
+    "accepted": true
+   }
+  ],
+  "ledger": [],
+  "not_upheld_claims": [
+   "100% Atta 0% Maida"
+  ],
+  "upheld_claims": [],
+  "note": "Clear visual demarcation meant the atta claim would not be read as applying to Parle-G biscuits; no composition evidence was needed or examined, so nothing goes in the ledger.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-097",
+  "grounds": [
+   "implication",
+   "statutory"
+  ],
+  "evidence": [
+   {
+    "statement": "NutriChoice is a registered trademark in continuous use since 1998, held inherently distinctive",
+    "source": "trademark registration certificate",
+    "accepted": true
+   },
+   {
+    "statement": "'Sugar Free' used within FSS (Advertising and Claims) Regulations 2018 limits; 'No Added Sugar' not on pack; ingredients (maida, palm oil) are FSSAI-permitted",
+    "source": "product packaging / FSSAI regulations",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "NutriChoice is a registered trademark (in use since 1998) used solely as a brand name, not a nutrition or health claim",
+   "'Sugar Free' on NutriChoice crackers complies with FSS (Advertising and Claims) Regulations 2018 sugar limits"
+  ],
+  "not_upheld_claims": [
+   "NutriChoice"
+  ],
+  "upheld_claims": [],
+  "note": "A long-registered coined trademark without accompanying health claims does not imply nutritional benefit, and the sugar-free label met FSSAI limits.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-098",
+  "grounds": [
+   "implication",
+   "comparison",
+   "exaggeration",
+   "statutory"
+  ],
+  "evidence": [
+   {
+    "statement": "Certificate of analysis confirms product pH of 5.5",
+    "source": "certificate of analysis",
+    "accepted": true
+   },
+   {
+    "statement": "Product approved by the statutory authority for baby products in India",
+    "source": "regulatory certificate / label artwork",
+    "accepted": true
+   },
+   {
+    "statement": "Slightly acidic pH 5.5 supports baby skin barrier and moisture retention",
+    "source": "scientific rationale (advertiser statement)",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Certificate of analysis: Baby Sebamed body lotion has a pH of 5.5, which supports the baby's natural skin barrier",
+   "Baby Sebamed lotion is approved by the Indian statutory authority for baby products"
+  ],
+  "not_upheld_claims": [
+   "What if your baby could feel as protected outside",
+   "Baby Sebamed with ideal pH 5.5 gives your baby the best protection",
+   "Best Protection after the womb"
+  ],
+  "upheld_claims": [],
+  "note": "The pH 5.5 certificate plus aspirational, post-birth framing meant the ad conveyed emotional reassurance, not a literal womb-equivalent protection claim.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-099",
+  "grounds": [
+   "unsubstantiated",
+   "exaggeration",
+   "omission"
+  ],
+  "evidence": [
+   {
+    "statement": "Independent in-vivo axillary deodorancy study (recognized standard): significant malodour reduction vs untreated side at 24h and 48h",
+    "source": "independent clinical study",
+    "accepted": true
+   },
+   {
+    "statement": "Advertiser agreed to add disclaimer that results are from an independent lab study and may vary",
+    "source": "advertiser undertaking",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "Independent in-vivo deodorancy study: Park Avenue Voyage deo lotion significantly reduced underarm malodour vs untreated side at 24 and 48 hours (results may vary)"
+  ],
+  "not_upheld_claims": [
+   "That goes on skin and lasts all day",
+   "48 HR Odour Protection"
+  ],
+  "upheld_claims": [],
+  "note": "A standard in-vivo deodorancy study showing odour reduction at 48 hours substantiated both claims, with a results-may-vary disclaimer to be added.",
+  "readable": true
+ },
+ {
+  "id": "ASCI-100",
+  "grounds": [
+   "unsubstantiated",
+   "comparison",
+   "exaggeration"
+  ],
+  "evidence": [
+   {
+    "statement": "NIQ Retail Index (offline, MAT Feb 2025) ranks GEF India first by volume in refined sunflower oil consumer packs",
+    "source": "NIQ retail audit with methodology",
+    "accepted": true
+   },
+   {
+    "statement": "GEF recognised as highest sunflower oil importer into India (Globoil awards 2024, 2024-25)",
+    "source": "industry award invitations",
+    "accepted": true
+   },
+   {
+    "statement": "Independent lab tested 101 parameters; all contaminants below limits of quantification, FSSAI-compliant",
+    "source": "independent external lab test report",
+    "accepted": true
+   },
+   {
+    "statement": "Automated closed-system manufacturing minimises contamination",
+    "source": "advertiser statement",
+    "accepted": true
+   }
+  ],
+  "ledger": [
+   "NIQ retail audit (offline, MAT Feb 2025): GEF India is No. 1 by volume in refined sunflower oil in India",
+   "Independent lab: Be-Rite Refined Sunflower Oil cleared 101 test parameters with all contaminants below limits of quantification"
+  ],
+  "not_upheld_claims": [
+   "From India's No. 1 Sunflower Oil Company",
+   "Pure with no chances of adulteration",
+   "It has cleared 101 tests and thus it can be completely trusted for its purity"
+  ],
+  "upheld_claims": [],
+  "note": "NIQ offline retail-audit leadership (with disclaimer) plus import leadership supported No. 1 by majority, and 101-parameter independent tests below LOQ supported purity.",
+  "readable": true
+ }
+]
