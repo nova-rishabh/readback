@@ -104,41 +104,34 @@ export default async function RecallPage() {
           that cited it appears here.
         </EmptyState>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[920px] border-collapse text-[14px]">
-            <caption className="sr-only">Posts to review for recall</caption>
-            <thead>
-              <tr className="border-b border-rule-strong text-left text-[12.5px] text-muted">
-                <th scope="col" className="w-14 py-2 pr-3 font-medium">No.</th>
-                <th scope="col" className="py-2 pr-3 font-medium">Post</th>
-                <th scope="col" className="w-[26%] py-2 pr-3 font-medium">Why it is here</th>
-                <th scope="col" className="w-[26%] py-2 pr-3 font-medium">Live page</th>
-                <th scope="col" className="py-2 font-medium"><span className="sr-only">Actions</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              {state.open.map((q) => (
-                <tr key={`${q.submission.id}-${q.fact_code}`} className="border-b border-rule align-top">
-                  <td className="py-3 pr-3 font-mono text-[12.5px] text-muted">#{q.submission.number}</td>
-                  <td className="py-3 pr-3">
-                    <Link href={`/app/s/${q.submission.id}`} className="font-medium underline decoration-rule-strong underline-offset-4 hover:decoration-ink">
-                      {q.submission.title}
-                    </Link>
-                    <div className="mt-1 flex flex-wrap items-center gap-2 text-[12.5px] text-muted">
-                      <StatusPill status={q.submission.status} />
-                      {channelLabel[q.submission.channel]}
-                    </div>
-                  </td>
-                  <td className="py-3 pr-3 text-[13px] leading-relaxed">{q.reason}</td>
-                  <td className="py-3 pr-3"><LiveStatus item={q} /></td>
-                  <td className="py-2.5">
-                    <RecallControls submissionId={q.submission.id} factCode={q.fact_code} hasUrl={!!q.url} reviewer={reviewer} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <ul aria-label="Posts to review for recall" className="flex flex-col divide-y divide-rule border-y border-rule">
+          {state.open.map((q) => (
+            <li
+              key={`${q.submission.id}-${q.fact_code}`}
+              className="grid gap-3 py-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:gap-5"
+            >
+              <div className="min-w-0">
+                <span className="font-mono text-[12.5px] text-muted">#{q.submission.number} </span>
+                <Link href={`/app/s/${q.submission.id}`} className="font-medium underline decoration-rule-strong underline-offset-4 hover:decoration-ink">
+                  {q.submission.title}
+                </Link>
+                <div className="mt-1 flex flex-wrap items-center gap-2 text-[12.5px] text-muted">
+                  <StatusPill status={q.submission.status} />
+                  {channelLabel[q.submission.channel]}
+                </div>
+              </div>
+              <div className="text-[13px] leading-relaxed">
+                <span className="block text-[12px] text-muted md:hidden">Why it is here</span>
+                {q.reason}
+              </div>
+              <div>
+                <span className="block text-[12px] text-muted md:hidden">Live page</span>
+                <LiveStatus item={q} />
+              </div>
+              <RecallControls submissionId={q.submission.id} factCode={q.fact_code} hasUrl={!!q.url} reviewer={reviewer} />
+            </li>
+          ))}
+        </ul>
       ))}
 
       {state && state.closed.length > 0 && (
