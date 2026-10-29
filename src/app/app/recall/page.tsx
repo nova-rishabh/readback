@@ -144,7 +144,7 @@ export default async function RecallPage() {
                 <span className="font-mono text-[12px] text-muted">#{q.submission.number}</span>
                 <Link href={`/app/s/${q.submission.id}`} className="font-medium underline decoration-rule-strong underline-offset-4">{q.submission.title}</Link>
                 <span className="font-mono text-[12px]">{q.fact_code}</span>
-                <Badge tone="moss">{q.closed!.auto ? "Closed: claim gone from live page" : "Closed by reviewer"}</Badge>
+                <Badge tone="moss">{q.closed!.auto ? "Closed: claim gone from live page" : "Closed by hand"}</Badge>
                 <span className="text-[12.5px] text-muted">
                   {fmtDateTime(q.closed!.at)} by {q.closed!.by}
                   {q.closed!.note && !q.closed!.auto && `: “${q.closed!.note}”`}

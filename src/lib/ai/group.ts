@@ -37,6 +37,22 @@ export function spanOverlap(a: Span | null, b: Span | null): number {
 }
 
 /**
+ * Beliefs of the same category triggered by overlapping words (half the shorter quote or more), as index groups.
+ * They are one belief in different words, so each group is embedded once: far fewer embedding requests per check,
+ * which matters on a free tier that counts every text as a request.
+ */
+export function anchorGroups(items: Pick<BeliefItem, "category" | "span">[]): number[][] {
+  const parent = items.map((_, i) => i);
+  const find = (i: number): number => (parent[i] === i ? i : (parent[i] = find(parent[i])));
+  for (let i = 0; i < items.length; i++)
+    for (let j = i + 1; j < items.length; j++)
+      if (items[i].category === items[j].category && spanOverlap(items[i].span, items[j].span) >= 0.5) parent[find(j)] = find(i);
+  const groups = new Map<number, number[]>();
+  items.forEach((_, i) => groups.set(find(i), [...(groups.get(find(i)) ?? []), i]));
+  return [...groups.values()];
+}
+
+/**
  * Greedy grouping. A belief joins a group when its embedding is close to the group's (cosine >= threshold), or when
  * it is the same kind of belief triggered by the same words: a member of the same category whose quoted span
  * overlaps it by half or more, with a looser similarity floor. Readers paraphrase one claim in many ways

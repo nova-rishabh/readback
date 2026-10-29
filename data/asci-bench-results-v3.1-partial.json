@@ -5,20 +5,20 @@
   "runs": 3,
   "model": "gemini-3.8-flash",
   "started_at": "2026-10-29T08:51:10.402Z",
-  "generated_at": "2026-10-29T09:02:23.865Z",
+  "generated_at": "2026-10-29T09:08:15.804Z",
   "cases": 100,
   "metrics": {
-    "scored": 26,
-    "upheld": 26,
+    "scored": 36,
+    "upheld": 36,
     "not_upheld": 0,
-    "errors": 0,
+    "errors": 2,
     "readback": {
       "recall": {
-        "k": 26,
-        "n": 26,
-        "rate": 1,
-        "lo": 0.8712669561953784,
-        "hi": 1
+        "k": 35,
+        "n": 36,
+        "rate": 0.9722222222222222,
+        "lo": 0.8582996626496918,
+        "hi": 0.9950797197044302
       },
       "false_alarm": {
         "k": 0,
@@ -28,27 +28,27 @@
         "hi": null
       },
       "precision": {
-        "k": 26,
-        "n": 26,
+        "k": 35,
+        "n": 35,
         "rate": 1,
-        "lo": 0.8712669561953784,
+        "lo": 0.9010957324106112,
         "hi": 1
       },
       "stability": {
-        "k": 26,
-        "n": 26,
+        "k": 36,
+        "n": 36,
         "rate": 1,
-        "lo": 0.8712669561953784,
+        "lo": 0.9035781695514236,
         "hi": 1
       }
     },
     "baseline": {
       "recall": {
-        "k": 22,
-        "n": 26,
-        "rate": 0.8461538461538461,
-        "lo": 0.6646841558168644,
-        "hi": 0.9385006600107053
+        "k": 28,
+        "n": 36,
+        "rate": 0.7777777777777778,
+        "lo": 0.6191498017214091,
+        "hi": 0.882838070251604
       },
       "false_alarm": {
         "k": 0,
@@ -58,70 +58,88 @@
         "hi": null
       },
       "precision": {
-        "k": 22,
-        "n": 22,
+        "k": 28,
+        "n": 28,
         "rate": 1,
-        "lo": 0.8513404742740388,
+        "lo": 0.8793527963418923,
         "hi": 1
       }
     },
     "byGround": [
       {
         "ground": "unsubstantiated",
-        "cases": 26,
+        "cases": 36,
         "readback": {
-          "k": 26,
-          "n": 26,
-          "rate": 1,
-          "lo": 0.8712669561953784,
-          "hi": 1
+          "k": 35,
+          "n": 36,
+          "rate": 0.9722222222222222,
+          "lo": 0.8582996626496918,
+          "hi": 0.9950797197044302
         },
         "baseline": {
-          "k": 22,
-          "n": 26,
-          "rate": 0.8461538461538461,
-          "lo": 0.6646841558168644,
-          "hi": 0.9385006600107053
+          "k": 28,
+          "n": 36,
+          "rate": 0.7777777777777778,
+          "lo": 0.6191498017214091,
+          "hi": 0.882838070251604
         }
       },
       {
         "ground": "exaggeration",
-        "cases": 24,
+        "cases": 34,
         "readback": {
-          "k": 24,
-          "n": 24,
-          "rate": 1,
-          "lo": 0.8620194241710247,
-          "hi": 1
+          "k": 33,
+          "n": 34,
+          "rate": 0.9705882352941176,
+          "lo": 0.8508409778365519,
+          "hi": 0.9947892280744034
         },
         "baseline": {
-          "k": 20,
-          "n": 24,
-          "rate": 0.8333333333333334,
-          "lo": 0.6414652961213058,
-          "hi": 0.9332143199927109
+          "k": 26,
+          "n": 34,
+          "rate": 0.7647058823529411,
+          "lo": 0.6000353719173557,
+          "hi": 0.8756316189075566
         }
       },
       {
         "ground": "implication",
-        "cases": 8,
+        "cases": 10,
         "readback": {
-          "k": 8,
-          "n": 8,
-          "rate": 1,
-          "lo": 0.6755843804891231,
-          "hi": 1
+          "k": 9,
+          "n": 10,
+          "rate": 0.9,
+          "lo": 0.5958436145024278,
+          "hi": 0.9821242504842788
         },
         "baseline": {
-          "k": 8,
-          "n": 8,
-          "rate": 1,
-          "lo": 0.6755843804891231,
-          "hi": 1
+          "k": 9,
+          "n": 10,
+          "rate": 0.9,
+          "lo": 0.5958436145024278,
+          "hi": 0.9821242504842788
         }
       },
       {
         "ground": "omission",
+        "cases": 12,
+        "readback": {
+          "k": 12,
+          "n": 12,
+          "rate": 1,
+          "lo": 0.7574992425007574,
+          "hi": 1
+        },
+        "baseline": {
+          "k": 9,
+          "n": 12,
+          "rate": 0.75,
+          "lo": 0.46768966087934005,
+          "hi": 0.9110599603710386
+        }
+      },
+      {
+        "ground": "comparison",
         "cases": 9,
         "readback": {
           "k": 9,
@@ -131,29 +149,29 @@
           "hi": 1
         },
         "baseline": {
-          "k": 7,
+          "k": 8,
           "n": 9,
-          "rate": 0.7777777777777778,
-          "lo": 0.4525833436728054,
-          "hi": 0.9367762376877727
+          "rate": 0.8888888888888888,
+          "lo": 0.5649937852319399,
+          "hi": 0.9801096286728695
         }
       },
       {
-        "ground": "comparison",
-        "cases": 6,
+        "ground": "statutory",
+        "cases": 1,
         "readback": {
-          "k": 6,
-          "n": 6,
+          "k": 1,
+          "n": 1,
           "rate": 1,
-          "lo": 0.6096569663469354,
-          "hi": 0.9999999999999999
+          "lo": 0.20654329147389294,
+          "hi": 1
         },
         "baseline": {
-          "k": 5,
-          "n": 6,
-          "rate": 0.8333333333333334,
-          "lo": 0.43649056343635395,
-          "hi": 0.9699474141282697
+          "k": 0,
+          "n": 1,
+          "rate": 0,
+          "lo": 0,
+          "hi": 0.7934567085261071
         }
       }
     ],
@@ -182,6 +200,72 @@
           "rate": 0.75,
           "lo": 0.40926987910258916,
           "hi": 0.9285223111419724
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "food",
+        "upheld": 6,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 6,
+          "n": 6,
+          "rate": 1,
+          "lo": 0.6096569663469354,
+          "hi": 0.9999999999999999
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 5,
+          "n": 6,
+          "rate": 0.8333333333333334,
+          "lo": 0.43649056343635395,
+          "hi": 0.9699474141282697
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "health",
+        "upheld": 1,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
         },
         "baseline_fa": {
           "k": 0,
@@ -226,14 +310,14 @@
       },
       {
         "category": "skincare",
-        "upheld": 17,
+        "upheld": 20,
         "not_upheld": 0,
         "readback_recall": {
-          "k": 17,
-          "n": 17,
-          "rate": 1,
-          "lo": 0.8156763396284354,
-          "hi": 1
+          "k": 19,
+          "n": 20,
+          "rate": 0.95,
+          "lo": 0.7638641064874331,
+          "hi": 0.9911187805671268
         },
         "readback_fa": {
           "k": 0,
@@ -244,10 +328,10 @@
         },
         "baseline_recall": {
           "k": 15,
-          "n": 17,
-          "rate": 0.8823529411764706,
-          "lo": 0.6566315750229009,
-          "hi": 0.967120919987079
+          "n": 20,
+          "rate": 0.75,
+          "lo": 0.5312949900419365,
+          "hi": 0.888139947210597
         },
         "baseline_fa": {
           "k": 0,
@@ -666,6 +750,180 @@
         "5/6 The product is highly popular and in high demand. [unsupported]"
       ],
       "ms": 38909
+    },
+    {
+      "id": "ASCI-028",
+      "outcome": "upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 77948
+    },
+    {
+      "id": "ASCI-027",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The product works quickly to clear skin blemishes. [unsupported]",
+        "2/6 The product is highly effective and scientifically backed. [unsupported]"
+      ],
+      "ms": 170581
+    },
+    {
+      "id": "ASCI-029",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The soap is free from synthetic chemicals. [unsupported]"
+      ],
+      "ms": 77844
+    },
+    {
+      "id": "ASCI-030",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product will make my skin look younger and more elastic. [unsupported]",
+        "2/6 This formula is ten times stronger than regular collagen products. [unsupported]",
+        "2/6 The claim of 10X potency is likely an unverified marketing term. [unsupported]"
+      ],
+      "ms": 37030
+    },
+    {
+      "id": "ASCI-032",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product contains only natural ingredients. [unsupported]",
+        "5/6 The milk quality is superior because it comes from European farms. [unsupported]"
+      ],
+      "ms": 40098
+    },
+    {
+      "id": "ASCI-033",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product is effective for weight loss. [unsupported]",
+        "2/6 Isme protein zyada hai aur sugar kam badhata hai. [unsupported]"
+      ],
+      "ms": 33540
+    },
+    {
+      "id": "ASCI-031",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is highly popular and widely accepted by millions. [unsupported]",
+        "2/6 The tea is specifically made for people living in polluted cities. [unsupported]"
+      ],
+      "ms": 124846
+    },
+    {
+      "id": "ASCI-034",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 This product is superior to all competitors because it avoids chemical refining. [unsupported]"
+      ],
+      "ms": 40309
+    },
+    {
+      "id": "ASCI-035",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The oil is healthy. [unsupported]"
+      ],
+      "ms": 33867
+    },
+    {
+      "id": "ASCI-036",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The snacks are healthy. [unsupported]"
+      ],
+      "ms": 25303
+    },
+    {
+      "id": "ASCI-038",
+      "outcome": "upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": true,
+      "beliefs": [],
+      "ms": 26597,
+      "error": "The AI check stopped (unknown error). Rule findings are saved; run the check again."
+    },
+    {
+      "id": "ASCI-037",
+      "outcome": "upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": true,
+      "beliefs": [],
+      "ms": 37426,
+      "error": "embedding quota exhausted on every benchmark model"
     }
   ]
 }

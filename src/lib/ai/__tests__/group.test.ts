@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clusterBeliefs, cosine, isAmbiguous, selectGroups, spanOverlap, type BeliefItem } from "../group";
+import { anchorGroups, clusterBeliefs, cosine, isAmbiguous, selectGroups, spanOverlap, type BeliefItem } from "../group";
 
 const item = (reader: string, belief: string, embedding: number[]): BeliefItem => ({
   reader, reader_name: reader, belief, category: "efficacy", quote: "", span: null, visual: null, embedding,
@@ -51,5 +51,10 @@ describe("group", () => {
     expect(clusterBeliefs([item("a", "x", a), item("b", "y", b)])).toHaveLength(2); // no quote, no anchor
     expect(spanOverlap(span, { start: 20, end: 60, text: "" })).toBeCloseTo(2 / 3);
     expect(spanOverlap(span, null)).toBe(0);
+  });
+  it("embeds one text per anchored group", () => {
+    const at = (start: number, end: number, category: BeliefItem["category"] = "efficacy") => ({ category, span: { start, end, text: "" } });
+    const groups = anchorGroups([at(0, 20), at(5, 20), at(0, 20, "health"), { category: "efficacy" as const, span: null }, at(10, 30)]);
+    expect(groups.map((g) => g.sort())).toEqual([[0, 1, 4], [2], [3]]);
   });
 });

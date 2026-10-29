@@ -5,7 +5,7 @@ import type { BrandSpace, CheckEvent, CheckSummary, Channel, Finding, Lang, Read
 import { contentHash, LRU } from "./cache";
 import { fixAllAndGate, trimSpan, type FixTarget } from "./fix";
 import { locateQuote } from "./grounding";
-import { clusterBeliefs, selectGroups, type BeliefItem } from "./group";
+import { anchorGroups, clusterBeliefs, selectGroups, type BeliefItem } from "./group";
 import { maskAll } from "./mask";
 import { panelFor, type ReadCtx } from "./personas";
 import { embedTexts, isMock, LEXICAL, MODEL_NAME, QuotaError, withTracker, type Img, type Tracker } from "./provider";
@@ -116,8 +116,10 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
           })),
       );
       if (items.length) {
-        const embs = await embedTexts(items.map((i) => i.belief), embargo);
-        items.forEach((it, i) => (it.embedding = embs[i]));
+        // one embedding per anchored group (same category, same quoted words), shared by its members
+        const anchored = anchorGroups(items);
+        const embs = await embedTexts(anchored.map((g) => items[g[0]].belief), embargo);
+        anchored.forEach((g, gi) => g.forEach((i) => (items[i].embedding = embs[gi])));
         // word-overlap vectors (embedding quota used up) score paraphrases lower, so they get lower thresholds
         const lexical = tracker.embedModel === LEXICAL;
         const groups = selectGroups(lexical ? clusterBeliefs(items, 0.55, 0.2) : clusterBeliefs(items), of);
