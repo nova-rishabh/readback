@@ -5,19 +5,19 @@
   "runs": 3,
   "model": "gemini-3.8-flash",
   "started_at": "2026-10-29T08:21:30.922Z",
-  "generated_at": "2026-10-29T08:36:36.929Z",
+  "generated_at": "2026-10-29T08:38:05.469Z",
   "cases": 100,
   "metrics": {
-    "scored": 20,
-    "upheld": 20,
+    "scored": 23,
+    "upheld": 23,
     "not_upheld": 0,
     "errors": 0,
     "readback": {
       "recall": {
-        "k": 20,
-        "n": 20,
+        "k": 23,
+        "n": 23,
         "rate": 1,
-        "lo": 0.8388698745050667,
+        "lo": 0.8568788745827374,
         "hi": 1
       },
       "false_alarm": {
@@ -28,27 +28,27 @@
         "hi": null
       },
       "precision": {
-        "k": 20,
-        "n": 20,
+        "k": 23,
+        "n": 23,
         "rate": 1,
-        "lo": 0.8388698745050667,
+        "lo": 0.8568788745827374,
         "hi": 1
       },
       "stability": {
-        "k": 11,
-        "n": 20,
-        "rate": 0.55,
-        "lo": 0.3420820083075997,
-        "hi": 0.7418049791429071
+        "k": 13,
+        "n": 23,
+        "rate": 0.5652173913043478,
+        "lo": 0.3681104930501695,
+        "hi": 0.7436563166780135
       }
     },
     "baseline": {
       "recall": {
-        "k": 17,
-        "n": 20,
-        "rate": 0.85,
-        "lo": 0.6395767041130426,
-        "hi": 0.9476322080405041
+        "k": 20,
+        "n": 23,
+        "rate": 0.8695652173913043,
+        "lo": 0.678721020269818,
+        "hi": 0.954624234856553
       },
       "false_alarm": {
         "k": 0,
@@ -58,65 +58,65 @@
         "hi": null
       },
       "precision": {
-        "k": 17,
-        "n": 17,
+        "k": 20,
+        "n": 20,
         "rate": 1,
-        "lo": 0.8156763396284354,
+        "lo": 0.8388698745050667,
         "hi": 1
       }
     },
     "byGround": [
       {
         "ground": "unsubstantiated",
-        "cases": 19,
+        "cases": 22,
         "readback": {
-          "k": 19,
-          "n": 19,
+          "k": 22,
+          "n": 22,
           "rate": 1,
-          "lo": 0.8318156346315496,
+          "lo": 0.8513404742740388,
           "hi": 1
         },
         "baseline": {
-          "k": 17,
-          "n": 19,
-          "rate": 0.8947368421052632,
-          "lo": 0.686054495051583,
-          "hi": 0.9706420586049034
+          "k": 20,
+          "n": 22,
+          "rate": 0.9090909090909091,
+          "lo": 0.7218461934161421,
+          "hi": 0.9747051037171622
         }
       },
       {
         "ground": "exaggeration",
-        "cases": 18,
+        "cases": 21,
         "readback": {
-          "k": 18,
-          "n": 18,
+          "k": 21,
+          "n": 21,
           "rate": 1,
-          "lo": 0.8241154494176252,
-          "hi": 1
+          "lo": 0.8453561767357979,
+          "hi": 0.9999999999999999
         },
         "baseline": {
-          "k": 15,
-          "n": 18,
-          "rate": 0.8333333333333334,
-          "lo": 0.6077750036164076,
-          "hi": 0.9416352959953425
+          "k": 18,
+          "n": 21,
+          "rate": 0.8571428571428571,
+          "lo": 0.6536350585077049,
+          "hi": 0.950190782017865
         }
       },
       {
         "ground": "implication",
-        "cases": 7,
+        "cases": 8,
         "readback": {
-          "k": 7,
-          "n": 7,
+          "k": 8,
+          "n": 8,
           "rate": 1,
-          "lo": 0.6456611570247934,
+          "lo": 0.6755843804891231,
           "hi": 1
         },
         "baseline": {
-          "k": 7,
-          "n": 7,
+          "k": 8,
+          "n": 8,
           "rate": 1,
-          "lo": 0.6456611570247934,
+          "lo": 0.6755843804891231,
           "hi": 1
         }
       }
@@ -190,13 +190,13 @@
       },
       {
         "category": "skincare",
-        "upheld": 11,
+        "upheld": 14,
         "not_upheld": 0,
         "readback_recall": {
-          "k": 11,
-          "n": 11,
+          "k": 14,
+          "n": 14,
           "rate": 1,
-          "lo": 0.7411599827511859,
+          "lo": 0.7846829880728186,
           "hi": 1
         },
         "readback_fa": {
@@ -207,11 +207,11 @@
           "hi": null
         },
         "baseline_recall": {
-          "k": 10,
-          "n": 11,
-          "rate": 0.9090909090909091,
-          "lo": 0.6226353745137962,
-          "hi": 0.9837682477371741
+          "k": 13,
+          "n": 14,
+          "rate": 0.9285714285714286,
+          "lo": 0.6853073044604219,
+          "hi": 0.9872781138877085
         },
         "baseline_fa": {
           "k": 0,
@@ -537,6 +537,55 @@
         "2/6 The product provides protection for two full days. [unsupported]"
       ],
       "ms": 20118
+    },
+    {
+      "id": "ASCI-020",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The skin whitening effect is permanent. [unsupported]",
+        "2/6 The promise of results in 5 days seems unrealistic and potentially unsafe. [unsupported]",
+        "2/6 It promises to clear tan very quickly. [unsupported]"
+      ],
+      "ms": 78059
+    },
+    {
+      "id": "ASCI-023",
+      "outcome": "upheld",
+      "runs": [
+        false,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product is reliable because a known celebrity is promoting it. [unsupported]"
+      ],
+      "ms": 33362
+    },
+    {
+      "id": "ASCI-022",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product is effective enough to show results in exactly seven days. [unsupported]",
+        "2/6 The 24-hour hydration claim is an absolute claim that likely lacks clinical proof. [unsupported]",
+        "2/6 The seven-day result claim is misleading without disclosure of the asterisk conditions. [unsupported]"
+      ],
+      "ms": 88540
     }
   ]
 }
