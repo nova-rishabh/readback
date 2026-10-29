@@ -212,7 +212,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       own_key: !!input.options?.apiKey || undefined,
       readers: readers.length ? readers : undefined,
       drift: driftSummary,
-      embeddings: tracker.embedModel,
+      embeddings: tracker.factsByWords ? `${tracker.embedModel ?? "lexical"}, facts by word overlap` : tracker.embedModel,
     };
     out({ type: "stage", stage: "done", message: "Check complete" });
     out({ type: "summary", summary });

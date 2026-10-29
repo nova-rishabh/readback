@@ -5,7 +5,7 @@ import { matchFacts } from "@/lib/db/queries";
 import type { BrandSpace, Fact, Finding, Severity, Verdict } from "../types";
 import { cosine, isAmbiguous, type BeliefGroup } from "./group";
 import { mockJudge } from "./mock";
-import { callObject, EMBED_MODEL, embedSpace, embedTexts, isMock } from "./provider";
+import { callObject, EMBED_MODEL, embedSpace, embedTexts, isMock, lexicalEmbed, markFactsByWords } from "./provider";
 
 export interface Judged {
   verdict: "supported" | "contradicted" | "unsupported";
@@ -58,9 +58,23 @@ const judgeSchema = z.object({
 export const describeFact = (f: Fact) =>
   `${f.code} [${f.status}${f.expires_on ? `, expires ${f.expires_on}` : ""}]: ${f.statement}`;
 
+/** Facts ranked by shared words with the belief: the fallback when embeddings run out partway through a check. */
+export function lexicalTopFacts(brand: BrandSpace, statement: string, k = 3): Fact[] {
+  const q = lexicalEmbed(statement);
+  return brand.facts
+    .filter((f) => f.status !== "retired")
+    .map((f) => ({ f, s: cosine(q, lexicalEmbed(f.statement)) }))
+    .filter((x) => x.s > 0)
+    .sort((a, b) => b.s - a.s)
+    .slice(0, k)
+    .map((x) => x.f);
+}
+
 export async function verifyGroups(groups: BeliefGroup[], brand: BrandSpace, embargo: string[]): Promise<Judged[]> {
   if (isMock()) return groups.map((g) => mockJudge(g.statement));
-  const cands = await Promise.all(groups.map((g) => topFacts(brand, g.centroid, 3, embargo)));
+  const cands = await Promise.all(
+    groups.map((g) => topFacts(brand, g.centroid, 3, embargo).catch(() => (markFactsByWords(), lexicalTopFacts(brand, g.statement, 3)))),
+  );
   const todo = groups.map((_, i) => i).filter((i) => cands[i].length);
   const res: Judged[] = groups.map(() => NO_FACT);
   if (!todo.length) return res;

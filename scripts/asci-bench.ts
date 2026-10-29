@@ -101,7 +101,7 @@ async function main() {
       },
     ).catch((e: unknown) => ((error = e instanceof Error ? e.message : String(e)), null));
     if (!r || !r.readers.length || r.summary.partial) return { flagged: null, beliefs: [], error: error ?? "no readers answered" };
-    if (r.summary.embeddings === "lexical") {
+    if (r.summary.embeddings?.includes("lexical") || r.summary.embeddings?.includes("word overlap")) {
       // word-overlap grouping is the app's last-resort fallback, not the engine being measured: stop and resume later
       embeddingsExhausted = true;
       return { flagged: null, beliefs: [], error: "embedding quota exhausted on every benchmark model" };

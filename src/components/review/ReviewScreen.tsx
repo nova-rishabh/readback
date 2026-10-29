@@ -321,7 +321,7 @@ export function ReviewScreen(props: {
           the demo runs offline; rule findings are real.
         </p>
       )}
-      {summary?.embeddings === "lexical" && (
+      {(summary?.embeddings === "lexical" || summary?.embeddings?.includes("word overlap")) && (
         <p className="mt-4 rounded-md border border-steel/40 bg-steel-tint px-4 py-2.5 text-[13.5px]">
           <span className="font-medium">Grouped by word overlap.</span> Every embedding model was at its daily free-tier limit, so
           readers&apos; beliefs were grouped by shared words instead. Findings are still grounded in the draft; groups may be a little

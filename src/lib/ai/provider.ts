@@ -48,6 +48,7 @@ export interface Tracker {
   deadline?: number; // epoch ms; past it, calls stop waiting out cooldowns
   apiKey?: string; // a viewer's own Gemini key for this request only; never stored or logged
   embedModel?: string; // the embedding space this check uses; fixed by its first embedding call
+  factsByWords?: boolean; // the embedding model ran out partway: facts were matched by shared words
 }
 const als = new AsyncLocalStorage<Tracker>();
 
@@ -170,6 +171,12 @@ export async function callObject<T>(o: {
 /** Word-overlap vectors: a deterministic stand-in when every embedding model is out of quota (or in mock mode). */
 export { mockEmbed as lexicalEmbed } from "./mock";
 
+/** Record that facts were matched by shared words because embeddings ran out partway through the check. */
+export const markFactsByWords = () => {
+  const t = als.getStore();
+  if (t) t.factsByWords = true;
+};
+
 /** Which embedding space the current check is in: a model name, "lexical", or undefined before the first call. */
 export const embedSpace = () => als.getStore()?.embedModel;
 
@@ -203,9 +210,10 @@ export async function embedTexts(texts: string[], embargo: string[] = []): Promi
       }
     }
   }
-  if (track && !track.embedModel && statusOf(err) === 429) {
+  // nothing answered: every model is out of quota or cooling down (err stays undefined when all were skipped)
+  if (track && !track.embedModel && (err === undefined || statusOf(err) === 429)) {
     track.embedModel = LEXICAL;
     return texts.map(mockEmbed);
   }
-  throw err;
+  throw err ?? new QuotaError(60, "quota");
 }
