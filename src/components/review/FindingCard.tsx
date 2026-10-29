@@ -238,7 +238,8 @@ export const FindingCard = forwardRef<HTMLElement, FindingCardProps>(function Fi
             <span className="text-muted"> with </span>
             <span className="diff-add font-display text-[15px]">{sug.replacement}</span>
           </p>
-          {sug.rationale && <p className="mt-1 text-[12.5px] text-muted">{sug.rationale}</p>}
+          {/* a term-list replacement explains itself in the line below; only model-written fixes show their rationale */}
+          {sug.rationale && (sug.reread || sug.source) && <p className="mt-1 text-[12.5px] text-muted">{sug.rationale}</p>}
           <div className="mt-1.5">
             <RereadLine s={sug} />
           </div>
