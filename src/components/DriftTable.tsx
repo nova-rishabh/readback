@@ -28,11 +28,11 @@ function Side({ s, of }: { s: DriftRow["master"]; of: number }) {
 export function DriftTable({ rows, of, lang, compact = false }: { rows: DriftRow[]; of: number; lang: Lang; compact?: boolean }) {
   return (
     <div className="overflow-x-auto rounded-md border border-rule">
-      <table className={compact ? "w-full min-w-[560px] border-collapse bg-sheet text-left" : "w-full min-w-[760px] border-collapse bg-sheet text-left"}>
+      <table className={compact ? "w-full table-fixed border-collapse bg-sheet text-left [overflow-wrap:anywhere]" : "w-full min-w-[760px] border-collapse bg-sheet text-left"}>
         <caption className="sr-only">Beliefs formed from each version</caption>
         <thead>
           <tr className="border-b border-rule-strong text-[12.5px] text-muted">
-            <th scope="col" className={compact ? "w-[130px] px-3 py-2 font-medium" : "w-[170px] px-4 py-2 font-medium"}>Change</th>
+            <th scope="col" className={compact ? "w-[30%] px-3 py-2 font-medium" : "w-[170px] px-4 py-2 font-medium"}>Change</th>
             <th scope="col" className="px-3 py-2 font-medium">English master</th>
             <th scope="col" className="px-3 py-2 font-medium">{LANG_NAME[lang]} version</th>
           </tr>
