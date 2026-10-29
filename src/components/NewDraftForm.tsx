@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { ImageUp, LoaderCircle, X } from "lucide-react";
+import { FileUp, ImageUp, LoaderCircle, X } from "lucide-react";
 import type { Channel, Lang } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Select, Textarea } from "@/components/ui/Field";
@@ -47,6 +47,9 @@ export function NewDraftForm({ master = null }: { master?: MasterInfo | null }) 
   const [errors, setErrors] = useState<Errors>({});
   const [loadingExample, setLoadingExample] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const docRef = useRef<HTMLInputElement>(null);
+  const [importing, setImporting] = useState(false);
+  const [imported, setImported] = useState<{ name: string; note: string } | null>(null);
 
   useEffect(() => {
     if (!file) {
@@ -92,6 +95,35 @@ export function NewDraftForm({ master = null }: { master?: MasterInfo | null }) 
     }
   }
 
+  /** Pull the copy (and a DOCX's first image) out of a document, so a draft written in Word or exported as PDF can be checked. */
+  async function importDoc(f: File | null) {
+    if (!f) return;
+    setImporting(true);
+    setErrors((e) => ({ ...e, body: undefined }));
+    try {
+      const fd = new FormData();
+      fd.set("file", f);
+      const res = await fetch("/api/drafts/extract", { method: "POST", body: fd });
+      const j = (await res.json().catch(() => ({}))) as { text?: string; truncated?: boolean; image?: { base64: string; mime: string } | null; error?: string };
+      if (!res.ok || !j.text) throw new Error(j.error ?? "The document could not be read.");
+      setBody(j.text);
+      if (!title.trim()) setTitle(f.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " "));
+      const notes = [j.truncated ? "copy cut to the first 5,000 characters" : null];
+      if (j.image && !file) {
+        const bytes = Uint8Array.from(atob(j.image.base64), (c) => c.charCodeAt(0));
+        const ext = j.image.mime.split("/")[1].replace("jpeg", "jpg");
+        pickFile(new File([bytes], `${f.name.replace(/\.[^.]+$/, "")}-image.${ext}`, { type: j.image.mime }));
+        notes.push("its first image is attached; add alt text");
+      }
+      setImported({ name: f.name, note: notes.filter(Boolean).join("; ") });
+    } catch (err) {
+      setErrors((e) => ({ ...e, body: err instanceof Error ? err.message : "The document could not be read." }));
+    } finally {
+      setImporting(false);
+      if (docRef.current) docRef.current.value = "";
+    }
+  }
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     const local: Errors = {};
@@ -114,6 +146,7 @@ export function NewDraftForm({ master = null }: { master?: MasterInfo | null }) 
     fd.set("alt", alt);
     if (file) fd.set("image", file);
     if (master) fd.set("master", master.id);
+    if (imported) fd.set("source", imported.name);
     try {
       const res = await fetch("/api/submissions", { method: "POST", body: fd });
       const json = (await res.json().catch(() => ({}))) as {
@@ -211,6 +244,31 @@ export function NewDraftForm({ master = null }: { master?: MasterInfo | null }) 
                 </Select>
               )}
             </Field>
+          </div>
+          <div className="-mb-2 flex flex-wrap items-center justify-between gap-2">
+            <p className="text-[12.5px] text-muted">
+              {imported ? (
+                <>
+                  Imported from <span className="font-mono text-ink">{imported.name}</span>
+                  {imported.note && `: ${imported.note}`}. Check the copy below before saving.
+                </>
+              ) : (
+                "Written in Word or exported as PDF? Import it instead of pasting."
+              )}
+            </p>
+            <Button size="sm" variant="ghost" onClick={() => docRef.current?.click()} disabled={importing || submitting}>
+              {importing ? <LoaderCircle size={13} className="animate-spin" aria-hidden /> : <FileUp size={13} aria-hidden />}
+              {importing ? "Reading the document" : "Import from DOCX, PDF or TXT"}
+            </Button>
+            <input
+              ref={docRef}
+              type="file"
+              accept=".pdf,.docx,.txt,.md"
+              className="sr-only"
+              tabIndex={-1}
+              aria-hidden
+              onChange={(e) => void importDoc(e.target.files?.[0] ?? null)}
+            />
           </div>
           <Field
             label="Copy (required)"

@@ -8,7 +8,7 @@ import { locateQuote } from "./grounding";
 import { clusterBeliefs, selectGroups, type BeliefItem } from "./group";
 import { maskAll } from "./mask";
 import { panelFor, type ReadCtx } from "./personas";
-import { embedTexts, isMock, MODEL_NAME, QuotaError, withTracker, type Img, type Tracker } from "./provider";
+import { embedTexts, isMock, LEXICAL, MODEL_NAME, QuotaError, withTracker, type Img, type Tracker } from "./provider";
 import { readPanel } from "./reader";
 import { toneFinding } from "./tone";
 import { buildClaimFindings, verifyGroups } from "./verify";
@@ -118,7 +118,9 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       if (items.length) {
         const embs = await embedTexts(items.map((i) => i.belief), embargo);
         items.forEach((it, i) => (it.embedding = embs[i]));
-        const groups = selectGroups(clusterBeliefs(items), of);
+        // word-overlap vectors (embedding quota used up) score paraphrases lower, so they get lower thresholds
+        const lexical = tracker.embedModel === LEXICAL;
+        const groups = selectGroups(lexical ? clusterBeliefs(items, 0.55, 0.2) : clusterBeliefs(items), of);
         out({ type: "stage", stage: "verify", message: `Checking ${groups.length} shared belief(s) against the Fact Ledger` });
         ai = buildClaimFindings(groups, await verifyGroups(groups, brand, embargo), of, brand, MODEL_NAME);
       }
@@ -208,6 +210,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       own_key: !!input.options?.apiKey || undefined,
       readers: readers.length ? readers : undefined,
       drift: driftSummary,
+      embeddings: tracker.embedModel,
     };
     out({ type: "stage", stage: "done", message: "Check complete" });
     out({ type: "summary", summary });

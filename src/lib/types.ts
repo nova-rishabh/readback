@@ -187,6 +187,7 @@ export interface CheckSummary {
   own_key?: boolean; // ran on the viewer's own Gemini key rather than the shared free one
   partial?: boolean; // the AI stage did not complete (quota, overload); only rule findings are reliable
   drift?: DriftSummary; // translations only: what readers believe from the master versus this version
+  embeddings?: string; // embedding model that grouped the beliefs, or "lexical" when every model was out of quota
 }
 
 // ---------- Translations ----------

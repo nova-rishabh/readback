@@ -43,6 +43,10 @@ const sarg = (name: string) => {
 const IDS = sarg("ids")?.split(",").map((s) => s.trim()) ?? null;
 const OUT = sarg("out") ?? (LEDGER ? "data/asci-bench-results-ledger.json" : "data/asci-bench-results.json");
 if (process.argv.includes("--mock")) process.env.READBACK_MOCK_AI = "1";
+// the benchmark never touches the live app's embedding model (gemini-embedding-001: 1,000 requests a day on the free
+// tier, which the deployed demo needs); it uses the two newer models, each with its own daily quota
+process.env.READBACK_EMBED_MODELS ??= "gemini-embedding-2-preview,gemini-embedding-2";
+let embeddingsExhausted = false;
 
 /** Keep the upheld / not-upheld ratio of the full set in the first N cases. */
 function stratified(all: BenchCase[], n: number): BenchCase[] {
@@ -97,6 +101,11 @@ async function main() {
       },
     ).catch((e: unknown) => ((error = e instanceof Error ? e.message : String(e)), null));
     if (!r || !r.readers.length || r.summary.partial) return { flagged: null, beliefs: [], error: error ?? "no readers answered" };
+    if (r.summary.embeddings === "lexical") {
+      // word-overlap grouping is the app's last-resort fallback, not the engine being measured: stop and resume later
+      embeddingsExhausted = true;
+      return { flagged: null, beliefs: [], error: "embedding quota exhausted on every benchmark model" };
+    }
     const bad = r.findings.filter((f) => f.belief && (f.belief.verdict === "contradicted" || f.belief.verdict === "unsupported"));
     return { flagged: bad.length > 0, beliefs: bad.map((f) => `${f.belief!.readers}/${f.belief!.of} ${f.belief!.statement} [${f.belief!.verdict}]`), error };
   };
@@ -145,7 +154,7 @@ async function main() {
     const runs = (old?.runs ?? []).filter((x) => x !== null);
     let beliefs = old?.beliefs ?? [];
     let error: string | undefined;
-    for (let tries = 0; runs.length < RUNS && tries < RUNS + 2; tries++) {
+    for (let tries = 0; runs.length < RUNS && tries < RUNS + 2 && !embeddingsExhausted; tries++) {
       const r = await readbackOnce(c);
       if (r.flagged === null) {
         error = r.error;
@@ -167,10 +176,11 @@ async function main() {
 
   const queue = [...todo];
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
-    for (let c = queue.shift(); c; c = queue.shift()) await one(c);
+    for (let c = queue.shift(); c && !embeddingsExhausted; c = queue.shift()) await one(c);
   }));
 
   save();
+  if (embeddingsExhausted) console.log("\nStopped: the daily embedding quota is used up on every benchmark model. Run the same command after it resets to resume.");
   const m = computeMetrics([...rows.values()], cases, evidence);
   const show = (r: Rate) => `${pct(r).padStart(6)} (${r.k}/${r.n})`;
   console.log(`\n                          Readback            Single-prompt baseline`);

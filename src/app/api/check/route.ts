@@ -1,6 +1,6 @@
 import { after } from "next/server";
 import { keyFrom } from "@/lib/ai/key-header";
-import { getBrand, getMaster, getSessionUser, getSubmission, saveCheckResult, signedImageUrl } from "@/lib/db/queries";
+import { getBrand, getMaster, getSessionUser, getSubmission, isUuid, saveCheckResult, signedImageUrl } from "@/lib/db/queries";
 import { createClient } from "@/lib/db/server";
 import { runCheck } from "@/lib/ai/pipeline";
 import type { CheckEvent, Finding } from "@/lib/types";
@@ -47,7 +47,9 @@ export async function POST(req: Request) {
     return json(400, { error: "Body must be JSON: { versionId }." });
   }
   const versionId = payload.versionId;
-  if (!versionId) return json(400, { error: "versionId is required." });
+  if (!isUuid(versionId) || (payload.submissionId !== undefined && !isUuid(payload.submissionId))) {
+    return json(400, { error: "versionId must be a version id from this workspace." });
+  }
 
   const submissionId = payload.submissionId ?? (await resolveSubmissionId(versionId).catch(() => null));
   if (!submissionId) return json(404, { error: "No version with that id is visible to you." });

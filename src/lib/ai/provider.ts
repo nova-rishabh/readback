@@ -14,6 +14,13 @@ export const MODELS: string[] = process.env.GEMINI_MODELS
   : [...new Set([process.env.GEMINI_MODEL, ...DEFAULT_MODELS].filter((m): m is string => !!m))];
 export const MODEL_NAME = MODELS[0];
 export const EMBED_MODEL = "gemini-embedding-001"; // truncated to 768 dims to match facts.embedding
+// Free-tier embeddings allow 1,000 requests per model per day. When the primary is used up, a check moves to the next
+// model (and matches facts in memory, since stored fact vectors are in the primary's space), and as a last resort
+// to word-overlap vectors, so a check never loses its reader findings to an embedding quota.
+export const EMBED_MODELS: string[] = process.env.READBACK_EMBED_MODELS
+  ? process.env.READBACK_EMBED_MODELS.split(",").map((m) => m.trim()).filter(Boolean)
+  : [EMBED_MODEL, "gemini-embedding-2", "gemini-embedding-2-preview"];
+export const LEXICAL = "lexical";
 export const TIMEOUT_MS = 40_000;
 export const isMock = () =>
   process.env.READBACK_MOCK_AI === "1" || (!process.env.GOOGLE_GENERATIVE_AI_API_KEY && !als.getStore()?.apiKey);
@@ -40,6 +47,7 @@ export interface Tracker {
   calls: number;
   deadline?: number; // epoch ms; past it, calls stop waiting out cooldowns
   apiKey?: string; // a viewer's own Gemini key for this request only; never stored or logged
+  embedModel?: string; // the embedding space this check uses; fixed by its first embedding call
 }
 const als = new AsyncLocalStorage<Tracker>();
 
@@ -66,9 +74,12 @@ const quotaHit = new Set<string>(); // models whose cooldown came from a 429 rat
 let rr = 0;
 
 const statusOf = (e: unknown) => (e as { statusCode?: number })?.statusCode ?? 0;
-function retrySeconds(e: unknown): number {
+export function retrySeconds(e: unknown): number {
   const raw = `${(e as Error)?.message ?? ""} ${(e as { responseBody?: string })?.responseBody ?? ""}`;
-  const m = raw.match(/retry in ([\d.]+)\s*s/i) ?? raw.match(/"retryDelay"\s*:\s*"([\d.]+)s"/i);
+  // "retry in 41.5s", "retry in 22h12m17.9s" (daily quota), or a JSON retryDelay
+  const hms = raw.match(/retry in (?:(\d+)h)?(?:(\d+)m)?([\d.]+)s/i);
+  if (hms) return Math.ceil(Number(hms[1] ?? 0) * 3600 + Number(hms[2] ?? 0) * 60 + parseFloat(hms[3]));
+  const m = raw.match(/"retryDelay"\s*:\s*"([\d.]+)s"/i);
   return m ? Math.ceil(parseFloat(m[1])) : 60;
 }
 
@@ -156,23 +167,45 @@ export async function callObject<T>(o: {
   }
 }
 
+/** Word-overlap vectors: a deterministic stand-in when every embedding model is out of quota (or in mock mode). */
+export { mockEmbed as lexicalEmbed } from "./mock";
+
+/** Which embedding space the current check is in: a model name, "lexical", or undefined before the first call. */
+export const embedSpace = () => als.getStore()?.embedModel;
+
 export async function embedTexts(texts: string[], embargo: string[] = []): Promise<number[][]> {
   if (!texts.length) return [];
   if (isMock()) return texts.map(mockEmbed);
+  const track = als.getStore();
+  if (track?.embedModel === LEXICAL) return texts.map(mockEmbed);
   const { out } = maskAll(texts, embargo);
+  // one check stays in one vector space: once a model has answered, later calls in the check use it too
+  const order = track?.embedModel ? [track.embedModel] : EMBED_MODELS;
   let err: unknown;
-  for (let i = 0; i < 2; i++) {
-    try {
-      const { embeddings } = await embedMany({
-        model: provider().textEmbeddingModel(EMBED_MODEL, { outputDimensionality: 768 }),
-        values: out,
-        maxRetries: 0,
-        abortSignal: AbortSignal.timeout(TIMEOUT_MS),
-      });
-      return embeddings;
-    } catch (e) {
-      err = e;
+  for (const model of order) {
+    if ((cooldown.get(k(`embed:${model}`)) ?? 0) > Date.now()) continue;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const { embeddings } = await embedMany({
+          model: provider().textEmbeddingModel(model, { outputDimensionality: 768 }),
+          values: out,
+          maxRetries: 0,
+          abortSignal: AbortSignal.timeout(TIMEOUT_MS),
+        });
+        if (track) track.embedModel = model;
+        return embeddings;
+      } catch (e) {
+        err = e;
+        if (statusOf(e) === 429) {
+          cooldown.set(k(`embed:${model}`), Date.now() + retrySeconds(e) * 1000);
+          break; // try the next model
+        }
+      }
     }
+  }
+  if (track && !track.embedModel && statusOf(err) === 429) {
+    track.embedModel = LEXICAL;
+    return texts.map(mockEmbed);
   }
   throw err;
 }

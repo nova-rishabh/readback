@@ -40,9 +40,26 @@ const READERS = [
   "Translations that make a claim stronger",
 ];
 
+// what happens around the check: translations, live posts, and how well the engine does against the regulator
+const AFTER = [
+  {
+    title: "Translations can't quietly promise more",
+    body: "Link a Hindi, Hinglish, Tamil or Marathi version to its English master. Every check compares what readers believe from both, and anything the translation adds or makes stronger, like पक्का (“guaranteed”), becomes a finding a reviewer must clear.",
+  },
+  {
+    title: "Live posts are re-checked when facts change",
+    body: "When an approved fact changes or expires, every post that cited it joins the Recall queue. Readback opens each live page, looks for the stale wording, and closes the recall itself once it is gone. Expiry alerts arrive before a fact lapses.",
+  },
+  {
+    title: "Measured against the regulator",
+    body: "ASCI-Bench runs the engine on 100 real Advertising Standards Council of India rulings, three times each, against a single-prompt baseline, with and without the evidence ASCI accepted. Every case and its result is open to inspect.",
+  },
+];
+
 const NAV = [
   { href: "#how", label: "How it works" },
   { href: "#checks", label: "What it checks" },
+  { href: "#after", label: "After the check" },
   { href: "#roles", label: "Try a role" },
 ];
 
@@ -147,6 +164,20 @@ export default async function Landing() {
                     </li>
                   ))}
                 </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="after" aria-labelledby="after-h" className="scroll-mt-20 border-t border-rule py-14 lg:py-16">
+          <h2 id="after-h" className="font-display text-[28px] leading-tight lg:text-[32px]">
+            Beyond the first check
+          </h2>
+          <div className="mt-8 grid gap-8 md:grid-cols-3">
+            {AFTER.map((a) => (
+              <div key={a.title} className="flex flex-col gap-2 border-t-2 border-ink pt-4">
+                <h3 className="text-[16.5px] font-semibold">{a.title}</h3>
+                <p className="text-[14.5px] leading-relaxed text-muted">{a.body}</p>
               </div>
             ))}
           </div>

@@ -21,10 +21,12 @@ const TOURS: Record<string, Step[]> = {
       body: "Readback checks marketing drafts before they are published. Code checks the brand rules; six simulated readers report what the post makes them believe; you decide what to change. This tour takes under a minute.",
     },
     { target: "inbox-list", title: "Every draft, with its status", body: "Drafts move from Draft to In review to Approved and Published. Click any row to open its review. Start with #142: its findings are already saved." },
-    { target: "nav-new", title: "Check your own copy", body: "Submit a draft here. The “Load Velura #142 example” button fills the form so you can watch a live check run." },
-    { target: "nav-compare", title: "Compare translations", body: "Paste an English line and its Hindi version to see claims the translation added or made stronger." },
+    { target: "nav-new", title: "Check your own copy", body: "Submit a draft here, or import it from a DOCX, PDF or TXT file. The “Fill in the demo draft” button fills the form so you can watch a live check run." },
+    { target: "inbox-list", title: "Translations stay true", body: "#146 is the Hindi version of #145. Open an English draft and choose “Add a translation”: every check compares what readers believe from both versions, and a claim the translation makes stronger becomes a finding." },
+    { target: "nav-compare", title: "Quick translation check", body: "Paste any English line and its Hindi, Hinglish, Tamil or Marathi version for a one-off comparison, without saving a draft." },
     { target: "nav-brand", title: "The rules it checks against", body: "Brand Space holds the guideline clauses, approved facts, banned terms and reader personas. The brand owner edits them." },
-    { target: "nav-recall", title: "When a fact changes", body: "If an approved fact is edited or expires, every published post that relied on it shows up in the Recall queue." },
+    { target: "nav-recall", title: "When a fact changes", body: "If an approved fact is edited or expires, every post that relied on it shows up in the Recall queue. Readback opens the live page, looks for the stale wording, and closes the recall once it is gone." },
+    { target: "nav-bench", title: "How good is it?", body: "ASCI-Bench scores the engine on 100 real Advertising Standards Council of India rulings, against a single-prompt baseline. Every case is open to inspect." },
     { target: "role-switch", title: "Switch seats any time", body: "Try the same draft as a creator, a reviewer, the brand owner or an outside agency. Each role sees and can do different things." },
     { target: "help", title: "Need this again?", body: "Reopen the tour for this page from this button." },
   ],
@@ -37,7 +39,7 @@ const TOURS: Record<string, Step[]> = {
 };
 
 const tourFor = (path: string) => (path === "/app" ? "inbox" : path.startsWith("/app/s/") ? "review" : null);
-const KEY = (name: string) => `readback-tour-${name}-v1`;
+const KEY = (name: string) => `readback-tour-${name}-v2`; // v2: Round 3 steps (translations, live recall, benchmark)
 const seen = (name: string) => {
   try {
     return localStorage.getItem(KEY(name)) === "done";

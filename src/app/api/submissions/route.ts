@@ -43,6 +43,7 @@ export async function POST(req: Request) {
     .filter(Boolean);
   const altRaw = String(form.get("alt") ?? "").trim();
   const masterId = String(form.get("master") ?? "").trim() || null;
+  const sourceFile = String(form.get("source") ?? "").trim().slice(0, 120) || null; // document the copy was imported from
 
   const errors: Record<string, string> = {};
   if (!title) errors.title = "Give the draft a title your reviewer will recognise.";
@@ -75,7 +76,7 @@ export async function POST(req: Request) {
   if (Object.keys(errors).length) return NextResponse.json({ errors }, { status: 422 });
 
   try {
-    const ids = await createSubmission({ title, channel, lang, intent, body, lockedPhrases, image, masterId });
+    const ids = await createSubmission({ title, channel, lang, intent, body, lockedPhrases, image, masterId, sourceFile });
     return NextResponse.json(ids);
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Could not save the draft.";

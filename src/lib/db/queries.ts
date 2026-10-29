@@ -34,6 +34,8 @@ function must(res: { data: any; error: { message: string } | null }, what: strin
   return res.data;
 }
 
+export const isUuid = (s: unknown): s is string => typeof s === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
+
 function sha256(s: string | Buffer): string {
   return createHash("sha256").update(s).digest("hex");
 }
@@ -172,6 +174,12 @@ function openDrift(versions: { n: number; findings: Finding[] | null; summary: u
   return (latest.findings ?? []).filter((f) => f.category === "language_drift" && f.status === "open").length;
 }
 
+/** False until migration 0003 (translations, Tamil and Marathi, demo store pages) has been applied. */
+export const translationsEnabled = cache(async (): Promise<boolean> => {
+  const { error } = await createAdmin().from("submissions").select("master_id").limit(1);
+  return !error;
+});
+
 /** Translations of a master that the viewer can see (RLS), newest first. */
 export async function listVariants(masterId: string): Promise<LinkedSubmission[]> {
   await requireActor();
@@ -191,8 +199,9 @@ export async function listVariants(masterId: string): Promise<LinkedSubmission[]
  */
 export async function getMaster(masterId: string): Promise<(LinkedSubmission & { body: string; version: number; version_id: string; channel: Channel; intent: string }) | null> {
   const a = await requireActor();
+  if (!isUuid(masterId)) return null;
   const admin = createAdmin();
-  const { data } = await admin.from("submissions").select("id, brand_id, number, title, lang, status, channel, intent, master_id, versions(id, n, body)")
+  const { data } = await admin.from("submissions").select("id, brand_id, number, title, lang, status, channel, intent, versions(id, n, body)")
     .eq("id", masterId).maybeSingle();
   if (!data || data.brand_id !== a.brand_id) return null;
   const versions = (data.versions ?? []) as { id: string; n: number; body: string }[];
@@ -208,6 +217,7 @@ export async function getSubmission(id: string): Promise<{
   submission: Submission; versions: Version[]; comments: Comment[]; audit: AuditEntry[];
 } | null> {
   const actor = await requireActor();
+  if (!isUuid(id)) return null; // a mistyped link is "not found", not a database error
   const sb = await createClient();
   const { data: s, error } = await sb.from("submissions").select(SUBMISSION_SELECT).eq("id", id).maybeSingle();
   if (error) throw new Error(`getSubmission: ${error.message}`);
@@ -236,6 +246,7 @@ export async function createSubmission(input: {
   title: string; channel: Channel; lang: Lang; intent: string; body: string; lockedPhrases: string[];
   image?: { data: Buffer; mime: string; alt: string | null };
   masterId?: string | null; // set when this draft translates another submission
+  sourceFile?: string | null; // the DOCX/PDF/TXT the copy was imported from, kept in the audit entry
 }): Promise<{ submissionId: string; versionId: string }> {
   const a = await requireActor();
   const sb = await createClient();
@@ -282,6 +293,7 @@ export async function createSubmission(input: {
     detail: {
       title: input.title, channel: input.channel, version: 1,
       ...(master ? { translation_of: master.number, lang: input.lang } : {}),
+      ...(input.sourceFile ? { source_file: input.sourceFile } : {}),
     },
   });
   return { submissionId: sub.id, versionId: ver.id };

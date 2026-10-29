@@ -5,7 +5,7 @@ import { matchFacts } from "@/lib/db/queries";
 import type { BrandSpace, Fact, Finding, Severity, Verdict } from "../types";
 import { cosine, isAmbiguous, type BeliefGroup } from "./group";
 import { mockJudge } from "./mock";
-import { callObject, embedTexts, isMock } from "./provider";
+import { callObject, EMBED_MODEL, embedSpace, embedTexts, isMock } from "./provider";
 
 export interface Judged {
   verdict: "supported" | "contradicted" | "unsupported";
@@ -17,7 +17,8 @@ const NO_FACT: Judged = { verdict: "unsupported", fact_code: null, reason: "Unsu
 const factVecs = new Map<string, number[]>();
 
 async function memoryTopFacts(brand: BrandSpace, emb: number[], k: number, embargo: string[]): Promise<Fact[]> {
-  const key = (f: Fact) => `${f.code}@${f.version}:${f.statement}`;
+  // fact vectors are cached per embedding space: a belief and its candidate facts must share one
+  const key = (f: Fact) => `${embedSpace() ?? EMBED_MODEL}|${f.code}@${f.version}:${f.statement}`;
   const missing = brand.facts.filter((f) => !factVecs.has(key(f)));
   if (missing.length) {
     const vecs = await embedTexts(missing.map((f) => f.statement), embargo);
@@ -31,7 +32,8 @@ async function memoryTopFacts(brand: BrandSpace, emb: number[], k: number, embar
 }
 
 export async function topFacts(brand: BrandSpace, emb: number[], k = 3, embargo: string[] = []): Promise<Fact[]> {
-  if (!isMock()) {
+  // stored fact vectors are in the primary model's space; any other space matches in memory
+  if (!isMock() && (embedSpace() ?? EMBED_MODEL) === EMBED_MODEL) {
     try {
       const r = await matchFacts(emb, k);
       if (r.length) return r.map((x) => x.fact);

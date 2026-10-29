@@ -1,28 +1,11 @@
 import { NextResponse } from "next/server";
 import { getBrand, getSessionUser } from "@/lib/db/queries";
 import type { Clause, ClauseKind } from "@/lib/types";
+import { extractText as extract } from "@/lib/docs/extract";
 
 export const runtime = "nodejs";
 
 const MAX = 15 * 1024 * 1024;
-
-async function extract(file: File): Promise<string> {
-  const name = file.name.toLowerCase();
-  const buf = Buffer.from(await file.arrayBuffer());
-  if (name.endsWith(".pdf") || file.type === "application/pdf") {
-    const { extractText, getDocumentProxy } = await import("unpdf");
-    const pdf = await getDocumentProxy(new Uint8Array(buf));
-    const { text } = await extractText(pdf, { mergePages: true });
-    return Array.isArray(text) ? text.join("\n") : text;
-  }
-  if (name.endsWith(".docx")) {
-    const mammoth = await import("mammoth");
-    const { value } = await mammoth.extractRawText({ buffer: buf });
-    return value;
-  }
-  if (name.endsWith(".txt") || name.endsWith(".md") || file.type.startsWith("text/")) return buf.toString("utf8");
-  throw new Error("Upload a PDF, DOCX or TXT file.");
-}
 
 const RULE_CUES = /\b(must (include|carry|appear)|never use|do not use|banned|prohibited|contrast|alt text|disclaimer|hex|colour|color|font size|logo)\b/i;
 const NUMBERED = /^\s*(?:§\s*)?(?:clause\s+)?(\d+(?:\.\d+)*)[.)]?\s+(\S.*)$/i;
