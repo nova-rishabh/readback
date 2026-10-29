@@ -1,97 +1,145 @@
 # Readback
 
-**Pre-publication brand and claim governance.** Readback checks a marketing draft before it ships. It runs two engines over the same draft:
+**Pre-publication brand and claim governance.** Readback checks a marketing draft before it ships, and keeps checking
+it after it goes live. Two engines read every draft:
 
-- A **Rule Engine** of exact, deterministic checks.
-- An **Impression Engine** with six simulated readers. Each reports what they *believe* after reading the copy and seeing the image.
+- A **Rule Engine** of exact, deterministic checks (terms, disclaimers, embargoes, contrast from pixels, alt text, palette).
+- An **Impression Engine**: six simulated readers say what they *believe* after reading the copy and seeing the image.
+  Every belief must quote the words (or point to the image element) that caused it, is checked against the brand's
+  Fact Ledger, and any suggested fix is re-read by the panel before anyone sees it.
 
-Every belief must be traced to the words or image element that caused it. It is then checked against the brand's Fact Ledger, and any suggested fix is re-read by the panel before anyone sees it.
+**Live app:** https://readback-virid.vercel.app · **Source:** https://github.com/nova-rishabh/readback ·
+Team Nova (Rishabh Kataria, solo) · Inkloom AI brand-governance problem statement, We Code Coders hackathon.
 
-Built by Team Nova (Rishabh Kataria, solo) for the Inkloom AI brand-governance problem statement at the We Code Coders hackathon, Round 2.
-
-> Demo brand: **Velura**, a fictional Indian skincare D2C label. All brand data, people and submissions in the demo are fictional.
+> Demo brand: **Velura**, a fictional Indian skincare D2C label. All brand data, people and submissions are fictional.
 
 ---
 
-## Try it
+## Try it in ten minutes (no sign-up)
 
-1. Open the deployed app and click **Try it as a creator** (or any **Enter as…** role). No sign-up is needed. A short guided tour starts on first visit; reopen it with **Tour** in the top bar. Each role sees and can do different things, enforced by Postgres row-level security and workflow triggers.
-2. Open **#142 Hero post: Vitamin C serum**. It has precomputed results, so you can explore the full review screen without waiting for AI calls.
-3. Go to **New draft** → **Fill in the demo draft** → **Save and run check** to watch a live check stream in (rule findings appear at once; the six readers take one to two minutes on the free Gemini tier).
-4. Accept a fix and **Save as v2**, then **Send for review**. Switch to **Reviewer** (top-right menu), approve, and **Record published URL**. Then open **Audit log** → **Verify chain**.
-5. As **Brand owner**, edit a fact in **Brand Space → Approved facts**. Every approved or published post that cited it appears in the **Recall queue**.
-6. Open **Compare translations** → **Load Velura example** → **Compare translation**. The Hindi line adds पक्का ("guaranteed") and is flagged **Made stronger** under clause G-13; the dropped disclaimer is flagged too.
+Open the live app and press **Try it as a creator**. A short tour starts on first visit; reopen it with **Tour** in the
+top bar. Switch seats any time from the menu at the top right (creator, reviewer, brand owner, agency).
 
-## What works (Round 2)
-
-| Area | Status |
-|---|---|
-| One-click demo roles (owner, creator, reviewer, agency) with RLS | ✅ |
-| Brand Space: clauses (with guideline PDF/DOCX/TXT import and clause confirmation), Fact Ledger with versions and expiry, banned/preferred/disclaimer/embargo terms, palette and voice, personas | ✅ |
-| Privacy Gate: emails, Indian phone numbers, PAN, Aadhaar (spaced or not), card numbers (Luhn-checked) and embargoed names are masked into tokens before any model or embedding call | ✅ |
-| Rule Engine: hand-written Aho-Corasick term matching, missing disclaimers, embargo leaks, WCAG 1.4.3 contrast measured from image pixels, WCAG 1.1.1 alt text, off-palette colours by ΔE2000 | ✅ |
-| Impression Engine: 6 readers (3 brand personas + literal buyer, Hindi/Hinglish reader, ASCI sceptic), quote and visual grounding, belief grouping (≥2 of 6 readers), Fact Ledger verdicts, tone check | ✅ |
-| Span-level fixes with a re-read gate and locked phrases | ✅ (needs Gemini capacity, see limitations) |
-| Review workflow: accept / edit / dispute per finding, versions with word diffs, inline comments, approve / request changes, record published URL | ✅ |
-| Hash-chained, insert-only audit log with chain verification | ✅ |
-| Workflow rules enforced in Postgres as well as the app: allowed status changes only, no self-approval, saved versions immutable, a new version sends reviewed content back to draft | ✅ |
-| First-visit guided tour (inbox and review screen), instant role switcher, WCAG 2.2 AA pass on contrast, focus and announcements | ✅ |
-| Each reader's takeaway is saved with the check, so the reader panel survives a reload; when a suggested fix fails its re-read, a guided rewrite shows why and which approved fact to use | ✅ |
-| Bring your own Gemini key: a top-bar badge shows whether checks run on the shared free key or your own; your key is checked with Google, kept only in your browser and sent with your own AI requests (never stored or logged on the server) | ✅ |
-| Recall Queue for stale or changed facts, Insights (most-broken clauses, findings by author, unclear clauses from disputes and 50/50 reader splits, stale facts) | ✅ |
-| Cross-language belief diff: English master vs Hindi/Hinglish, NEW BELIEF / STRENGTHENED CLAIM labels | ✅ v1 |
-| ASCI-Bench: 100 public ASCI rulings plus a CLI runner comparing Readback with a single-prompt baseline | ✅ v1 |
-
-## The three named improvements
-
-These are the three improvements named in the Round 1 plan. Each has a working first version in Round 2 and a stated Round 3 target.
-
-| # | Improvement | Round 2 state (in this repo) | Round 3 target |
+| # | Journey | Where | What you should see |
 |---|---|---|---|
-| 1 | **ASCI-Bench** | [`data/asci-bench.json`](data/asci-bench.json) has 100 real rulings (66 upheld, 34 not upheld). [`scripts/asci-bench.ts`](scripts/asci-bench.ts) (`pnpm bench`) runs Readback and a single-prompt baseline on a stratified slice and reports recall on upheld rulings, the false-alarm rate on not-upheld rulings, and run-to-run stability. Results go to `data/asci-bench-results.json`. | Full 100-case runs with three repeats, hand-checked ground labels, per-ground breakdown, and an advertiser-evidence ledger so not-upheld cases are judged against the evidence ASCI accepted. |
-| 2 | **Cross-language consistency** | [`src/lib/ai/drift.ts`](src/lib/ai/drift.ts), [`/api/drift`](src/app/api/drift/route.ts) and the **Compare** page ([`CompareForm.tsx`](src/components/CompareForm.tsx)). The panel reads both versions in one call and pairs beliefs; code labels each pair NEW BELIEF, STRENGTHENED CLAIM, weakened, dropped or same, citing clause G-13. | Link variants to their master submission so drift findings join the review workflow and audit log; marketplace-listing variants; more Indic languages. |
-| 3 | **Fact Recall** | `fact_citations` records the fact versions every approval relied on. Editing or expiring a fact puts each approved or published post that cited it into the Recall Queue with its live URL ([`listRecallQueue`](src/lib/db/queries.ts)). | Scheduled re-checks of the live URLs (Amazon, Nykaa, website) to confirm the stale claim was actually removed, plus expiry alerts before a fact lapses. |
+| 1 | **A full check, saved** | Inbox → **#142 Hero post** (marked *Start here*) | Rule and AI findings marked in the draft, the six readers' takeaways, citations to clauses, facts and WCAG. Accept a fix → **Save as v2** runs a live check (1 to 3 minutes on the free Gemini key). |
+| 2 | **Your own draft** | **New draft** → **Fill in the demo draft** (or **Import from DOCX, PDF or TXT** with the sample DOCX) → **Save and run check** | Rule findings at once, readers stream in, findings save as they arrive; leaving the page does not stop the check. |
+| 3 | **Review workflow** | As creator: **Send v2 for review**. Switch to **Reviewer**: **Approve** (or Request changes with a note), then **Record published URL** | Status moves draft → in review → approved → published; you cannot approve your own draft; every step lands in the hash-chained audit log (**Audit log → Verify chain**). |
+| 4 | **Translations** (improvement 2) | Open **#146** (Hindi version of **#145**), or open #145 → **Add a translation** → **Fill in a sample Hindi translation** | The English master and the translation side by side, belief by belief. पक्का (“guaranteed”) is flagged as a claim the translation added, cited to clause G-13, with suggested wording that passed a re-comparison. Tamil (#147) and Marathi translations get a native reader. |
+| 5 | **Live fact recall** (improvement 3) | As **brand owner**: **Recall queue** → #139 → **Check live page now** | Readback opens the post's live page and finds the stale “#1 rated” claim. Open the live page, **Edit this demo page**, remove the line, check again: the recall closes itself and the audit log records it. Expiry alerts list facts lapsing within 30 days. |
+| 6 | **Fact change → recall** | As brand owner: **Brand Space → Approved facts** → edit a fact cited by an approved post | Every approved or published post that relied on it joins the Recall queue, and its live page is re-checked straight away. |
+| 7 | **The benchmark** (improvement 1) | **Benchmark** in the top bar | ASCI-Bench on 100 real Advertising Standards Council of India rulings, three runs each, against a single-prompt baseline, with and without the evidence ASCI accepted; every case is inspectable. |
 
-## ASCI-Bench v1 results (Round 2)
+The demo is shared. The brand owner can put the seeded drafts back with **Brand Space → Reset demo drafts**, and the
+daily job does it every morning (09:00 IST); drafts you create are kept. If the shared free Gemini key is busy, add your
+own free key from the **Free Gemini key** badge in the top bar; it stays in your browser.
 
-`pnpm bench` on a stratified 20-case slice of real ASCI rulings (13 upheld, 7 not upheld), live Gemini, 23 Oct 2026. Raw per-case output is in [`data/asci-bench-results.json`](data/asci-bench-results.json).
+---
 
-| Metric | Readback | Single-prompt baseline |
+## What Round 3 added
+
+### The three improvements named in Round 2
+
+| # | Improvement | Delivered |
 |---|---|---|
-| Recall on upheld rulings | **84.6%** (11/13) | 76.9% (10/13) |
-| False alarms on not-upheld rulings | **42.9%** (3/7) | 57.1% (4/7) |
-| Run-to-run stability (5 cases × 3 runs) | 80.0% | not measured |
+| 1 | **ASCI-Bench at full scale with evidence-aware scoring** | All **100** rulings, **3 runs each** (majority verdict, run-to-run stability), a single-prompt baseline, Wilson 95% intervals, **per-ground** and per-category breakdowns. Grounds re-labelled from each ruling's full text (unsubstantiated, exaggeration, implication, omission, comparison, statutory). An **advertiser-evidence ledger** ([`data/asci-evidence.json`](data/asci-evidence.json)) records what each advertiser submitted and what the panel accepted; `pnpm bench --ledger` gives each case's brand that accepted evidence as its Fact Ledger. Results page in the app: **/app/bench**. |
+| 2 | **Cross-language consistency inside the review workflow** | A Hindi, Hinglish, Tamil or Marathi draft can be **linked to its English master**. Every check of every version compares the beliefs each leaves (one structured call), and anything the translation adds or makes stronger becomes a **finding** (clause G-13) that is accepted, edited or disputed and approved like any other, and recorded in the audit log. Suggested wording must pass a **re-comparison** with the master. **Tamil and Marathi native readers** join the panel for those languages. The master lists its translations and their open drift. |
+| 3 | **Live Fact Recall** | When a cited fact changes or expires, Readback **fetches each post's live URL** (SSRF-guarded), looks for the approved wording that relied on the fact, and **closes the recall automatically** when it is gone, with an audit entry. Checks run on demand, **when a fact is edited**, and **daily** (Vercel Cron). **Expiry alerts** list facts lapsing within 30 days and the posts that cite them; the daily job marks lapsed facts expired and records one alert per fact. A demo storefront stands in for real product pages so the whole loop can be tried. |
 
-With n = 20 these numbers are directional, not statistically significant. The false-alarm rate is an upper bound because the benchmark brand has no Fact Ledger: Readback cannot see the evidence advertisers gave ASCI. Closing that gap is the Round 3 target for improvement 1.
+### Loose ends closed
+
+- **Drafts from documents:** import a DOCX, PDF or TXT into New draft; a DOCX's first image is attached; the source file is recorded in the audit log.
+- **Compare translations** results are now kept when the translation is linked to its master (the Compare page stays as a quick, unsaved check).
+- **Demo data changed by other visitors:** owner reset and a daily automatic reset of the seeded drafts.
+
+### Reliability fixes found by testing
+
+- **Stable verdicts.** A first full benchmark pass showed only 52% of cases got the same verdict on all three runs: readers paraphrase one claim many ways and embedding similarity split them. Beliefs anchored on the **same quoted words and category** now group together (and the panel runs at temperature 0); the same unstable cases became stable on every run. The pre-fix run is kept in [`data/asci-bench-results-v3.0-before-grouping-fix.json`](data/asci-bench-results-v3.0-before-grouping-fix.json).
+- **Embedding quota no longer ends a check.** The free tier allows 1,000 embedding requests per model per day. Checks now rotate `gemini-embedding-001` → `gemini-embedding-2` → `gemini-embedding-2-preview` (matching facts in memory outside the stored vector space) and finally fall back to word-overlap grouping with a visible note. Daily-quota retry hints (“retry in 22h12m…”) are parsed so exhausted models are skipped.
+- **Workflow buttons match the rules:** reviewers only see Approve on drafts that were sent for review, and never on their own.
+- **Bad links are “not found”,** not a database error. Hindi, Tamil and Marathi quotes keep their vowel signs when located in the draft.
+
+---
+
+## Complete feature list
+
+**Workspace and roles**
+- One-click demo roles (brand owner, creator, reviewer, agency), no sign-up; email and password sign-in also available.
+- Row-level security in Postgres: agencies see only their own drafts; only the owner edits Brand Space; only reviewers and the owner approve.
+- Guided first-visit tour on the inbox and review screen; Tour button to reopen it.
+- Bring your own Gemini key (verified with Google, kept only in the browser, used only for your requests).
+- Owner reset of the seeded demo, plus a daily automatic reset.
+
+**Brand Space**
+- Guideline clauses, with PDF/DOCX/TXT import and clause-by-clause confirmation.
+- Fact Ledger: approved facts with source, owner, versions and expiry dates; pgvector embeddings.
+- Banned and preferred terms, required disclaimers with triggers, embargoed product names.
+- Brand palette and voice traits; reader personas (three brand personas plus built-in readers).
+
+**Drafts**
+- Copy, image with alt text, channel, language (English, Hindi, Hinglish, Tamil, Marathi), intended takeaway, phrases fixes must keep.
+- Import copy from DOCX, PDF or TXT (and a DOCX's first image).
+- Translations linked to an English master.
+
+**Checks**
+- Privacy Gate: emails, Indian phone numbers, PAN, Aadhaar, card numbers (Luhn-checked) and embargoed names become tokens before any AI call.
+- Rule Engine: Aho-Corasick term matching tied to clauses, missing disclaimers, embargo leaks, WCAG 1.4.3 contrast measured from pixels inside the text boxes the vision model finds, WCAG 1.1.1 alt text, off-palette colours by ΔE2000.
+- Impression Engine: six readers in one structured call; quote and visual grounding; beliefs grouped across readers (2 of 6 needed); verdicts against the Fact Ledger (supported, contradicted, unsupported, ambiguous); tone against the brand voice.
+- Translation drift against the master, with gated suggested wording.
+- Span-level fixes that change only the flagged words, never locked phrases, shown as safe only after a re-read.
+- Live streaming review screen; results checkpointed as they arrive; checks survive navigation and reloads; partial checks say why.
+- Quota-aware Gemini model rotation (generation and embeddings) with cooldowns and a per-check time budget.
+
+**Review and governance**
+- Accept, edit or dispute each finding; versions with word diffs; anchored comments; send for review; approve or request changes; record the published URL.
+- Workflow enforced in the database too: allowed status changes only, no self-approval, saved versions immutable, a new version sends reviewed content back to draft.
+- Tamper-evident audit log: insert-only, SHA-256 hash chain, Verify chain button; approvals store the fact versions they relied on.
+- Recall queue with live-page checks, automatic and manual closure, and expiry alerts; daily scheduled sweep.
+- Insights: rules broken most often, findings by author, unclear rules (disputes and 50/50 reader splits), facts about to expire.
+- Compare translations: a quick, unsaved comparison of any two versions.
+
+**Evaluation**
+- ASCI-Bench: 100 real rulings, evidence ledger, CLI runner, in-app results page with every case.
+- 66 unit tests (Vitest).
+
+---
 
 ## Architecture
 
 ```
 Browser (Next.js App Router, React 19)
-  │  NDJSON stream: rules → reader cards → findings → suggestions → summary
+  │  NDJSON stream: rules → reader cards → findings → drift → suggestions → summary
   ▼
-POST /api/check ─── Supabase Auth + role check (RLS)
+POST /api/check ─── Supabase Auth + role (RLS) ─── job runs under after(): survives navigation
   │
-  ├─ Privacy Gate        src/lib/privacy/gate.ts   mask → ⟦EMAIL_1⟧, ⟦EMBARGO_1⟧ … unmask on return
-  ├─ Rule Engine         src/lib/rules/            plain code, no tokens, ~100 ms
+  ├─ Privacy Gate        src/lib/privacy/gate.ts     mask → ⟦EMAIL_1⟧, ⟦EMBARGO_1⟧ … unmask on return
+  ├─ Rule Engine         src/lib/rules/              plain code, no tokens
   │    aho-corasick.ts · color.ts (WCAG, ΔE2000) · pixels.ts (sharp k-means on text boxes)
-  └─ Impression Engine   src/lib/ai/               Gemini via Vercel AI SDK + zod schemas
-       vision (text boxes) → panel (6 readers, 1 call) → grounding → embeddings + clustering
-       → fact judge (+ visual confirmation) → span fixes → one combined re-read gate
+  └─ Impression Engine   src/lib/ai/                 Gemini via Vercel AI SDK + zod schemas
+       vision (text boxes) → panel (6 readers, 1 call) → grounding → embeddings + anchored grouping
+       → fact judge → [translations: drift vs master + gated wording] → span fixes → combined re-read gate
   ▼
 Supabase Postgres + pgvector + private Storage
-  brands · clauses · facts(embedding vector(768)) · terms · personas · submissions · versions
-  comments · fact_citations · audit_log (insert-only, sha256 hash chain via trigger)
+  brands · clauses · facts(vector 768) · terms · personas · submissions(master_id) · versions(findings, summary)
+  comments · fact_citations · live_pages · audit_log (insert-only, sha256 chain via trigger)
+
+Live Fact Recall   src/lib/recall/   queue derived from fact_citations + audit_log; live.ts fetches pages safely
+  ├─ on demand (Recall queue) · on fact edit (after()) · daily (Vercel Cron → /api/cron/recall)
+  └─ outcomes → audit_log: recall_url_checked, recall_closed, fact_expired, fact_expiry_alert
+
+ASCI-Bench         scripts/asci-bench.ts → data/*.json → src/lib/bench/metrics.ts → /app/bench
 ```
 
 ### Main technical decisions
 
-- **Two engines, not one prompt.** Anything that can be decided exactly (terms, disclaimers, contrast ratios, colour distance) is plain code, so it's fast, free and reproducible. The model is only used for what requires reading comprehension: implied claims, tone, and cross-modal impressions.
-- **No citation, no flag.** A reader's belief must quote an exact substring of the draft (fuzzy-normalised) or name a visual element that a separate vision check confirms. Ungrounded beliefs are dropped before anyone sees them. A belief becomes a finding only when at least 2 of 6 readers form it independently. A 40–60% split is reported as *ambiguous* wording rather than a violation.
-- **"Unsupported", never "false".** Beliefs are matched to the closest Fact Ledger entries (pgvector `match_facts`) and judged *supported*, *contradicted* or *unsupported*. If no fact matches, the result says so.
-- **Fixes have to pass a re-read.** A fix rewrites only the trigger span and never touches locked phrases. It's shown as safe only if the re-read panel no longer holds the flagged belief, no new unsupported belief appears, and most readers still get the creator's declared intent.
-- **Built for a free-tier quota.** Gemini's free tier allows 5 requests per minute per model, so a check makes at most 6 generation calls (the six readers share one structured call). Calls rotate across several Gemini models, with per-model cooldowns parsed from 429/503 responses, plus a per-check time budget. When the AI is unavailable, the rule findings are still saved and the UI says why.
-- **Tamper-evident decisions.** `audit_log` rejects UPDATE/DELETE/TRUNCATE. Each row stores `sha256(prev_hash || row)` and the exact fact versions an approval relied on.
+- **Two engines, not one prompt.** Anything decidable exactly (terms, disclaimers, contrast ratios, colour distance) is code: fast, free, reproducible. The model handles only reading comprehension: implied claims, tone, cross-modal impressions, translation drift.
+- **No citation, no flag.** A belief must quote the draft (fuzzy-normalised, Unicode-aware) or name an image element a separate vision check confirms. A belief becomes a finding only when 2 of 6 readers form it; a 40–60% split is reported as ambiguous wording.
+- **Group by what triggered the belief.** Readers word one claim many ways. Beliefs of the same category anchored on the same quoted words join one group even when their embeddings differ, which made repeat checks agree.
+- **“Unsupported”, never “false”.** Beliefs are matched to the closest facts (pgvector) and judged supported, contradicted or unsupported. With no matching fact, the result says so.
+- **Fixes and translations pass a re-read.** A fix rewrites only its span, never locked phrases, and is shown as safe only if the panel no longer forms the flagged belief, nothing new is unsupported, and most readers still get the intent. Suggested translation wording must pass a re-comparison with the master.
+- **Built for a free tier.** At most about 8 generation calls per check (6 for English drafts), rotation across models with cooldowns parsed from 429/503 responses, embedding-model rotation with a word-overlap fallback, and a per-check time budget. When the AI is unavailable, rule findings are still saved and the page says why.
+- **The audit log is the source of truth for recall.** Live-page checks and closures are audit entries, so the recall state is derived from the same tamper-evident record reviewers rely on, and closes only for the fact version it was about.
+- **Safe fetching.** Live pages are fetched server-side over http(s) only, every redirect re-checked against private, loopback and link-local addresses, with a 12-second timeout and a 2 MB cap; only the matched phrases are kept.
 - **One language, one repo.** Everything is TypeScript, so a solo builder can own it end to end.
 
 ## Tech, models and services
@@ -99,52 +147,74 @@ Supabase Postgres + pgvector + private Storage
 | Kind | Used |
 |---|---|
 | Framework | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS v4 |
-| Database / auth / storage | Supabase (Postgres 15, Auth, Storage, pgvector, row-level security) |
+| Database, auth, storage | Supabase (Postgres 15, Auth, Storage, pgvector, row-level security, triggers) |
 | AI SDK | Vercel AI SDK v4 (`ai`, `@ai-sdk/google`), zod v3 |
-| Models (external service) | Google Gemini: `gemini-3.8-flash`, with `gemini-3.5-flash`, `gemini-flash-latest` and `gemini-3.1-flash-lite` as rotation fallbacks; embeddings from `gemini-embedding-001` (768 dims) |
+| Models (external service) | Google Gemini: `gemini-3.8-flash`, rotating to `gemini-3.5-flash`, `gemini-flash-latest` and `gemini-3.1-flash-lite`; embeddings `gemini-embedding-001` (768 dims), falling back to `gemini-embedding-2` and `gemini-embedding-2-preview` |
 | Libraries | sharp (pixels), diff (word diffs), mammoth (DOCX), unpdf (PDF), lucide-react (icons), clsx |
+| Scheduling | Vercel Cron (daily recall sweep and demo reset) |
 | Fonts | Newsreader, Inter Tight, JetBrains Mono (Google Fonts via `next/font`) |
-| Testing | Vitest (52 unit tests: Aho-Corasick, contrast, ΔE2000, masking, grounding, clustering, drift labelling, mock pipeline); ASCI-Bench CLI |
-| Data | ASCI Complaint Outcomes (public rulings) for ASCI-Bench; see [`data/asci-bench.README.md`](data/asci-bench.README.md) |
-| Hosting | Vercel |
+| Testing | Vitest (66 unit tests), ASCI-Bench CLI, manual end-to-end journeys (see [docs/TESTING.md](docs/TESTING.md)) |
+| Data | ASCI Complaint Outcomes (public rulings), see [`data/asci-bench.README.md`](data/asci-bench.README.md) |
+| Hosting | Vercel (Mumbai region, next to the database) |
 
-## Run locally
+## Run it yourself
+
+You need Node 20+, pnpm 9+, a free Supabase project and (optionally) a free Gemini API key.
 
 ```bash
+git clone https://github.com/nova-rishabh/readback.git
+cd readback
 pnpm install
-cp .env.example .env.local     # fill in Supabase + Gemini keys and a DEMO_PASSWORD
-# run supabase/migrations/0001_init.sql, then 0002_hardening.sql, in the Supabase SQL editor (see supabase/README.md)
-pnpm seed                      # demo brand, users, submissions, embeddings
-pnpm dev                       # http://localhost:3000
-pnpm test                      # unit tests
-pnpm bench                     # ASCI-Bench on 20 cases (--limit 100, --stability 0, --mock, --fresh)
+cp .env.example .env.local
 ```
 
-Set `READBACK_MOCK_AI=1` to run with deterministic mock readers and no API key.
+1. **Supabase.** Create a project, then in **SQL Editor** run, in order, [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql), [`0002_hardening.sql`](supabase/migrations/0002_hardening.sql) and [`0003_round3.sql`](supabase/migrations/0003_round3.sql). Details: [supabase/README.md](supabase/README.md).
+2. **Fill in `.env.local`:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, a `DEMO_PASSWORD` (6+ characters) and `GOOGLE_GENERATIVE_AI_API_KEY` (free at https://aistudio.google.com). Without a Gemini key, set `READBACK_MOCK_AI=1`: readers become deterministic stand-ins and every screen says so; rule checks stay real.
+3. **Seed and run:**
 
-## Privacy, security and responsible design
+```bash
+pnpm seed      # Velura brand, 4 demo users, 11 drafts with saved checks, facts (+ embeddings), demo store pages
+pnpm dev       # http://localhost:3000, then use the "Enter as ..." buttons
+pnpm test      # 66 unit tests
+pnpm bench     # ASCI-Bench: 100 cases x 3 runs (add --ledger for evidence-aware scoring; --limit 20, --mock, --fresh)
+```
 
-- **What leaves the server:** draft text and image go to Google Gemini, but only after the Privacy Gate replaces emails, phone numbers, PAN, Aadhaar and embargoed product names with tokens. Fact statements sent for embedding pass through the same gate. This is disclosed on the landing page and in the app footer.
-- **Access control:** row-level security in Postgres, plus triggers that enforce the review workflow for anyone calling the database directly (allowed status changes only, no self-approval, immutable versions, image-only uploads up to 8 MB). Agencies see only their own submissions. Only the brand owner edits Brand Space. Only reviewers and the owner approve. Images live in a private bucket served through short-lived signed URLs. The service-role key is used only on the server.
-- **Prompt-injection hardening:** draft text is fenced in prompts and cannot close its fence; a belief only counts if it quotes the draft or a visual element confirmed in the image, so injected text cannot invent or hide findings on its own.
-- **Human control:** Readback never edits content automatically, never publishes, and never blocks a human override. Every finding is labelled `[RULE]` or `[AI]` with the model name and the cited clause, fact or WCAG criterion. Disputes are recorded with a note.
-- **Limits of AI personas:** simulated readers don't represent real populations. The panel is a comprehension stress test, kept honest by grounding, multi-reader agreement and human sign-off.
+Optional environment: `GEMINI_MODELS` (comma list for rotation), `READBACK_EMBED_MODELS`, `CRON_SECRET` (protects
+`/api/cron/recall`), `DEMO_DAILY_RESET=0` (keep visitors' changes), `NEXT_PUBLIC_SITE_URL` (where seeded posts' live
+URLs point). Deploying to Vercel needs only the same variables; `vercel.json` sets the Mumbai region and the daily cron.
+
+## Privacy, security, accessibility and responsible design
+
+- **What leaves the server:** draft text and image go to Google Gemini only after the Privacy Gate replaces emails, phone numbers, PAN, Aadhaar, card numbers and embargoed product names with tokens; fact statements sent for embedding pass the same gate. Recall checks fetch only the URL recorded on a post. All of this is disclosed on the landing page and in the app footer.
+- **Access control:** row-level security plus triggers that enforce the workflow for anyone calling the database directly (allowed status changes, no self-approval, immutable versions, translation links that cannot be re-pointed, image-only uploads up to 8 MB). Images live in a private bucket behind short-lived signed URLs. The service-role key stays on the server.
+- **Prompt-injection hardening:** draft text is fenced in prompts and cannot close its fence; a finding needs a quote from the draft or a confirmed image element, so injected text cannot invent or hide findings on its own.
+- **Human control:** Readback never edits content automatically, never publishes, and never blocks a human override. Every finding is labelled `[RULE]` or `[AI]` with the model and the cited clause, fact or WCAG criterion; disputes are recorded with a note; approving with open high-severity findings is recorded as accepted risk.
+- **Accessibility:** WCAG 2.2 AA contrast, visible focus, skip link, keyboard-operable menus and tour with focus trap and restore, live regions for streaming results, `lang` attributes on Hindi, Tamil and Marathi text, finding marks that do not rely on colour alone, layouts that work at 375 px.
+- **Limits of AI personas:** simulated readers are a model's guess at how people read, not a survey. The panel is a comprehension stress test, kept honest by grounding, multi-reader agreement, a public benchmark and human sign-off.
 
 ## Known limitations
 
-- **Live AI on the shared free key is slow and can fail** (add your own key from the top-bar badge to avoid this). On a free Gemini key a live check takes one to three minutes, and when Google returns 503 "high demand" it may save only rule findings (the page then says "Partial check"). Checks keep running and save even if you leave the page. The seeded submissions always show complete results.
-- **Demo sign-in is open by design.** Anyone with the link can enter any role so judges need no account; in production this would be real sign-in with invited users.
-- **ASCI-Bench is a small first run.** On the free Gemini tier a full 100-case run takes hours and can hit the daily quota, so the Round 2 numbers above come from a 20-case stratified slice. The benchmark brand has an empty Fact Ledger, so the false-alarm rate is an upper bound. The dataset's `grounds` tags were assigned by keyword rules and need hand review.
-- **Drift comparisons are not stored.** The Compare page is a standalone check; linking variants to submissions is Round 3 work.
-- **Single brand.** The demo workspace is one brand (Velura).
+- **The shared free Gemini key is slow and limited.** A live check takes one to three minutes; under heavy use the AI stage can save only rule findings (“Partial check”) and the page says why. Adding your own free key from the top bar removes the shared limit. Seeded drafts always show complete results.
+- **Demo sign-in is open by design** so judges need no account; production would use invited users. Shared demo data is reset daily.
+- **ASCI-Bench reads only claim text,** not the ad's visuals or voice-over, and its cases were picked by reading rather than at random; see the results page for the full method and intervals.
+- **Live-page checks read server-rendered text.** Pages that need JavaScript or block automated visitors (some marketplaces) are reported as “could not confirm” rather than closed.
+- **Drafts are text plus one image.** Video and multi-image carousels are not supported.
+- **Single brand** in the demo workspace (Velura).
+
+## Roadmap
+
+See [docs/ROADMAP.md](docs/ROADMAP.md). Next: real sign-in with invited users and multiple brands; carousel and video
+frames; reviewer assignment and SLAs; Slack and email alerts for recalls and expiries; marketplace listing connectors
+(Amazon, Nykaa) instead of page fetching; more Indic readers (Bengali, Telugu, Kannada); a larger, randomly sampled
+ASCI-Bench with human double-labelling.
 
 ## Disclosures
 
 - **Boilerplate:** the first commit is the unmodified `create-next-app` template (Next.js 15, TypeScript, Tailwind). It was entirely replaced in later commits.
-- **AI assistance and tooling (Rule 7):** product architecture, the dual-engine pipeline design, database schema, RLS and triggers, rule algorithms and testing were designed and integrated by Rishabh Kataria. Claude Code (Anthropic) was used as an AI pair-programming and research assistant during the official 22–24 Oct build window, including generating code and collecting the ASCI-Bench cases under his direction and review.
+- **AI assistance (Rule 7):** product architecture, the dual-engine design, the database schema, RLS and triggers, rule algorithms and testing were designed and integrated by Rishabh Kataria. Claude Code (Anthropic) was used as an AI pair-programming and research assistant during the official build windows, including generating code, collecting the ASCI-Bench cases and extracting the evidence ledger from the public rulings, under his direction and review.
 - **External services:** Google Gemini API (generation and embeddings), Supabase, Vercel.
-- **Data:** ASCI rulings are public records from ascionline.in, cited per record. "Velura" and all demo people and products are fictional.
+- **Data:** ASCI rulings are public records from ascionline.in, cited per record. “Velura” and all demo people and products are fictional.
 
 ## Team
 
-Team Nova: **Rishabh Kataria** (solo). Product, research, AI engine, full-stack app, rule engine, testing and presentation (100%).
+Team Nova: **Rishabh Kataria** (solo). Product, research, AI engine, full-stack app, rule engine, benchmark, testing and documentation (100%).

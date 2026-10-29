@@ -10,7 +10,8 @@
     "test": "vitest run",
     "seed": "tsx scripts/seed.ts",
     "seed:image": "tsx scripts/make-demo-image.ts",
-    "bench": "tsx scripts/asci-bench.ts"
+    "bench": "tsx scripts/asci-bench.ts",
+    "test:db": "node scripts/check-migrations.mjs"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",
@@ -29,6 +30,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.3.7",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/diff": "^8.0.0",
