@@ -8,6 +8,7 @@
 //   pnpm bench --concurrency 2       cases in flight at once (free-tier Gemini: keep this at 1 or 2)
 //   pnpm bench --mock                deterministic mock readers, no API calls (pipeline smoke test)
 //   pnpm bench --fresh               ignore saved results instead of resuming
+//   pnpm bench --ids ASCI-002,ASCI-014 --out data/x.json   only these cases, to another file
 //
 // Per run, Readback "flags" a case when the panel forms a grounded belief (>= 2 of 6 readers) that the fact judge
 // finds contradicted or unsupported. The case verdict is the majority of its runs. Results are written after every
@@ -35,7 +36,12 @@ const LIMIT = arg("limit", 100);
 const RUNS = Math.max(1, arg("runs", 3));
 const CONCURRENCY = Math.max(1, arg("concurrency", 1));
 const LEDGER = process.argv.includes("--ledger");
-const OUT = LEDGER ? "data/asci-bench-results-ledger.json" : "data/asci-bench-results.json";
+const sarg = (name: string) => {
+  const i = process.argv.indexOf(`--${name}`);
+  return i >= 0 ? process.argv[i + 1] : null;
+};
+const IDS = sarg("ids")?.split(",").map((s) => s.trim()) ?? null;
+const OUT = sarg("out") ?? (LEDGER ? "data/asci-bench-results-ledger.json" : "data/asci-bench-results.json");
 if (process.argv.includes("--mock")) process.env.READBACK_MOCK_AI = "1";
 
 /** Keep the upheld / not-upheld ratio of the full set in the first N cases. */
@@ -115,7 +121,7 @@ async function main() {
     }
   };
 
-  const cases = stratified(all, Math.min(LIMIT, all.length));
+  const cases = IDS ? all.filter((c) => IDS.includes(c.id)) : stratified(all, Math.min(LIMIT, all.length));
   const mode = isMock() ? "mock" : "cloud";
   const prev = !process.argv.includes("--fresh") && existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : null;
   const rows = new Map<string, BenchRow>(

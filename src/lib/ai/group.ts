@@ -29,13 +29,28 @@ export function cosine(a: number[], b: number[]): number {
   return na && nb ? dot / Math.sqrt(na * nb) : 0;
 }
 
-export function clusterBeliefs(items: BeliefItem[], threshold = 0.82): BeliefGroup[] {
+/** Share of the shorter span covered by the other one (0 when either is missing). */
+export function spanOverlap(a: Span | null, b: Span | null): number {
+  if (!a || !b) return 0;
+  const inter = Math.min(a.end, b.end) - Math.max(a.start, b.start);
+  return inter > 0 ? inter / Math.max(1, Math.min(a.end - a.start, b.end - b.start)) : 0;
+}
+
+/**
+ * Greedy grouping. A belief joins a group when its embedding is close to the group's (cosine >= threshold), or when
+ * it is the same kind of belief triggered by the same words: a member of the same category whose quoted span
+ * overlaps it by half or more, with a looser similarity floor. Readers paraphrase one claim in many ways
+ * ("eliminates 99% of germs", "kills nearly all germs"); anchoring on the shared quote keeps them in one group,
+ * which is what makes a check give the same answer run after run.
+ */
+export function clusterBeliefs(items: BeliefItem[], threshold = 0.82, anchoredFloor = 0.6): BeliefGroup[] {
   const acc: { items: BeliefItem[]; sum: number[] }[] = [];
   for (const it of items) {
-    let best = -1, bestSim = threshold;
+    let best = -1, bestSim = -Infinity;
     acc.forEach((g, gi) => {
       const s = cosine(it.embedding, g.sum);
-      if (s >= bestSim) { best = gi; bestSim = s; }
+      const anchored = g.items.some((m) => m.category === it.category && spanOverlap(m.span, it.span) >= 0.5 && cosine(m.embedding, it.embedding) >= anchoredFloor);
+      if ((s >= threshold || anchored) && s > bestSim) { best = gi; bestSim = s; }
     });
     if (best < 0) acc.push({ items: [it], sum: [...it.embedding] });
     else {

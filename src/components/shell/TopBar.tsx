@@ -19,6 +19,7 @@ const NAV = [
   { href: "/app/recall", label: "Recall queue" },
   { href: "/app/insights", label: "Insights" },
   { href: "/app/audit", label: "Audit log" },
+  { href: "/app/bench", label: "Benchmark" },
 ];
 
 const PEOPLE: Record<Role, string> = {

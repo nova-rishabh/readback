@@ -67,6 +67,7 @@ export async function readPanel(panel: Persona[], ctx: ReadCtx): Promise<ReaderR
     ].join("\n\n"),
     image: ctx.image,
     embargo: ctx.embargo,
+    temperature: 0, // the personas supply the variety; a fixed temperature keeps repeat checks of one draft consistent
   });
   const byId = new Map(o.readers.map((r) => [r.persona_id, r]));
   return panel.flatMap((p) => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clusterBeliefs, cosine, isAmbiguous, selectGroups, type BeliefItem } from "../group";
+import { clusterBeliefs, cosine, isAmbiguous, selectGroups, spanOverlap, type BeliefItem } from "../group";
 
 const item = (reader: string, belief: string, embedding: number[]): BeliefItem => ({
   reader, reader_name: reader, belief, category: "efficacy", quote: "", span: null, visual: null, embedding,
@@ -41,5 +41,15 @@ describe("group", () => {
     expect(isAmbiguous(2, 5)).toBe(true);
     expect(isAmbiguous(5, 6)).toBe(false);
     expect(isAmbiguous(2, 6)).toBe(false);
+  });
+  it("groups paraphrases anchored on the same quote and category, but not other categories", () => {
+    const span = { start: 10, end: 40, text: "99.99% Microbe Neutralisation" };
+    const a = [1, 0], b = [Math.cos(0.8), Math.sin(0.8)]; // cos ~0.70: below 0.82, above the 0.6 anchored floor
+    const anchored = (reader: string, e: number[], category: BeliefItem["category"] = "efficacy") => ({ ...item(reader, "x", e), span, category });
+    expect(clusterBeliefs([anchored("a", a), anchored("b", b)])).toHaveLength(1);
+    expect(clusterBeliefs([anchored("a", a), anchored("b", b, "health")])).toHaveLength(2);
+    expect(clusterBeliefs([item("a", "x", a), item("b", "y", b)])).toHaveLength(2); // no quote, no anchor
+    expect(spanOverlap(span, { start: 20, end: 60, text: "" })).toBeCloseTo(2 / 3);
+    expect(spanOverlap(span, null)).toBe(0);
   });
 });
