@@ -61,6 +61,15 @@ own free key from the **Free Gemini key** badge in the top bar; it stays in your
 
 ---
 
+## ASCI-Bench: Round 3 results
+
+The full 100-case run (three runs per case, with and without the evidence ASCI accepted) is in progress; the final
+numbers will replace this note. On the first 36 upheld rulings with the final engine, Readback flagged 35 (97.2%)
+against 28 (77.8%) for the single-prompt baseline, and every case gave the same verdict on all three runs. Every case,
+with intervals and the per-ground breakdown, is on **/app/bench**.
+
+---
+
 ## Complete feature list
 
 **Workspace and roles**
@@ -100,7 +109,7 @@ own free key from the **Free Gemini key** badge in the top bar; it stays in your
 
 **Evaluation**
 - ASCI-Bench: 100 real rulings, evidence ledger, CLI runner, in-app results page with every case.
-- 66 unit tests (Vitest).
+- 70 unit tests (Vitest), a migration test in an in-memory Postgres, and logged end-to-end journeys ([docs/TESTING.md](docs/TESTING.md)).
 
 ---
 
@@ -153,7 +162,7 @@ ASCI-Bench         scripts/asci-bench.ts → data/*.json → src/lib/bench/metri
 | Libraries | sharp (pixels), diff (word diffs), mammoth (DOCX), unpdf (PDF), lucide-react (icons), clsx |
 | Scheduling | Vercel Cron (daily recall sweep and demo reset) |
 | Fonts | Newsreader, Inter Tight, JetBrains Mono (Google Fonts via `next/font`) |
-| Testing | Vitest (66 unit tests), ASCI-Bench CLI, manual end-to-end journeys (see [docs/TESTING.md](docs/TESTING.md)) |
+| Testing | Vitest (70 unit tests), PGlite migration test, ASCI-Bench CLI, logged end-to-end journeys (see [docs/TESTING.md](docs/TESTING.md)) |
 | Data | ASCI Complaint Outcomes (public rulings), see [`data/asci-bench.README.md`](data/asci-bench.README.md) |
 | Hosting | Vercel (Mumbai region, next to the database) |
 
@@ -175,7 +184,8 @@ cp .env.example .env.local
 ```bash
 pnpm seed      # Velura brand, 4 demo users, 11 drafts with saved checks, facts (+ embeddings), demo store pages
 pnpm dev       # http://localhost:3000, then use the "Enter as ..." buttons
-pnpm test      # 66 unit tests
+pnpm test      # 70 unit tests
+pnpm test:db   # applies the migrations to an in-memory Postgres and checks the guards
 pnpm bench     # ASCI-Bench: 100 cases x 3 runs (add --ledger for evidence-aware scoring; --limit 20, --mock, --fresh)
 ```
 
