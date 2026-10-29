@@ -20,6 +20,6 @@ export async function resetDemo(origin: string, actor: Actor): Promise<{ submiss
     image = null; // the seeded hero post then has no image; everything else still resets
   }
   const out = await seedDemo(admin, { password, image, refreshUsers: false }); // keep everyone signed in
-  await writeAudit(actor as never, { action: "demo_reset", detail: { submissions: out.submissions } });
+  await writeAudit(actor as never, { action: "demo_reset_requested", detail: { submissions: out.submissions } });
   return out;
 }

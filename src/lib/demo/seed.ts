@@ -578,6 +578,8 @@ export async function seedDemo(
   const { data: chain } = await admin.rpc("verify_audit_chain");
   const c0 = Array.isArray(chain) ? chain[0] : chain;
   log(`Audit chain: ${c0?.ok ? "intact" : `BROKEN at ${c0?.broken_at}`}`);
+  // recall checks and closures recorded before this point belong to the old demo state (see recall/queue.ts)
+  must(await admin.from("audit_log").insert({ actor_id: null, actor_name: "Readback scheduler", actor_role: "system", action: "demo_reset", detail: { submissions: subs.length } }), "demo_reset audit");
   log("Done. Sign in at / with the 'Enter as' buttons.");
   return { submissions: subs.length };
 }
