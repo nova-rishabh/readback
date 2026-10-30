@@ -146,7 +146,9 @@ async function main() {
   console.log(`ASCI-Bench: ${cases.length} cases, ${RUNS} Readback run(s) each, ${LEDGER ? "with" : "without"} evidence ledger (${mode})\n`);
   const done = (r: BenchRow | undefined) =>
     !!r && r.baseline !== null && r.runs.length >= RUNS && r.runs.filter((x) => x !== null).length >= Math.min(RUNS, 2);
-  const todo = cases.filter((c) => !done(rows.get(c.id)));
+  // --not-upheld-first: when the daily quota may run out, score the cases where false alarms are measured first
+  const todo = cases.filter((c) => !done(rows.get(c.id)))
+    .sort((a, b) => (process.argv.includes("--not-upheld-first") ? Number(a.outcome === "upheld") - Number(b.outcome === "upheld") : 0));
 
   const one = async (c: BenchCase) => {
     const t = Date.now();
