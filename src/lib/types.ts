@@ -187,6 +187,7 @@ export interface CheckSummary {
   own_key?: boolean; // ran on the viewer's own Gemini key rather than the shared free one
   partial?: boolean; // the AI stage did not complete (quota, overload); only rule findings are reliable
   partial_reason?: string; // why, in plain words
+  contrast_unchecked?: boolean; // the image's text could not be read, so WCAG 1.4.3 contrast was not assessed
   drift?: DriftSummary; // translations only: what readers believe from the master versus this version
   embeddings?: string; // embedding model that grouped the beliefs, or "lexical" when every model was out of quota
 }

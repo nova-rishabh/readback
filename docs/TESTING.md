@@ -8,7 +8,7 @@ How Readback was tested for Round 3, what the tests found, and what was fixed as
 4. **End-to-end journeys**: every main journey driven in a browser, including bad input, empty states, reloads,
    repeated actions, quota exhaustion and phone width.
 
-## 1. Unit tests: 72 tests in 10 files
+## 1. Unit tests: 73 tests in 10 files
 
 `pnpm test`
 
@@ -107,6 +107,25 @@ a judge (prompt in the hackk folder). It scored 77/100 and raised these points, 
 | Partial-check messages blamed the per-minute limit when the daily limit was the cause | The real reason is stored with the check and shown (“daily limit”, “overloaded”, “per-minute limit, retry in N s”). |
 | A reviewer could approve after a partial check without acknowledging the unassessed AI risks | Approval then requires a checkbox, and the audit note records “Approved without a complete AI check”. |
 | Tours interrupted; navigation crowded | Only the inbox tour starts by itself; nav labels shortened. |
+
+## Second independent review (30 October)
+
+Run against commit 2d9b346 with prompt v2 (25 steps, fresh clone, live product). Score 82/100; all three improvements
+judged delivered. Defects it reported, and what changed:
+
+| Finding | Fix |
+|---|---|
+| A reviewer's “request changes” note was in the audit log but not shown on the author's draft | The latest decision note is shown as a banner on the draft, and history lines include notes. |
+| A reader's doubt (“no clinical evidence is given”) became a high-severity “contradicted” finding on a harmless sentence | Readers are told to report only what the post claims or implies, never their own doubts; the fact judge marks a criticism as not-a-claim so it is not raised. |
+| A rejected double-click looked like a failed check and blanked the reader panel | A duplicate request now keeps the saved results and shows “A check is already running…”, then refreshes. |
+| “100% guaranteed” → fix produced “100% designed to support” | Banned-term fixes take a preceding intensifier (100%, totally, absolutely…) with the term. |
+| Partial-check approval was enforced only in the browser | The server refuses to approve a version whose AI check did not finish without the explicit acknowledgment. |
+| Image text-box errors were silently treated as “no text” | The check records that contrast was not assessed and the draft says so. |
+| Expiry day counts differed by one between screens; footer named one model | Dates are counted in India time everywhere; the footer names the rotation and says images are sent unmasked. |
+| IPv6 link-local coverage incomplete in the live-page guard | fe80::/10 fully covered. |
+
+Not changed, and stated as limits: the benchmark's false-alarm rate (roadmap item 1), a curated rather than random
+sample without human double-labelling, no separate tone finding when only one reader calls a call to action pushy.
 
 ## How to reproduce
 

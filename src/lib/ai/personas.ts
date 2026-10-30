@@ -90,6 +90,7 @@ export function readerPrompt(p: Persona, c: ReadCtx): { system: string; prompt: 
     "4. tone: adjectives describing how the post sounds to you (e.g. pushy, warm, salesy, calm).",
     "5. takeaway: one sentence on what you think the post says. intent_match: true only if you took away the declared intent.",
     "Do not invent beliefs that have no trigger. Keep each belief to one short declarative sentence.",
+    "A belief states what the post claims or implies about the product, phrased as that claim (e.g. 'Dermatologists recommend this serum'). Never report your doubts, criticisms or judgments (e.g. 'there is no evidence', 'this is impossible', 'the brand is exaggerating') as beliefs; if the post makes no claim, report no beliefs.",
   ].join("\n");
   return { system, prompt };
 }

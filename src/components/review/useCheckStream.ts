@@ -44,7 +44,7 @@ const initial: StreamState = {
   startedAt: null,
 };
 
-type Action = { type: "start" } | { type: "event"; e: CheckEvent } | { type: "fail"; message: string } | { type: "end" };
+type Action = { type: "start" } | { type: "event"; e: CheckEvent } | { type: "fail"; message: string } | { type: "end" } | { type: "busy" };
 
 function reach(s: StreamState, stage: StageId): StreamState {
   const idx = STAGES.findIndex((x) => x.id === stage);
@@ -63,6 +63,8 @@ function reducer(s: StreamState, a: Action): StreamState {
       return { ...initial, status: "running", stage: "mask", reached: ["mask"], startedAt: Date.now() };
     case "fail":
       return { ...s, status: "error", error: a.message };
+    case "busy":
+      return { ...initial, message: "A check is already running on this version; its results appear here when it finishes." };
     case "end":
       return s.status === "running" ? { ...s, status: s.error ? "error" : "done" } : s;
     case "event": {
@@ -117,6 +119,12 @@ export function useCheckStream(versionId: string, submissionId: string, onFinish
       });
       if (!res.ok || !res.body) {
         const j = (await res.json().catch(() => null)) as { error?: string } | null;
+        if (res.status === 409 && /already running/i.test(j?.error ?? "")) {
+          // another tab or click already started this check: keep showing the saved results and refresh when it lands
+          dispatch({ type: "busy" });
+          finishRef.current?.();
+          return;
+        }
         dispatch({ type: "fail", message: j?.error ?? `The check endpoint answered ${res.status}.` });
         return;
       }

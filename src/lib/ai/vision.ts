@@ -13,7 +13,8 @@ const boxesSchema = z.object({
 });
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
 
-export async function extractTextBoxes(image: Img): Promise<TextBox[]> {
+/** Text boxes in the image, or null when the vision call failed (contrast then cannot be assessed). */
+export async function extractTextBoxes(image: Img): Promise<TextBox[] | null> {
   if (isMock()) return mockBoxes();
   try {
     const o = await callObject({
@@ -27,7 +28,7 @@ export async function extractTextBoxes(image: Img): Promise<TextBox[]> {
       .map((b) => ({ text: b.text, box: [clamp01(b.x), clamp01(b.y), clamp01(b.w), clamp01(b.h)] as TextBox["box"] }))
       .filter((b) => b.text.trim() && b.box[2] > 0 && b.box[3] > 0);
   } catch {
-    return [];
+    return null;
   }
 }
 

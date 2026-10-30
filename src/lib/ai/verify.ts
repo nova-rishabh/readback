@@ -82,6 +82,7 @@ export async function verifyGroups(groups: BeliefGroup[], brand: BrandSpace, emb
     "A reader panel formed the beliefs below from a marketing post. For each belief, judge it against its candidate facts from the brand's Fact Ledger.",
     "supported: an active fact backs the claim at the strength it is stated. contradicted: a fact conflicts with it (smaller number, longer timeframe, weaker wording). unsupported: no candidate fact backs it. Expired or retired facts never support a claim.",
     "fact_code is the single most relevant candidate code, or null.",
+    "Judge only claims the post makes about the product. If a belief is a reader's doubt or criticism rather than a claim (e.g. 'no clinical evidence is given'), answer supported with fact_code null, so it is not raised as a finding.",
     ...todo.map((i) => `\n#${i} BELIEF: ${groups[i].statement}\nCANDIDATE FACTS:\n${cands[i].map(describeFact).join("\n")}`),
   ].join("\n");
   try {

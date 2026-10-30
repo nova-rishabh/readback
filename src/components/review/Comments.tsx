@@ -152,6 +152,7 @@ export function History({ audit }: { audit: AuditEntry[] }) {
           <li key={a.id} className="grid grid-cols-[1fr_auto] gap-x-2 border-b border-rule py-1.5 last:border-b-0">
             <span>
               <span className="font-medium">{a.actor_name}</span> {actionText[a.action] ?? a.action.replace(/_/g, " ")}
+              {typeof a.detail.note === "string" && a.detail.note && <span className="text-ink/80">: “{a.detail.note}”</span>}
               {a.fact_versions && Object.keys(a.fact_versions).length > 0 && (
                 <span className="text-muted">
                   {" "}

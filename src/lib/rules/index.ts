@@ -46,6 +46,12 @@ function termFindings(text: string, brand: BrandSpace): Finding[] {
         citation: citeTerm(t, brand), span,
       }));
     } else if (t.kind === "banned") {
+      // "100% guaranteed" -> replace the intensifier too, or the fix reads "100% designed to support"
+      const pre = text.slice(Math.max(0, span.start - 16), span.start).match(/(?:100\s*%|totally|completely|absolutely|fully|truly|always)\s+$/i);
+      if (pre && t.replacement) {
+        span.start -= pre[0].length;
+        span.text = text.slice(span.start, span.end);
+      }
       out.push(base({
         id: `rule-banned-${h.start}-${h.end}`, category: "terminology", severity: "high",
         title: `Banned term: “${span.text}”`,

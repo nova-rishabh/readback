@@ -315,10 +315,27 @@ export function ReviewScreen(props: {
         {live && <StageTrack state={state} translation={!!submission.master_id} />}
       </div>
 
+      {(() => {
+        // the reviewer's latest decision note, where the author is told to look for it
+        const d = [...props.audit].reverse().find((a) => a.action === "requested_changes" || a.action === "approved");
+        const note = d && typeof d.detail.note === "string" && d.detail.note.trim() ? d.detail.note : null;
+        if (!note || (d!.action === "requested_changes" && submission.status !== "changes_requested")) return null;
+        return (
+          <section aria-label="Reviewer note" className={`mt-4 rounded-md border px-4 py-2.5 text-[13.5px] ${d!.action === "requested_changes" ? "border-proof/40 bg-proof-tint" : "border-moss/40 bg-moss-tint"}`}>
+            <span className="font-medium">{d!.action === "requested_changes" ? `${d!.actor_name} requested changes:` : `${d!.actor_name} approved with a note:`}</span> {note}
+          </section>
+        );
+      })()}
       {summary?.mode === "mock" && (
         <p className="mt-4 rounded-md border border-steel/40 bg-steel-tint px-4 py-2.5 text-[13.5px]">
           <span className="font-medium">Mock readers.</span> No model was called. Reader beliefs come from fixed text cues so
           the demo runs offline; rule findings are real.
+        </p>
+      )}
+      {summary?.contrast_unchecked && (
+        <p className="mt-4 rounded-md border border-ochre/40 bg-ochre-tint px-4 py-2.5 text-[13.5px]">
+          <span className="font-medium">Contrast not assessed.</span> The text inside the image could not be read this time, so
+          text-on-image contrast (WCAG 1.4.3) was not checked. Alt text and palette were. Run the check again to include it.
         </p>
       )}
       {(summary?.embeddings === "lexical" || summary?.embeddings?.includes("word overlap")) && (
@@ -327,6 +344,9 @@ export function ReviewScreen(props: {
           readers&apos; beliefs were grouped by shared words instead. Findings are still grounded in the draft; groups may be a little
           coarser. Add your own Gemini key from the top bar for full grouping.
         </p>
+      )}
+      {state.status === "idle" && state.message && (
+        <p role="status" className="mt-4 rounded-md border border-steel/40 bg-steel-tint px-4 py-2.5 text-[13.5px]">{state.message}</p>
       )}
       {state.status === "error" && (
         <div role="alert" className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-md border border-proof/40 bg-proof-tint px-4 py-2.5 text-[13.5px]">

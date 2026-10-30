@@ -52,6 +52,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
   const tracker: Tracker = { models: new Set(), calls: 0, deadline: t0 + 100_000, apiKey: input.options?.apiKey }; // keep a check under ~2 min
   let partial = false;
   let partialReason: string | undefined;
+  let contrastUnchecked = false;
   let driftSummary: CheckSummary["drift"];
   return withTracker(tracker, async () => {
   try {
@@ -78,7 +79,12 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
     const ruleMs = Date.now() - tr; // the rule engine's own time; the vision wait below is not counted
     out({ type: "rules", findings: ruleFindings, ms: ruleMs });
     if (image) {
-      const textBoxes: TextBox[] = await extractTextBoxes(image);
+      const found = await extractTextBoxes(image);
+      if (found === null) {
+        contrastUnchecked = true;
+        out({ type: "stage", stage: "rules", message: "Could not read text in the image, so text-on-image contrast was not assessed" });
+      }
+      const textBoxes: TextBox[] = found ?? [];
       if (textBoxes.length) {
         ruleFindings = await rules(textBoxes);
         out({ type: "rules", findings: ruleFindings, ms: ruleMs });
@@ -218,6 +224,7 @@ export async function runCheck(input: CheckInput, emit: (e: CheckEvent) => void)
       own_key: !!input.options?.apiKey || undefined,
       readers: readers.length ? readers : undefined,
       drift: driftSummary,
+      contrast_unchecked: contrastUnchecked || undefined,
       embeddings: tracker.factsByWords ? `${tracker.embedModel ?? "lexical"}, facts by word overlap` : tracker.embedModel,
     };
     out({ type: "stage", stage: "done", message: "Check complete" });

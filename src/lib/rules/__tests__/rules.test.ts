@@ -189,3 +189,13 @@ describe("medical claims", () => {
     expect((await runRules({ text: "Gentle on skin, made for daily use.", brand, channel: "instagram" })).length).toBe(0);
   });
 });
+
+describe("banned-term fixes in context", () => {
+  it("replace an intensifier with the term, so the sentence still reads", async () => {
+    const { runRules } = await import("../index");
+    const brand = { terms: [{ id: "t", kind: "banned", phrase: "guaranteed", replacement: "designed to support", clause_code: null }], clauses: [], palette: [], facts: [] } as never;
+    const [f] = await runRules({ text: "Glow, 100% guaranteed.", brand, channel: "instagram" });
+    expect(f.span?.text).toBe("100% guaranteed");
+    expect(f.suggestion?.replacement).toBe("designed to support");
+  });
+});

@@ -29,7 +29,7 @@ export function isPrivateAddress(ip: string): boolean {
   }
   const v = ip.toLowerCase();
   if (v.startsWith("::ffff:")) return isPrivateAddress(v.slice(7));
-  return v === "::1" || v === "::" || v.startsWith("fc") || v.startsWith("fd") || v.startsWith("fe80");
+  return v === "::1" || v === "::" || v.startsWith("fc") || v.startsWith("fd") || /^fe[89ab]/.test(v);
 }
 
 async function assertPublic(url: URL): Promise<void> {

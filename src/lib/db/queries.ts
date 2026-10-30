@@ -432,6 +432,13 @@ export async function setStatus(submissionId: string, status: SubmissionStatus, 
     throw new Error(`A submission that is ${before.status.replace("_", " ")} cannot move to ${status.replace("_", " ")}`);
   }
   if (status === "approved" && before.author_id === a.id) throw new Error("You cannot approve your own draft; ask another reviewer");
+  if (status === "approved") {
+    const { data: v } = await sb.from("versions").select("summary").eq("submission_id", submissionId).order("n", { ascending: false }).limit(1).maybeSingle();
+    const s = (v?.summary ?? null) as CheckSummary | null;
+    if ((!s || s.partial) && !/\[Approved without a complete AI check\]/.test(note ?? "")) {
+      throw new Error("The AI check on this version did not finish. Confirm that you approve without it.");
+    }
+  }
   must(await sb.from("submissions").update({ status }).eq("id", submissionId).select("id").single(), "setStatus(update)");
   await writeAudit(a, {
     submission_id: submissionId,

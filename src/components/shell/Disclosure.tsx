@@ -46,8 +46,8 @@ export function DisclosureFull() {
 export function DisclosureFooter() {
   return (
     <footer className="mt-16 border-t border-rule px-6 py-5 text-[12.5px] leading-relaxed text-muted lg:px-8">
-      Rule checks run on this server. Reader simulation sends masked draft text and images to Google Gemini ({MODEL}).
-      Personal data and embargoed names are tokenised first. Simulated readers are estimates, and a person approves
+      Rule checks run on this server. Reader simulation sends draft text (personal data and embargoed names tokenised
+      first) and images as uploaded (not masked) to Google Gemini ({MODEL}, rotating to other Gemini models when busy). Simulated readers are estimates, and a person approves
       every post.
     </footer>
   );

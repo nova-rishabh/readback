@@ -7,8 +7,9 @@ import type {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Row = Record<string, any>;
 
+/** Today's date in India (the workspace's time zone), so expiry counts agree on every screen. */
 export function todayISO(): string {
-  return new Date().toISOString().slice(0, 10);
+  return new Date(Date.now() + 5.5 * 3600_000).toISOString().slice(0, 10);
 }
 
 export function mapClause(r: Row): Clause {

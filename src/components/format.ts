@@ -65,10 +65,11 @@ export function fmtDateTime(iso: string | null | undefined) {
   return d.toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Kolkata" });
 }
 
+/** Whole days from today (India) to a date, counted by calendar date like the Recall queue. */
 export function relDays(iso: string | null) {
   if (!iso) return null;
-  const ms = new Date(iso).getTime() - Date.now();
-  return Math.round(ms / 86_400_000);
+  const today = new Date(Date.now() + 5.5 * 3600_000).toISOString().slice(0, 10);
+  return Math.round((Date.parse(iso.slice(0, 10)) - Date.parse(today)) / 86_400_000);
 }
 
 export function errMessage(e: unknown) {

@@ -124,7 +124,7 @@ What this says, honestly:
 
 **Evaluation**
 - ASCI-Bench: 100 real rulings, evidence ledger, CLI runner, in-app results page with every case.
-- 72 unit tests (Vitest), a migration test in an in-memory Postgres, and logged end-to-end journeys ([docs/TESTING.md](docs/TESTING.md)).
+- 73 unit tests (Vitest), a migration test in an in-memory Postgres, and logged end-to-end journeys ([docs/TESTING.md](docs/TESTING.md)).
 
 ---
 
@@ -177,7 +177,7 @@ ASCI-Bench         scripts/asci-bench.ts → data/*.json → src/lib/bench/metri
 | Libraries | sharp (pixels), diff (word diffs), mammoth (DOCX), unpdf (PDF), lucide-react (icons), clsx |
 | Scheduling | Vercel Cron (daily recall sweep and demo reset) |
 | Fonts | Newsreader, Inter Tight, JetBrains Mono (Google Fonts via `next/font`) |
-| Testing | Vitest (72 unit tests), PGlite migration test, ASCI-Bench CLI, logged end-to-end journeys (see [docs/TESTING.md](docs/TESTING.md)) |
+| Testing | Vitest (73 unit tests), PGlite migration test, ASCI-Bench CLI, logged end-to-end journeys (see [docs/TESTING.md](docs/TESTING.md)) |
 | Data | ASCI Complaint Outcomes (public rulings), see [`data/asci-bench.README.md`](data/asci-bench.README.md) |
 | Hosting | Vercel (Mumbai region, next to the database) |
 
@@ -199,7 +199,7 @@ cp .env.example .env.local
 ```bash
 pnpm seed      # Velura brand, 4 demo users, 11 drafts with saved checks, facts (+ embeddings), demo store pages
 pnpm dev       # http://localhost:3000, then use the "Enter as ..." buttons
-pnpm test      # 72 unit tests
+pnpm test      # 73 unit tests
 pnpm test:db   # applies the migrations to an in-memory Postgres and checks the guards
 pnpm bench     # ASCI-Bench: 100 cases x 3 runs (add --ledger for evidence-aware scoring; --limit 20, --mock, --fresh)
 ```
