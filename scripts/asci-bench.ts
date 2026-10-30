@@ -154,11 +154,12 @@ async function main() {
     const runs = (old?.runs ?? []).filter((x) => x !== null);
     let beliefs = old?.beliefs ?? [];
     let error: string | undefined;
-    for (let tries = 0; runs.length < RUNS && tries < RUNS + 2 && !embeddingsExhausted; tries++) {
+    for (let tries = 0; runs.length < RUNS && tries < RUNS + 4 && !embeddingsExhausted; tries++) {
       const r = await readbackOnce(c);
       if (r.flagged === null) {
         error = r.error;
-        if (/quota|overloaded|503|429/i.test(r.error ?? "")) await new Promise((res) => setTimeout(res, 30_000));
+        // a per-minute limit clears within a minute: wait it out rather than spend the case's retries
+        if (/quota|limit|overloaded|503|429/i.test(r.error ?? "")) await new Promise((res) => setTimeout(res, 65_000));
         continue;
       }
       if (!runs.length || !beliefs.length) beliefs = r.beliefs;
