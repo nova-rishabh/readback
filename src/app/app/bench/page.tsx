@@ -134,11 +134,12 @@ export default async function BenchPage({ searchParams }: { searchParams: Promis
         </p>
       ) : (
         <div className="flex flex-col gap-6">
-          {plain && plain.rows.length < cases.length && (
+          {(mPlain.scored < cases.length || (mLedger && mLedger.scored < cases.length)) && (
             <p className="rounded-md border border-ochre/40 bg-ochre-tint px-4 py-2.5 text-[13.5px]">
-              <span className="font-medium">Partial run.</span> {plain.rows.length} of {cases.length} cases so far: the free Gemini tier allows
-              1,000 embedding requests per model per day, and the run resumes where it stopped when the quota resets. Cases not yet run
-              show “not run” below.
+              <span className="font-medium">Run in progress.</span> Scored so far: {mPlain.scored} of {cases.length} cases without evidence
+              {mLedger ? `, ${mLedger.scored} of ${cases.length} with evidence` : ""}. The free Gemini tier allows only a few hundred AI
+              requests a day, so the runs continue each day from where they stopped; unscored cases show “not run” or “–” below, and
+              rates with no cases yet show n/a.
             </p>
           )}
           <Headline
