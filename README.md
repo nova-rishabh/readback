@@ -22,15 +22,15 @@ top bar. Switch seats any time from the menu at the top right (creator, reviewer
 
 | # | Journey | Where | What you should see |
 |---|---|---|---|
-| 1 | **A full check, saved** | Inbox → **#142 Hero post** (marked *Start here*) | Rule and AI findings marked in the draft, the six readers' takeaways, citations to clauses, facts and WCAG. Accept a fix → **Save as v2** runs a live check (1 to 3 minutes on the free Gemini key). |
+| 1 | **A full check, saved** | Inbox → **#142 Hero post** (marked *Start here*) | Rule and AI findings marked in the draft, the six readers' takeaways, citations to clauses, facts and WCAG. Accept a fix → **Save as v2** runs a live check (about 30 seconds to 3 minutes on the free Gemini key, depending on load). |
 | 2 | **Your own draft** | **New draft** → **Fill in the demo draft** (or **Import from DOCX, PDF or TXT** with the sample DOCX) → **Save and run check** | Rule findings at once, readers stream in, findings save as they arrive; leaving the page does not stop the check. |
 | 3 | **Review workflow** | As creator: **Send v2 for review**. Switch to **Reviewer**: **Approve** (or Request changes with a note), then **Record published URL** | Status moves draft → in review → approved → published; you cannot approve your own draft; every step lands in the hash-chained audit log (**Audit log → Verify chain**). |
 | 4 | **Translations** (improvement 2) | Open **#146** (Hindi version of **#145**), or open #145 → **Add a translation** → **Fill in a sample Hindi translation** | The English master and the translation side by side, belief by belief. पक्का (“guaranteed”) is flagged as a claim the translation added, cited to clause G-13, with suggested wording that passed a re-comparison. Tamil (#147) and Marathi translations get a native reader. |
-| 5 | **Live fact recall** (improvement 3) | As **brand owner**: **Recall queue** → #139 → **Check live page now** | Readback opens the post's live page and finds the stale “#1 rated” claim. Open the live page, **Edit this demo page**, remove the line, check again: the recall closes itself and the audit log records it. Expiry alerts list facts lapsing within 30 days. |
-| 6 | **Fact change → recall** | As brand owner: **Brand Space → Approved facts** → edit a fact cited by an approved post | Every approved or published post that relied on it joins the Recall queue, and its live page is re-checked straight away. |
+| 5 | **Live fact recall** (improvement 3) | As **brand owner**: **Recall** in the top bar → #139 → **Check live page now** | Readback opens the post's live page and finds the stale “#1 rated” claim. Open the live page, **Edit this demo page**, remove the line, check again: the recall closes itself and the audit log records it. Expiry alerts list facts lapsing within 30 days. |
+| 6 | **Fact change → recall** | As brand owner: **Brand** (Brand Space) → **Approved facts** → edit a fact cited by an approved post | Every approved or published post that relied on it joins the Recall queue, and its live page is re-checked straight away. |
 | 7 | **The benchmark** (improvement 1) | **Benchmark** in the top bar | ASCI-Bench on 100 real Advertising Standards Council of India rulings, three runs each, against a single-prompt baseline, with and without the evidence ASCI accepted; every case is inspectable. |
 
-The demo is shared. The brand owner can put the seeded drafts back with **Brand Space → Reset demo drafts**, and the
+The demo is shared. The brand owner can put the seeded drafts back with **Brand → Reset demo drafts**, and the
 daily job does it every morning (09:00 IST); drafts you create are kept. If the shared free Gemini key is busy, add your
 own free key from the **Free Gemini key** badge in the top bar; it stays in your browser.
 
@@ -57,6 +57,8 @@ own free key from the **Free Gemini key** badge in the top bar; it stays in your
 - **Stable verdicts.** A first full benchmark pass showed only 52% of cases got the same verdict on all three runs: readers paraphrase one claim many ways and embedding similarity split them. Beliefs anchored on the **same quoted words and category** now group together (and the panel runs at temperature 0); the same unstable cases became stable on every run. The pre-fix run is kept in [`data/asci-bench-results-v3.0-before-grouping-fix.json`](data/asci-bench-results-v3.0-before-grouping-fix.json).
 - **Embedding quota no longer ends a check.** The free tier allows 1,000 embedding requests per model per day. Checks now rotate `gemini-embedding-001` → `gemini-embedding-2` → `gemini-embedding-2-preview` (matching facts in memory outside the stored vector space) and finally fall back to word-overlap grouping with a visible note. Daily-quota retry hints (“retry in 22h12m…”) are parsed so exhausted models are skipped.
 - **Workflow buttons match the rules:** reviewers only see Approve on drafts that were sent for review, and never on their own.
+- **Medical claims never slip through.** “Cures acne”, “treats eczema” and similar disease claims are a rule, caught by code on every draft even when the AI is busy (found by an independent judge-style review; see [docs/TESTING.md](docs/TESTING.md)).
+- **Translations that drop a disclaimer** raise a finding, and **approving after a partial AI check** requires an explicit acknowledgment recorded in the audit log.
 - **Bad links are “not found”,** not a database error. Hindi, Tamil and Marathi quotes keep their vowel signs when located in the draft.
 
 ---
