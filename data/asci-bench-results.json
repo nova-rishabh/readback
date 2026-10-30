@@ -1,0 +1,1733 @@
+{
+  "version": 3,
+  "mode": "cloud",
+  "ledger": false,
+  "runs": 3,
+  "model": "gemini-3.8-flash",
+  "started_at": "2026-10-29T17:30:56.820Z",
+  "generated_at": "2026-10-30T01:44:32.303Z",
+  "cases": 100,
+  "metrics": {
+    "scored": 66,
+    "upheld": 66,
+    "not_upheld": 0,
+    "errors": 34,
+    "readback": {
+      "recall": {
+        "k": 64,
+        "n": 66,
+        "rate": 0.9696969696969697,
+        "lo": 0.8960728112941316,
+        "hi": 0.9916502649240535
+      },
+      "false_alarm": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "lo": null,
+        "hi": null
+      },
+      "precision": {
+        "k": 64,
+        "n": 64,
+        "rate": 1,
+        "lo": 0.9433739770288436,
+        "hi": 1
+      },
+      "stability": {
+        "k": 66,
+        "n": 66,
+        "rate": 1,
+        "lo": 0.9449955327483907,
+        "hi": 1
+      }
+    },
+    "baseline": {
+      "recall": {
+        "k": 56,
+        "n": 66,
+        "rate": 0.8484848484848485,
+        "lo": 0.7430687139857184,
+        "hi": 0.9155645361116449
+      },
+      "false_alarm": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "lo": null,
+        "hi": null
+      },
+      "precision": {
+        "k": 56,
+        "n": 56,
+        "rate": 1,
+        "lo": 0.9358038555118846,
+        "hi": 1
+      }
+    },
+    "byGround": [
+      {
+        "ground": "unsubstantiated",
+        "cases": 64,
+        "readback": {
+          "k": 62,
+          "n": 64,
+          "rate": 0.96875,
+          "lo": 0.8930250611770575,
+          "hi": 0.9913880422874833
+        },
+        "baseline": {
+          "k": 55,
+          "n": 64,
+          "rate": 0.859375,
+          "lo": 0.7538349160536257,
+          "hi": 0.9242151299358556
+        }
+      },
+      {
+        "ground": "exaggeration",
+        "cases": 62,
+        "readback": {
+          "k": 60,
+          "n": 62,
+          "rate": 0.967741935483871,
+          "lo": 0.8897932286898178,
+          "hi": 0.9911088150029237
+        },
+        "baseline": {
+          "k": 53,
+          "n": 62,
+          "rate": 0.8548387096774194,
+          "lo": 0.7465637464683084,
+          "hi": 0.92170676943653
+        }
+      },
+      {
+        "ground": "implication",
+        "cases": 17,
+        "readback": {
+          "k": 15,
+          "n": 17,
+          "rate": 0.8823529411764706,
+          "lo": 0.6566315750229009,
+          "hi": 0.967120919987079
+        },
+        "baseline": {
+          "k": 15,
+          "n": 17,
+          "rate": 0.8823529411764706,
+          "lo": 0.6566315750229009,
+          "hi": 0.967120919987079
+        }
+      },
+      {
+        "ground": "omission",
+        "cases": 25,
+        "readback": {
+          "k": 25,
+          "n": 25,
+          "rate": 1,
+          "lo": 0.8668035060468213,
+          "hi": 1
+        },
+        "baseline": {
+          "k": 20,
+          "n": 25,
+          "rate": 0.8,
+          "lo": 0.6086866446346177,
+          "hi": 0.9113954589934752
+        }
+      },
+      {
+        "ground": "comparison",
+        "cases": 13,
+        "readback": {
+          "k": 13,
+          "n": 13,
+          "rate": 1,
+          "lo": 0.7718981569447083,
+          "hi": 1
+        },
+        "baseline": {
+          "k": 12,
+          "n": 13,
+          "rate": 0.9230769230769231,
+          "lo": 0.6668546607175265,
+          "hi": 0.9862899336203037
+        }
+      },
+      {
+        "ground": "statutory",
+        "cases": 2,
+        "readback": {
+          "k": 2,
+          "n": 2,
+          "rate": 1,
+          "lo": 0.34237195288961925,
+          "hi": 1
+        },
+        "baseline": {
+          "k": 1,
+          "n": 2,
+          "rate": 0.5,
+          "lo": 0.09452865480086614,
+          "hi": 0.9054713451991339
+        }
+      }
+    ],
+    "byCategory": [
+      {
+        "category": "electronics",
+        "upheld": 8,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 8,
+          "n": 8,
+          "rate": 1,
+          "lo": 0.6755843804891231,
+          "hi": 1
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 6,
+          "n": 8,
+          "rate": 0.75,
+          "lo": 0.40926987910258916,
+          "hi": 0.9285223111419724
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "food",
+        "upheld": 16,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 16,
+          "n": 16,
+          "rate": 1,
+          "lo": 0.8063865817272802,
+          "hi": 1
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 14,
+          "n": 16,
+          "rate": 0.875,
+          "lo": 0.6397666856325173,
+          "hi": 0.9650232506629428
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "health",
+        "upheld": 21,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 20,
+          "n": 21,
+          "rate": 0.9523809523809523,
+          "lo": 0.7733018341376452,
+          "hi": 0.9915442305280766
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 20,
+          "n": 21,
+          "rate": 0.9523809523809523,
+          "lo": 0.7733018341376452,
+          "hi": 0.9915442305280766
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "other",
+        "upheld": 1,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "skincare",
+        "upheld": 20,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 19,
+          "n": 20,
+          "rate": 0.95,
+          "lo": 0.7638641064874331,
+          "hi": 0.9911187805671268
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 15,
+          "n": 20,
+          "rate": 0.75,
+          "lo": 0.5312949900419365,
+          "hi": 0.888139947210597
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      }
+    ]
+  },
+  "rows": [
+    {
+      "id": "ASCI-001",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The fan sanitizes the air by killing bacteria. [unsupported]",
+        "2/6 It is highly effective at removing harmful gases. [unsupported]",
+        "2/6 The product is extremely reliable at neutralizing germs. [unsupported]"
+      ],
+      "ms": 184351
+    },
+    {
+      "id": "ASCI-002",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The filter turns a split AC into a HEPA air purifier. [unsupported]",
+        "6/6 It protects against Covid-19 and bacteria in the air. [unsupported]",
+        "5/6 It removes 99% of PM2.5, allergens, and germs. [unsupported]"
+      ],
+      "ms": 197310
+    },
+    {
+      "id": "ASCI-004",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 This refrigerator is the first single-door model in India featuring anti-frost technology. [unsupported]",
+        "6/6 The refrigerator automatically prevents frost buildup without requiring manual defrosting. [unsupported]"
+      ],
+      "ms": 116779
+    },
+    {
+      "id": "ASCI-003",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 This product is the best-selling air purifier globally. [unsupported]",
+        "4/6 The device is now cheaper than it used to be. [unsupported]",
+        "2/6 The purifier removes almost all harmful particles from the air. [unsupported]"
+      ],
+      "ms": 211105
+    },
+    {
+      "id": "ASCI-005",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 I must go to Vijay Sales to purchase this specific model. [unsupported]",
+        "5/6 This air conditioner is the first of its kind to focus on design. [unsupported]"
+      ],
+      "ms": 115458
+    },
+    {
+      "id": "ASCI-006",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The phone is entirely damage-proof from all angles. [unsupported]",
+        "5/6 The phone can survive accidental cycles inside a washing machine. [unsupported]",
+        "2/6 The phone can survive heavy physical impact from equipment like pitch rollers. [unsupported]"
+      ],
+      "ms": 61028
+    },
+    {
+      "id": "ASCI-007",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 Using filters with longer life spans results in water that is not fully pure. [unsupported]"
+      ],
+      "ms": 35502
+    },
+    {
+      "id": "ASCI-009",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The brand has been recognized by Marksmen Daily as one of India's most trusted brands. [unsupported]"
+      ],
+      "ms": 67599
+    },
+    {
+      "id": "ASCI-008",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The battery lasts twice as long as standard options. [unsupported]",
+        "4/6 Using these batteries will increase my profit margins. [unsupported]"
+      ],
+      "ms": 126379
+    },
+    {
+      "id": "ASCI-010",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product will make skin appear 7 years younger. [unsupported]"
+      ],
+      "ms": 50781
+    },
+    {
+      "id": "ASCI-012",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is highly effective at reversing long-term damage. [unsupported]",
+        "2/6 The product works extremely fast to repair hair. [unsupported]"
+      ],
+      "ms": 25963
+    },
+    {
+      "id": "ASCI-013",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product will make me look younger. [unsupported]"
+      ],
+      "ms": 36935
+    },
+    {
+      "id": "ASCI-011",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "4/6 The product will make my fine lines and wrinkles less noticeable. [unsupported]",
+        "4/6 This is a newer, better version of a previous product. [unsupported]"
+      ],
+      "ms": 66798
+    },
+    {
+      "id": "ASCI-015",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is highly effective at regrowing hair in a short time. [unsupported]"
+      ],
+      "ms": 26272
+    },
+    {
+      "id": "ASCI-014",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 This product is the most popular or effective choice in India. [unsupported]",
+        "5/6 The serum uses advanced delivery systems for better absorption. [unsupported]"
+      ],
+      "ms": 62922
+    },
+    {
+      "id": "ASCI-016",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is scientifically proven to reduce hair fall significantly. [unsupported]"
+      ],
+      "ms": 36533
+    },
+    {
+      "id": "ASCI-018",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The soap will clear my dark spots in one week. [unsupported]"
+      ],
+      "ms": 32320
+    },
+    {
+      "id": "ASCI-019",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is highly effective at reversing long-term sun damage. [unsupported]"
+      ],
+      "ms": 107241
+    },
+    {
+      "id": "ASCI-017",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is highly effective and works very quickly. [unsupported]",
+        "5/6 The product is safe because it has been verified by medical professionals. [unsupported]"
+      ],
+      "ms": 158098
+    },
+    {
+      "id": "ASCI-020",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The whitening effect is irreversible. [unsupported]",
+        "4/6 The product works very quickly. [unsupported]"
+      ],
+      "ms": 38616
+    },
+    {
+      "id": "ASCI-022",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product provides all-day moisture and sun safety. [unsupported]",
+        "4/6 I will see a noticeable improvement in my lip condition within a week. [unsupported]",
+        "2/6 The seven-day claim likely has conditions attached due to the asterisk. [unsupported]"
+      ],
+      "ms": 43483
+    },
+    {
+      "id": "ASCI-021",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is highly effective at preventing sweat for two full days. [unsupported]"
+      ],
+      "ms": 80271
+    },
+    {
+      "id": "ASCI-023",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product has been tested on a small group of people. [unsupported]"
+      ],
+      "ms": 28820
+    },
+    {
+      "id": "ASCI-024",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product uses natural ingredients to restore hair color. [unsupported]",
+        "4/6 The serum will definitely reverse my grey hair within 60 days. [unsupported]",
+        "2/6 I can expect results in exactly 60 days. [unsupported]"
+      ],
+      "ms": 26358
+    },
+    {
+      "id": "ASCI-025",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 I can expect to see hair improvements within 90 days. [unsupported]",
+        "2/6 The product contains a high concentration of active ingredients. [unsupported]"
+      ],
+      "ms": 17562
+    },
+    {
+      "id": "ASCI-026",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The product is highly popular and in high demand. [unsupported]",
+        "2/6 The product is widely purchased by others. [unsupported]"
+      ],
+      "ms": 17855
+    },
+    {
+      "id": "ASCI-028",
+      "outcome": "upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 24916
+    },
+    {
+      "id": "ASCI-029",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The soap contains only natural ingredients. [unsupported]",
+        "2/6 The product is completely authentic and high quality. [unsupported]"
+      ],
+      "ms": 16642
+    },
+    {
+      "id": "ASCI-030",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product will make my skin look younger and more elastic. [unsupported]",
+        "2/6 The product is highly potent compared to standard collagen. [unsupported]",
+        "2/6 The formula is extremely powerful and effective. [unsupported]"
+      ],
+      "ms": 24952
+    },
+    {
+      "id": "ASCI-031",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is highly popular and widely accepted by millions. [unsupported]",
+        "4/6 The tea will show noticeable health improvements within three months. [unsupported]",
+        "2/6 The product claims to mitigate the health effects of air pollution. [unsupported]"
+      ],
+      "ms": 19384
+    },
+    {
+      "id": "ASCI-032",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is made from pure, natural ingredients. [unsupported]",
+        "6/6 The protein source is high-quality European milk. [unsupported]"
+      ],
+      "ms": 16482
+    },
+    {
+      "id": "ASCI-033",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product is effective for weight loss. [unsupported]"
+      ],
+      "ms": 16124
+    },
+    {
+      "id": "ASCI-034",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 Other sunflower oils on the market use chemicals during refining. [unsupported]",
+        "4/6 This oil is safer because it is processed without chemicals. [unsupported]"
+      ],
+      "ms": 15470
+    },
+    {
+      "id": "ASCI-035",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The product is beneficial for health. [unsupported]"
+      ],
+      "ms": 14425
+    },
+    {
+      "id": "ASCI-036",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The snacks are healthy for long-term consumption. [unsupported]"
+      ],
+      "ms": 14557
+    },
+    {
+      "id": "ASCI-037",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 Consuming this flour will improve my overall health. [unsupported]",
+        "4/6 The product is made from high-quality wheat ingredients. [unsupported]"
+      ],
+      "ms": 17955
+    },
+    {
+      "id": "ASCI-038",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 This product will actively improve my heart health. [unsupported]",
+        "2/6 The product is medically proven to lower blood pressure. [unsupported]"
+      ],
+      "ms": 15297
+    },
+    {
+      "id": "ASCI-039",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 Consuming this product will improve my immune system. [unsupported]"
+      ],
+      "ms": 15827
+    },
+    {
+      "id": "ASCI-040",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 This product is a unique innovation in the market. [unsupported]",
+        "4/6 The coffee is made from plant-based ingredients. [unsupported]"
+      ],
+      "ms": 17183
+    },
+    {
+      "id": "ASCI-041",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The oil is healthy for consumption. [unsupported]"
+      ],
+      "ms": 13075
+    },
+    {
+      "id": "ASCI-042",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is made from fresh ingredients. [unsupported]"
+      ],
+      "ms": 13105
+    },
+    {
+      "id": "ASCI-043",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 The product is a plant-based substitute for meat. [unsupported]"
+      ],
+      "ms": 13579
+    },
+    {
+      "id": "ASCI-044",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The brand claims a specific timeline for health improvement. [unsupported]"
+      ],
+      "ms": 17830
+    },
+    {
+      "id": "ASCI-045",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is highly popular and reliable. [unsupported]",
+        "5/6 The product can permanently eliminate diabetes. [unsupported]"
+      ],
+      "ms": 18063
+    },
+    {
+      "id": "ASCI-046",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is scientifically validated to improve health markers over three months. [unsupported]",
+        "4/6 This is the most popular sugar supplement available on Amazon. [unsupported]",
+        "2/6 The product is popular among other Amazon customers. [unsupported]"
+      ],
+      "ms": 85882
+    },
+    {
+      "id": "ASCI-047",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 It is a medicinal-grade product that can regulate internal body metrics. [unsupported]",
+        "2/6 The product improves cholesterol and blood sugar levels. [unsupported]"
+      ],
+      "ms": 17659
+    },
+    {
+      "id": "ASCI-048",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product removes toxins from the body. [unsupported]",
+        "2/6 The product improves blood health. [unsupported]"
+      ],
+      "ms": 22222
+    },
+    {
+      "id": "ASCI-049",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product guarantees weight loss within three months. [unsupported]"
+      ],
+      "ms": 15191
+    },
+    {
+      "id": "ASCI-050",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is specifically designed for colon cleansing. [unsupported]",
+        "2/6 The product effectively removes toxins from the body. [unsupported]"
+      ],
+      "ms": 16688
+    },
+    {
+      "id": "ASCI-051",
+      "outcome": "upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": true,
+      "beliefs": [],
+      "ms": 17378
+    },
+    {
+      "id": "ASCI-052",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is effective at controlling blood sugar. [unsupported]",
+        "2/6 This product improves insulin function. [unsupported]",
+        "2/6 This product helps maintain healthy A1C levels. [unsupported]"
+      ],
+      "ms": 14615
+    },
+    {
+      "id": "ASCI-053",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product claims to limit fibrosis, which sounds like a medical treatment. [unsupported]"
+      ],
+      "ms": 17744
+    },
+    {
+      "id": "ASCI-054",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product effectively blocks carbohydrates from being absorbed. [unsupported]",
+        "2/6 The supplement will help me lose weight. [unsupported]",
+        "2/6 It will stop me from feeling hungry all the time. [unsupported]"
+      ],
+      "ms": 20421
+    },
+    {
+      "id": "ASCI-055",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 Weight loss is possible without tracking calories. [unsupported]",
+        "2/6 Calorie counting is an invalid method for weight management. [unsupported]",
+        "2/6 The brand suggests that traditional weight loss science is incorrect. [unsupported]"
+      ],
+      "ms": 15680
+    },
+    {
+      "id": "ASCI-056",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The supplement is specifically designed to boost fertility metrics. [unsupported]",
+        "2/6 The product will improve my physical energy and sexual performance. [unsupported]",
+        "2/6 The product is scientifically proven to increase sperm count. [unsupported]"
+      ],
+      "ms": 15766
+    },
+    {
+      "id": "ASCI-057",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The oil permanently destroys fat cells upon application. [unsupported]"
+      ],
+      "ms": 21845
+    },
+    {
+      "id": "ASCI-058",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product will help me lose weight and look better in three months. [unsupported]",
+        "2/6 The product targets digestion issues as part of weight loss. [unsupported]",
+        "2/6 It will burn my fat and fix my digestion. [unsupported]"
+      ],
+      "ms": 16839
+    },
+    {
+      "id": "ASCI-059",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product claims to repair internal tissue and nerve damage. [unsupported]"
+      ],
+      "ms": 15782
+    },
+    {
+      "id": "ASCI-060",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product will definitely increase my milk supply within a week. [unsupported]",
+        "5/6 The ingredients are natural and safe to consume. [unsupported]"
+      ],
+      "ms": 17882
+    },
+    {
+      "id": "ASCI-061",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product effectively manages blood sugar levels. [unsupported]",
+        "2/6 The product claims to perform complex biological functions like converting proinsulin. [unsupported]"
+      ],
+      "ms": 23889
+    },
+    {
+      "id": "ASCI-062",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The product acts extremely quickly to stop pain. [unsupported]",
+        "5/6 A single application provides relief for a full workday. [unsupported]"
+      ],
+      "ms": 27930
+    },
+    {
+      "id": "ASCI-063",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is highly effective at preventing infections. [unsupported]"
+      ],
+      "ms": 16729
+    },
+    {
+      "id": "ASCI-064",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The brand claims this tea has medicinal effects on the menstrual cycle. [unsupported]",
+        "2/6 This product is guaranteed to fix my mood swings. [unsupported]"
+      ],
+      "ms": 21546
+    },
+    {
+      "id": "ASCI-065",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product improves physical appearance by reducing acne. [unsupported]",
+        "4/6 The product effectively treats hormonal imbalances. [unsupported]"
+      ],
+      "ms": 23221
+    },
+    {
+      "id": "ASCI-066",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is highly effective at treating long-term joint pain. [unsupported]"
+      ],
+      "ms": 16419
+    },
+    {
+      "id": "ASCI-067",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": null,
+      "beliefs": [
+        "4/6 It is a healthy addition to a balanced lifestyle. [unsupported]"
+      ],
+      "ms": 337208,
+      "error": "The AI readers did not finish: the free Gemini key reached its daily limit on every model. Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-068",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 455051,
+      "error": "The AI readers did not finish: the free Gemini key reached its daily limit on every model. Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-069",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 455074,
+      "error": "The AI readers did not finish: the free Gemini key reached its daily limit on every model. Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-070",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-071",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-072",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-073",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-074",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-075",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-076",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-077",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-078",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-079",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-080",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-081",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-082",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-083",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-084",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-085",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-086",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-087",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-088",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-089",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-090",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-091",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-092",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-093",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-094",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-095",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-096",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-097",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 1,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-098",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-099",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-100",
+      "outcome": "not_upheld",
+      "runs": [],
+      "readback": null,
+      "baseline": null,
+      "beliefs": [],
+      "ms": 0,
+      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+    },
+    {
+      "id": "ASCI-027",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The product works quickly to clear skin blemishes. [unsupported]",
+        "2/6 The product is highly effective and scientifically backed. [unsupported]"
+      ],
+      "ms": 79113
+    }
+  ]
+}

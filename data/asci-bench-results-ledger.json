@@ -1,0 +1,991 @@
+{
+  "version": 3,
+  "mode": "cloud",
+  "ledger": true,
+  "runs": 3,
+  "model": "gemini-3.8-flash",
+  "started_at": "2026-10-29T17:48:37.937Z",
+  "generated_at": "2026-10-29T18:17:20.255Z",
+  "cases": 100,
+  "metrics": {
+    "scored": 41,
+    "upheld": 41,
+    "not_upheld": 0,
+    "errors": 0,
+    "readback": {
+      "recall": {
+        "k": 40,
+        "n": 41,
+        "rate": 0.975609756097561,
+        "lo": 0.8740465298832192,
+        "hi": 0.9956815797292835
+      },
+      "false_alarm": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "lo": null,
+        "hi": null
+      },
+      "precision": {
+        "k": 40,
+        "n": 40,
+        "rate": 1,
+        "lo": 0.9123754607496077,
+        "hi": 1
+      },
+      "stability": {
+        "k": 41,
+        "n": 41,
+        "rate": 1,
+        "lo": 0.9143295511310926,
+        "hi": 1
+      }
+    },
+    "baseline": {
+      "recall": {
+        "k": 33,
+        "n": 41,
+        "rate": 0.8048780487804879,
+        "lo": 0.6598611764744329,
+        "hi": 0.8976568425079408
+      },
+      "false_alarm": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "lo": null,
+        "hi": null
+      },
+      "precision": {
+        "k": 33,
+        "n": 33,
+        "rate": 1,
+        "lo": 0.8957265699643882,
+        "hi": 1
+      }
+    },
+    "byGround": [
+      {
+        "ground": "unsubstantiated",
+        "cases": 41,
+        "readback": {
+          "k": 40,
+          "n": 41,
+          "rate": 0.975609756097561,
+          "lo": 0.8740465298832192,
+          "hi": 0.9956815797292835
+        },
+        "baseline": {
+          "k": 33,
+          "n": 41,
+          "rate": 0.8048780487804879,
+          "lo": 0.6598611764744329,
+          "hi": 0.8976568425079408
+        }
+      },
+      {
+        "ground": "exaggeration",
+        "cases": 39,
+        "readback": {
+          "k": 38,
+          "n": 39,
+          "rate": 0.9743589743589743,
+          "lo": 0.8681871352137286,
+          "hi": 0.9954594139347627
+        },
+        "baseline": {
+          "k": 31,
+          "n": 39,
+          "rate": 0.7948717948717948,
+          "lo": 0.6446572703687138,
+          "hi": 0.8922040980208888
+        }
+      },
+      {
+        "ground": "implication",
+        "cases": 11,
+        "readback": {
+          "k": 10,
+          "n": 11,
+          "rate": 0.9090909090909091,
+          "lo": 0.6226353745137962,
+          "hi": 0.9837682477371741
+        },
+        "baseline": {
+          "k": 10,
+          "n": 11,
+          "rate": 0.9090909090909091,
+          "lo": 0.6226353745137962,
+          "hi": 0.9837682477371741
+        }
+      },
+      {
+        "ground": "omission",
+        "cases": 14,
+        "readback": {
+          "k": 14,
+          "n": 14,
+          "rate": 1,
+          "lo": 0.7846829880728186,
+          "hi": 1
+        },
+        "baseline": {
+          "k": 11,
+          "n": 14,
+          "rate": 0.7857142857142857,
+          "lo": 0.5241027622679172,
+          "hi": 0.9242875166308363
+        }
+      },
+      {
+        "ground": "comparison",
+        "cases": 11,
+        "readback": {
+          "k": 11,
+          "n": 11,
+          "rate": 1,
+          "lo": 0.7411599827511859,
+          "hi": 1
+        },
+        "baseline": {
+          "k": 10,
+          "n": 11,
+          "rate": 0.9090909090909091,
+          "lo": 0.6226353745137962,
+          "hi": 0.9837682477371741
+        }
+      },
+      {
+        "ground": "statutory",
+        "cases": 1,
+        "readback": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
+        },
+        "baseline": {
+          "k": 0,
+          "n": 1,
+          "rate": 0,
+          "lo": 0,
+          "hi": 0.7934567085261071
+        }
+      }
+    ],
+    "byCategory": [
+      {
+        "category": "electronics",
+        "upheld": 8,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 8,
+          "n": 8,
+          "rate": 1,
+          "lo": 0.6755843804891231,
+          "hi": 1
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 6,
+          "n": 8,
+          "rate": 0.75,
+          "lo": 0.40926987910258916,
+          "hi": 0.9285223111419724
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "food",
+        "upheld": 11,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 11,
+          "n": 11,
+          "rate": 1,
+          "lo": 0.7411599827511859,
+          "hi": 1
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 10,
+          "n": 11,
+          "rate": 0.9090909090909091,
+          "lo": 0.6226353745137962,
+          "hi": 0.9837682477371741
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "health",
+        "upheld": 1,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "other",
+        "upheld": 1,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 1,
+          "n": 1,
+          "rate": 1,
+          "lo": 0.20654329147389294,
+          "hi": 1
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      },
+      {
+        "category": "skincare",
+        "upheld": 20,
+        "not_upheld": 0,
+        "readback_recall": {
+          "k": 19,
+          "n": 20,
+          "rate": 0.95,
+          "lo": 0.7638641064874331,
+          "hi": 0.9911187805671268
+        },
+        "readback_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        },
+        "baseline_recall": {
+          "k": 15,
+          "n": 20,
+          "rate": 0.75,
+          "lo": 0.5312949900419365,
+          "hi": 0.888139947210597
+        },
+        "baseline_fa": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "lo": null,
+          "hi": null
+        }
+      }
+    ]
+  },
+  "rows": [
+    {
+      "id": "ASCI-002",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The filter is highly effective at cleaning indoor air. [unsupported]",
+        "2/6 This product is capable of removing Covid-19 particles. [unsupported]"
+      ],
+      "ms": 21908
+    },
+    {
+      "id": "ASCI-001",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The fan sanitizes the air by killing bacteria. [unsupported]",
+        "2/6 It is highly effective at removing harmful gases. [unsupported]",
+        "2/6 The product is extremely reliable at neutralizing germs. [unsupported]"
+      ],
+      "ms": 44311
+    },
+    {
+      "id": "ASCI-004",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 This refrigerator is the first of its kind in India to feature anti-frost technology. [unsupported]"
+      ],
+      "ms": 69468
+    },
+    {
+      "id": "ASCI-005",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 I must go to Vijay Sales to purchase this specific model. [unsupported]",
+        "5/6 This air conditioner is the first of its kind to focus on design. [unsupported]"
+      ],
+      "ms": 53318
+    },
+    {
+      "id": "ASCI-003",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 This product is the best-selling air purifier globally. [unsupported]",
+        "4/6 The device is now cheaper than it used to be. [unsupported]",
+        "2/6 The purifier removes almost all harmful particles from the air. [unsupported]"
+      ],
+      "ms": 145585
+    },
+    {
+      "id": "ASCI-007",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 Using filters with longer life spans results in water that is not fully pure. [unsupported]"
+      ],
+      "ms": 35923
+    },
+    {
+      "id": "ASCI-006",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The phone is virtually indestructible. [unsupported]",
+        "4/6 The device is fully waterproof and can survive a washing machine cycle. [unsupported]"
+      ],
+      "ms": 47378
+    },
+    {
+      "id": "ASCI-009",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The brand is officially recognized as a top-tier choice in India. [unsupported]"
+      ],
+      "ms": 32259
+    },
+    {
+      "id": "ASCI-010",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product will visibly reverse skin aging by seven years. [unsupported]",
+        "2/6 The product is highly effective at turning back the clock on skin appearance. [unsupported]"
+      ],
+      "ms": 36164
+    },
+    {
+      "id": "ASCI-008",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The battery lasts twice as long as standard options. [unsupported]",
+        "4/6 Using these batteries will increase my profit margins. [unsupported]"
+      ],
+      "ms": 126995
+    },
+    {
+      "id": "ASCI-011",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "4/6 The product will make my fine lines and wrinkles less noticeable. [unsupported]",
+        "4/6 This is a newer, better version of a previous product. [unsupported]"
+      ],
+      "ms": 94246
+    },
+    {
+      "id": "ASCI-013",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product will make me look younger. [unsupported]"
+      ],
+      "ms": 99000
+    },
+    {
+      "id": "ASCI-012",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is highly effective at reversing long-term damage. [unsupported]"
+      ],
+      "ms": 155369
+    },
+    {
+      "id": "ASCI-014",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 This product is the most popular or effective choice in India. [unsupported]",
+        "5/6 The serum uses advanced delivery systems for better absorption. [unsupported]"
+      ],
+      "ms": 110394
+    },
+    {
+      "id": "ASCI-015",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is highly effective at regrowing hair in a short time. [unsupported]"
+      ],
+      "ms": 138654
+    },
+    {
+      "id": "ASCI-016",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is scientifically proven to reduce hair fall significantly. [unsupported]"
+      ],
+      "ms": 98748
+    },
+    {
+      "id": "ASCI-018",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The soap will clear my dark spots in one week. [unsupported]"
+      ],
+      "ms": 126786
+    },
+    {
+      "id": "ASCI-017",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is highly effective and works very quickly. [unsupported]",
+        "5/6 The product is safe because it has been verified by medical professionals. [unsupported]"
+      ],
+      "ms": 198684
+    },
+    {
+      "id": "ASCI-019",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is highly effective at reversing long-term sun damage. [unsupported]"
+      ],
+      "ms": 72579
+    },
+    {
+      "id": "ASCI-020",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The whitening effect is irreversible. [unsupported]",
+        "4/6 The product works very quickly. [unsupported]"
+      ],
+      "ms": 74010
+    },
+    {
+      "id": "ASCI-022",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product provides all-day moisture and sun safety. [unsupported]",
+        "4/6 I will see a noticeable improvement in my lip condition within a week. [unsupported]",
+        "2/6 The seven-day claim likely has conditions attached due to the asterisk. [unsupported]"
+      ],
+      "ms": 26217
+    },
+    {
+      "id": "ASCI-021",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is highly effective at preventing sweat for two full days. [unsupported]"
+      ],
+      "ms": 130464
+    },
+    {
+      "id": "ASCI-023",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "3/6 The product is effective at removing skin marks within 14 days. [contradicted]"
+      ],
+      "ms": 106003
+    },
+    {
+      "id": "ASCI-025",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 I can expect to see hair improvements within 90 days. [unsupported]",
+        "2/6 The product contains a high concentration of active ingredients. [unsupported]"
+      ],
+      "ms": 88627
+    },
+    {
+      "id": "ASCI-024",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product uses natural ingredients to restore hair color. [unsupported]",
+        "4/6 The serum will definitely reverse my grey hair within 60 days. [unsupported]",
+        "2/6 I can expect results in exactly 60 days. [unsupported]"
+      ],
+      "ms": 132331
+    },
+    {
+      "id": "ASCI-026",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The product is highly popular and in high demand. [unsupported]",
+        "2/6 The product is widely purchased by others. [unsupported]"
+      ],
+      "ms": 42970
+    },
+    {
+      "id": "ASCI-027",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The product works quickly to clear skin blemishes. [unsupported]",
+        "2/6 The product is highly effective and scientifically backed. [unsupported]"
+      ],
+      "ms": 51176
+    },
+    {
+      "id": "ASCI-029",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The soap contains only natural ingredients. [unsupported]",
+        "2/6 The product is completely authentic and high quality. [unsupported]"
+      ],
+      "ms": 21667
+    },
+    {
+      "id": "ASCI-028",
+      "outcome": "upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 69215
+    },
+    {
+      "id": "ASCI-031",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is highly popular and widely accepted by millions. [unsupported]",
+        "4/6 The tea will show noticeable health improvements within three months. [unsupported]",
+        "2/6 The product claims to mitigate the health effects of air pollution. [unsupported]"
+      ],
+      "ms": 37425
+    },
+    {
+      "id": "ASCI-030",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product will make my skin look younger and more elastic. [unsupported]",
+        "2/6 The product is highly potent compared to standard collagen. [unsupported]",
+        "2/6 The formula is extremely powerful and effective. [unsupported]"
+      ],
+      "ms": 49141
+    },
+    {
+      "id": "ASCI-033",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product is effective for weight loss. [unsupported]"
+      ],
+      "ms": 104600
+    },
+    {
+      "id": "ASCI-032",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is made from pure, natural ingredients. [unsupported]",
+        "6/6 The protein source is high-quality European milk. [unsupported]"
+      ],
+      "ms": 160773
+    },
+    {
+      "id": "ASCI-035",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The product is beneficial for health. [unsupported]"
+      ],
+      "ms": 27690
+    },
+    {
+      "id": "ASCI-034",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 Other sunflower oils on the market use chemicals during refining. [unsupported]",
+        "4/6 This oil is safer because it is processed without chemicals. [unsupported]"
+      ],
+      "ms": 90518
+    },
+    {
+      "id": "ASCI-036",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The snacks are healthy for long-term consumption. [unsupported]"
+      ],
+      "ms": 51990
+    },
+    {
+      "id": "ASCI-038",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 This product will actively improve my heart health. [unsupported]",
+        "2/6 The product is medically proven to lower blood pressure. [unsupported]"
+      ],
+      "ms": 84694
+    },
+    {
+      "id": "ASCI-037",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 Consuming this flour will improve my overall health. [unsupported]",
+        "4/6 The product is made from high-quality wheat ingredients. [unsupported]"
+      ],
+      "ms": 146653
+    },
+    {
+      "id": "ASCI-040",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 This product is a unique innovation in the market. [unsupported]",
+        "4/6 The coffee is made from plant-based ingredients. [unsupported]"
+      ],
+      "ms": 22376
+    },
+    {
+      "id": "ASCI-041",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The oil is healthy for consumption. [unsupported]"
+      ],
+      "ms": 31888
+    },
+    {
+      "id": "ASCI-039",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 Consuming this product will improve my immune system. [unsupported]"
+      ],
+      "ms": 129555
+    }
+  ]
+}
