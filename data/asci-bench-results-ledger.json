@@ -5,173 +5,173 @@
   "runs": 3,
   "model": "gemini-3.8-flash",
   "started_at": "2026-10-29T17:48:37.937Z",
-  "generated_at": "2026-10-29T18:17:20.255Z",
+  "generated_at": "2026-10-30T12:41:31.132Z",
   "cases": 100,
   "metrics": {
-    "scored": 41,
-    "upheld": 41,
-    "not_upheld": 0,
+    "scored": 100,
+    "upheld": 66,
+    "not_upheld": 34,
     "errors": 0,
     "readback": {
       "recall": {
-        "k": 40,
-        "n": 41,
-        "rate": 0.975609756097561,
-        "lo": 0.8740465298832192,
-        "hi": 0.9956815797292835
+        "k": 63,
+        "n": 66,
+        "rate": 0.9545454545454546,
+        "lo": 0.8746648398478928,
+        "hi": 0.9844220081051896
       },
       "false_alarm": {
-        "k": 0,
-        "n": 0,
-        "rate": null,
-        "lo": null,
-        "hi": null
+        "k": 23,
+        "n": 34,
+        "rate": 0.6764705882352942,
+        "lo": 0.5084258404811939,
+        "hi": 0.8086854867354143
       },
       "precision": {
-        "k": 40,
-        "n": 40,
-        "rate": 1,
-        "lo": 0.9123754607496077,
-        "hi": 1
+        "k": 63,
+        "n": 86,
+        "rate": 0.7325581395348837,
+        "lo": 0.6305476035519365,
+        "hi": 0.8146804422531247
       },
       "stability": {
-        "k": 41,
-        "n": 41,
+        "k": 100,
+        "n": 100,
         "rate": 1,
-        "lo": 0.9143295511310926,
-        "hi": 1
+        "lo": 0.9630051925239981,
+        "hi": 0.9999999999999999
       }
     },
     "baseline": {
       "recall": {
-        "k": 33,
-        "n": 41,
-        "rate": 0.8048780487804879,
-        "lo": 0.6598611764744329,
-        "hi": 0.8976568425079408
+        "k": 56,
+        "n": 66,
+        "rate": 0.8484848484848485,
+        "lo": 0.7430687139857184,
+        "hi": 0.9155645361116449
       },
       "false_alarm": {
-        "k": 0,
-        "n": 0,
-        "rate": null,
-        "lo": null,
-        "hi": null
+        "k": 7,
+        "n": 34,
+        "rate": 0.20588235294117646,
+        "lo": 0.1034939602235132,
+        "hi": 0.3679871610821398
       },
       "precision": {
-        "k": 33,
-        "n": 33,
-        "rate": 1,
-        "lo": 0.8957265699643882,
-        "hi": 1
+        "k": 56,
+        "n": 63,
+        "rate": 0.8888888888888888,
+        "lo": 0.7879511971626006,
+        "hi": 0.9451252103441016
       }
     },
     "byGround": [
       {
         "ground": "unsubstantiated",
-        "cases": 41,
+        "cases": 64,
         "readback": {
-          "k": 40,
-          "n": 41,
-          "rate": 0.975609756097561,
-          "lo": 0.8740465298832192,
-          "hi": 0.9956815797292835
+          "k": 62,
+          "n": 64,
+          "rate": 0.96875,
+          "lo": 0.8930250611770575,
+          "hi": 0.9913880422874833
         },
         "baseline": {
-          "k": 33,
-          "n": 41,
-          "rate": 0.8048780487804879,
-          "lo": 0.6598611764744329,
-          "hi": 0.8976568425079408
+          "k": 55,
+          "n": 64,
+          "rate": 0.859375,
+          "lo": 0.7538349160536257,
+          "hi": 0.9242151299358556
         }
       },
       {
         "ground": "exaggeration",
-        "cases": 39,
+        "cases": 62,
         "readback": {
-          "k": 38,
-          "n": 39,
-          "rate": 0.9743589743589743,
-          "lo": 0.8681871352137286,
-          "hi": 0.9954594139347627
+          "k": 60,
+          "n": 62,
+          "rate": 0.967741935483871,
+          "lo": 0.8897932286898178,
+          "hi": 0.9911088150029237
         },
         "baseline": {
-          "k": 31,
-          "n": 39,
-          "rate": 0.7948717948717948,
-          "lo": 0.6446572703687138,
-          "hi": 0.8922040980208888
+          "k": 53,
+          "n": 62,
+          "rate": 0.8548387096774194,
+          "lo": 0.7465637464683084,
+          "hi": 0.92170676943653
         }
       },
       {
         "ground": "implication",
-        "cases": 11,
+        "cases": 17,
         "readback": {
-          "k": 10,
-          "n": 11,
-          "rate": 0.9090909090909091,
-          "lo": 0.6226353745137962,
-          "hi": 0.9837682477371741
+          "k": 14,
+          "n": 17,
+          "rate": 0.8235294117647058,
+          "lo": 0.5897007098262422,
+          "hi": 0.9380898628745101
         },
         "baseline": {
-          "k": 10,
-          "n": 11,
-          "rate": 0.9090909090909091,
-          "lo": 0.6226353745137962,
-          "hi": 0.9837682477371741
+          "k": 15,
+          "n": 17,
+          "rate": 0.8823529411764706,
+          "lo": 0.6566315750229009,
+          "hi": 0.967120919987079
         }
       },
       {
         "ground": "omission",
-        "cases": 14,
+        "cases": 25,
         "readback": {
-          "k": 14,
-          "n": 14,
-          "rate": 1,
-          "lo": 0.7846829880728186,
-          "hi": 1
+          "k": 24,
+          "n": 25,
+          "rate": 0.96,
+          "lo": 0.8045552759497747,
+          "hi": 0.9929039496133008
         },
         "baseline": {
-          "k": 11,
-          "n": 14,
-          "rate": 0.7857142857142857,
-          "lo": 0.5241027622679172,
-          "hi": 0.9242875166308363
+          "k": 20,
+          "n": 25,
+          "rate": 0.8,
+          "lo": 0.6086866446346177,
+          "hi": 0.9113954589934752
         }
       },
       {
         "ground": "comparison",
-        "cases": 11,
+        "cases": 13,
         "readback": {
-          "k": 11,
-          "n": 11,
+          "k": 13,
+          "n": 13,
           "rate": 1,
-          "lo": 0.7411599827511859,
+          "lo": 0.7718981569447083,
           "hi": 1
         },
         "baseline": {
-          "k": 10,
-          "n": 11,
-          "rate": 0.9090909090909091,
-          "lo": 0.6226353745137962,
-          "hi": 0.9837682477371741
+          "k": 12,
+          "n": 13,
+          "rate": 0.9230769230769231,
+          "lo": 0.6668546607175265,
+          "hi": 0.9862899336203037
         }
       },
       {
         "ground": "statutory",
-        "cases": 1,
+        "cases": 2,
         "readback": {
-          "k": 1,
-          "n": 1,
+          "k": 2,
+          "n": 2,
           "rate": 1,
-          "lo": 0.20654329147389294,
+          "lo": 0.34237195288961925,
           "hi": 1
         },
         "baseline": {
-          "k": 0,
-          "n": 1,
-          "rate": 0,
-          "lo": 0,
-          "hi": 0.7934567085261071
+          "k": 1,
+          "n": 2,
+          "rate": 0.5,
+          "lo": 0.09452865480086614,
+          "hi": 0.9054713451991339
         }
       }
     ],
@@ -179,7 +179,7 @@
       {
         "category": "electronics",
         "upheld": 8,
-        "not_upheld": 0,
+        "not_upheld": 5,
         "readback_recall": {
           "k": 8,
           "n": 8,
@@ -188,11 +188,11 @@
           "hi": 1
         },
         "readback_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 3,
+          "n": 5,
+          "rate": 0.6,
+          "lo": 0.23071993220883708,
+          "hi": 0.8823817688407467
         },
         "baseline_recall": {
           "k": 6,
@@ -202,77 +202,77 @@
           "hi": 0.9285223111419724
         },
         "baseline_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 1,
+          "n": 5,
+          "rate": 0.2,
+          "lo": 0.03622316096978745,
+          "hi": 0.6244717358814613
         }
       },
       {
         "category": "food",
-        "upheld": 11,
-        "not_upheld": 0,
+        "upheld": 16,
+        "not_upheld": 8,
         "readback_recall": {
-          "k": 11,
-          "n": 11,
-          "rate": 1,
-          "lo": 0.7411599827511859,
-          "hi": 1
+          "k": 15,
+          "n": 16,
+          "rate": 0.9375,
+          "lo": 0.7167073163197013,
+          "hi": 0.9888809426916687
         },
         "readback_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 7,
+          "n": 8,
+          "rate": 0.875,
+          "lo": 0.5291051942301386,
+          "hi": 0.9775830911367038
         },
         "baseline_recall": {
-          "k": 10,
-          "n": 11,
-          "rate": 0.9090909090909091,
-          "lo": 0.6226353745137962,
-          "hi": 0.9837682477371741
+          "k": 14,
+          "n": 16,
+          "rate": 0.875,
+          "lo": 0.6397666856325173,
+          "hi": 0.9650232506629428
         },
         "baseline_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 2,
+          "n": 8,
+          "rate": 0.25,
+          "lo": 0.07147768885802763,
+          "hi": 0.5907301208974108
         }
       },
       {
         "category": "health",
-        "upheld": 1,
-        "not_upheld": 0,
+        "upheld": 21,
+        "not_upheld": 7,
         "readback_recall": {
-          "k": 1,
-          "n": 1,
-          "rate": 1,
-          "lo": 0.20654329147389294,
-          "hi": 1
+          "k": 20,
+          "n": 21,
+          "rate": 0.9523809523809523,
+          "lo": 0.7733018341376452,
+          "hi": 0.9915442305280766
         },
         "readback_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 4,
+          "n": 7,
+          "rate": 0.5714285714285714,
+          "lo": 0.2504542304090258,
+          "hi": 0.8417830777373732
         },
         "baseline_recall": {
-          "k": 1,
-          "n": 1,
-          "rate": 1,
-          "lo": 0.20654329147389294,
-          "hi": 1
+          "k": 20,
+          "n": 21,
+          "rate": 0.9523809523809523,
+          "lo": 0.7733018341376452,
+          "hi": 0.9915442305280766
         },
         "baseline_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 1,
+          "n": 7,
+          "rate": 0.14285714285714285,
+          "lo": 0.02567895594897479,
+          "hi": 0.51313450331903
         }
       },
       {
@@ -311,7 +311,7 @@
       {
         "category": "skincare",
         "upheld": 20,
-        "not_upheld": 0,
+        "not_upheld": 14,
         "readback_recall": {
           "k": 19,
           "n": 20,
@@ -320,11 +320,11 @@
           "hi": 0.9911187805671268
         },
         "readback_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 9,
+          "n": 14,
+          "rate": 0.6428571428571429,
+          "lo": 0.3876400468214042,
+          "hi": 0.8365550926279727
         },
         "baseline_recall": {
           "k": 15,
@@ -334,11 +334,11 @@
           "hi": 0.888139947210597
         },
         "baseline_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 3,
+          "n": 14,
+          "rate": 0.21428571428571427,
+          "lo": 0.0757124833691637,
+          "hi": 0.4758972377320828
         }
       }
     ]
@@ -986,6 +986,895 @@
         "4/6 Consuming this product will improve my immune system. [unsupported]"
       ],
       "ms": 129555
+    },
+    {
+      "id": "ASCI-067",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "3/6 The drink provides a boost of energy. [contradicted]"
+      ],
+      "ms": 23736
+    },
+    {
+      "id": "ASCI-068",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 20247
+    },
+    {
+      "id": "ASCI-069",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The product is a healthier alternative because it lacks refined sugar. [unsupported]",
+        "2/6 The product helps eliminate parental anxiety regarding iron intake. [unsupported]"
+      ],
+      "ms": 23132
+    },
+    {
+      "id": "ASCI-070",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 20744
+    },
+    {
+      "id": "ASCI-071",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The brand is implying a medical or expert level of expertise in skin care. [unsupported]"
+      ],
+      "ms": 35933
+    },
+    {
+      "id": "ASCI-072",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product will help me lose weight fast. [unsupported]",
+        "2/6 The product uses chemical additives like L-Carnitine for fat burning. [unsupported]"
+      ],
+      "ms": 23857
+    },
+    {
+      "id": "ASCI-073",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The lotion is safe for sensitive skin because it lacks fragrance. [unsupported]"
+      ],
+      "ms": 24992
+    },
+    {
+      "id": "ASCI-074",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 20374
+    },
+    {
+      "id": "ASCI-075",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 21890
+    },
+    {
+      "id": "ASCI-076",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "3/6 The product provides relief from cold symptoms in just 15 minutes. [contradicted]"
+      ],
+      "ms": 40884
+    },
+    {
+      "id": "ASCI-077",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The product is scientifically proven to be better than competitors. [unsupported]"
+      ],
+      "ms": 23639
+    },
+    {
+      "id": "ASCI-078",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 27695
+    },
+    {
+      "id": "ASCI-079",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product improves cognitive function in addition to physical growth. [unsupported]"
+      ],
+      "ms": 20015
+    },
+    {
+      "id": "ASCI-080",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 This product is superior to other options on the market. [unsupported]",
+        "4/6 The product will provide noticeable health improvements. [unsupported]"
+      ],
+      "ms": 35651
+    },
+    {
+      "id": "ASCI-081",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "4/6 This supplement is three times more effective or concentrated than others. [contradicted]"
+      ],
+      "ms": 19755
+    },
+    {
+      "id": "ASCI-082",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The product is guaranteed to keep me fresh for 12 hours. [unsupported]"
+      ],
+      "ms": 33614
+    },
+    {
+      "id": "ASCI-083",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "4/6 The product will not cause skin breakouts. [unsupported]"
+      ],
+      "ms": 21425
+    },
+    {
+      "id": "ASCI-084",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 The product is safe for diabetics or those avoiding sugar. [unsupported]"
+      ],
+      "ms": 24086
+    },
+    {
+      "id": "ASCI-085",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 Using this will result in longer and stronger hair. [unsupported]"
+      ],
+      "ms": 44026
+    },
+    {
+      "id": "ASCI-086",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product will fully restore damaged hair. [unsupported]",
+        "2/6 The product claims to be completely safe and damage-free. [unsupported]"
+      ],
+      "ms": 20798
+    },
+    {
+      "id": "ASCI-087",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 24960
+    },
+    {
+      "id": "ASCI-088",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 62833
+    },
+    {
+      "id": "ASCI-089",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 56850
+    },
+    {
+      "id": "ASCI-090",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 The product contains a very high concentration of active Vitamin C. [unsupported]"
+      ],
+      "ms": 32393
+    },
+    {
+      "id": "ASCI-091",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 39411
+    },
+    {
+      "id": "ASCI-092",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 53275
+    },
+    {
+      "id": "ASCI-093",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 It is a very effective way to clean clothes without chemicals. [unsupported]",
+        "2/6 The sanitization process is safe for my family's health. [unsupported]"
+      ],
+      "ms": 43454
+    },
+    {
+      "id": "ASCI-094",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The cooler works effectively during extreme heat waves. [unsupported]"
+      ],
+      "ms": 39146
+    },
+    {
+      "id": "ASCI-095",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product effectively removes viruses from the air. [unsupported]",
+        "2/6 The air will be healthier if I use this product. [unsupported]"
+      ],
+      "ms": 69481
+    },
+    {
+      "id": "ASCI-096",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 The product is healthier because it lacks refined flour. [unsupported]",
+        "5/6 The product is made entirely from whole wheat. [unsupported]"
+      ],
+      "ms": 30277
+    },
+    {
+      "id": "ASCI-097",
+      "outcome": "not_upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 45855
+    },
+    {
+      "id": "ASCI-098",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The pH 5.5 level is scientifically better for baby skin. [unsupported]",
+        "2/6 This product is the best choice for protecting a baby after birth. [unsupported]"
+      ],
+      "ms": 39194
+    },
+    {
+      "id": "ASCI-099",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The product is safe for direct skin application. [unsupported]"
+      ],
+      "ms": 39717
+    },
+    {
+      "id": "ASCI-100",
+      "outcome": "not_upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 This brand is the market leader in India. [unsupported]",
+        "2/6 The product is guaranteed to be unadulterated. [unsupported]"
+      ],
+      "ms": 32455
+    },
+    {
+      "id": "ASCI-042",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is made from fresh ingredients. [unsupported]"
+      ],
+      "ms": 15993
+    },
+    {
+      "id": "ASCI-043",
+      "outcome": "upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": false,
+      "beliefs": [],
+      "ms": 25165
+    },
+    {
+      "id": "ASCI-044",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The brand claims a specific timeline for health improvement. [unsupported]"
+      ],
+      "ms": 16427
+    },
+    {
+      "id": "ASCI-045",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is highly popular and reliable. [unsupported]",
+        "5/6 The product can permanently eliminate diabetes. [unsupported]"
+      ],
+      "ms": 20116
+    },
+    {
+      "id": "ASCI-046",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is scientifically validated to improve health markers over three months. [unsupported]",
+        "4/6 This is the most popular sugar supplement available on Amazon. [unsupported]",
+        "2/6 The product is popular among other Amazon customers. [unsupported]"
+      ],
+      "ms": 20167
+    },
+    {
+      "id": "ASCI-047",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 It is a medicinal-grade product that can regulate internal body metrics. [unsupported]",
+        "2/6 The product improves cholesterol and blood sugar levels. [unsupported]"
+      ],
+      "ms": 16431
+    },
+    {
+      "id": "ASCI-048",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product removes toxins from the body. [unsupported]",
+        "2/6 The product improves blood health. [unsupported]"
+      ],
+      "ms": 19994
+    },
+    {
+      "id": "ASCI-049",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product guarantees weight loss within three months. [unsupported]"
+      ],
+      "ms": 16502
+    },
+    {
+      "id": "ASCI-050",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is specifically designed for colon cleansing. [unsupported]",
+        "2/6 The product effectively removes toxins from the body. [unsupported]"
+      ],
+      "ms": 17135
+    },
+    {
+      "id": "ASCI-051",
+      "outcome": "upheld",
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": true,
+      "beliefs": [],
+      "ms": 16367
+    },
+    {
+      "id": "ASCI-052",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is effective at controlling blood sugar. [unsupported]",
+        "2/6 This product improves insulin function. [unsupported]",
+        "2/6 This product helps maintain healthy A1C levels. [unsupported]"
+      ],
+      "ms": 37490
+    },
+    {
+      "id": "ASCI-053",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product claims to limit fibrosis, which sounds like a medical treatment. [unsupported]"
+      ],
+      "ms": 23631
+    },
+    {
+      "id": "ASCI-054",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product effectively blocks carbohydrates from being absorbed. [unsupported]",
+        "2/6 The supplement will help me lose weight. [unsupported]",
+        "2/6 It will stop me from feeling hungry all the time. [unsupported]"
+      ],
+      "ms": 24605
+    },
+    {
+      "id": "ASCI-055",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 Weight loss is possible without tracking calories. [unsupported]",
+        "2/6 Calorie counting is an invalid method for weight management. [unsupported]",
+        "2/6 The brand suggests that traditional weight loss science is incorrect. [unsupported]"
+      ],
+      "ms": 21453
+    },
+    {
+      "id": "ASCI-056",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The supplement is specifically designed to boost fertility metrics. [unsupported]",
+        "2/6 The product will improve my physical energy and sexual performance. [unsupported]",
+        "2/6 The product is scientifically proven to increase sperm count. [unsupported]"
+      ],
+      "ms": 23972
+    },
+    {
+      "id": "ASCI-057",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The oil permanently destroys fat cells upon application. [unsupported]"
+      ],
+      "ms": 40055
+    },
+    {
+      "id": "ASCI-058",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product will help me lose weight and look better in three months. [unsupported]",
+        "2/6 The product targets digestion issues as part of weight loss. [unsupported]",
+        "2/6 It will burn my fat and fix my digestion. [unsupported]"
+      ],
+      "ms": 23643
+    },
+    {
+      "id": "ASCI-059",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The product claims to repair internal tissue and nerve damage. [unsupported]"
+      ],
+      "ms": 23193
+    },
+    {
+      "id": "ASCI-060",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product will definitely increase my milk supply within a week. [unsupported]",
+        "5/6 The ingredients are natural and safe to consume. [unsupported]"
+      ],
+      "ms": 20262
+    },
+    {
+      "id": "ASCI-061",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product effectively manages blood sugar levels. [unsupported]",
+        "2/6 The product claims to perform complex biological functions like converting proinsulin. [unsupported]"
+      ],
+      "ms": 14175
+    },
+    {
+      "id": "ASCI-062",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The product acts extremely quickly to stop pain. [unsupported]",
+        "5/6 A single application provides relief for a full workday. [unsupported]"
+      ],
+      "ms": 15230
+    },
+    {
+      "id": "ASCI-063",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is highly effective at preventing infections. [unsupported]"
+      ],
+      "ms": 13742
+    },
+    {
+      "id": "ASCI-064",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The brand claims this tea has medicinal effects on the menstrual cycle. [unsupported]",
+        "2/6 This product is guaranteed to fix my mood swings. [unsupported]"
+      ],
+      "ms": 14890
+    },
+    {
+      "id": "ASCI-065",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product improves physical appearance by reducing acne. [unsupported]",
+        "4/6 The product effectively treats hormonal imbalances. [unsupported]"
+      ],
+      "ms": 16325
+    },
+    {
+      "id": "ASCI-066",
+      "outcome": "upheld",
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is highly effective at treating long-term joint pain. [unsupported]"
+      ],
+      "ms": 13714
     }
   ]
 }

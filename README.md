@@ -42,7 +42,7 @@ own free key from the **Free Gemini key** badge in the top bar; it stays in your
 
 | # | Improvement | Delivered |
 |---|---|---|
-| 1 | **ASCI-Bench at full scale with evidence-aware scoring** | All **100** rulings, **3 runs each** (majority verdict, run-to-run stability), a single-prompt baseline, Wilson 95% intervals, **per-ground** and per-category breakdowns. Grounds re-labelled from each ruling's full text (unsubstantiated, exaggeration, implication, omission, comparison, statutory). An **advertiser-evidence ledger** ([`data/asci-evidence.json`](data/asci-evidence.json)) records what each advertiser submitted and what the panel accepted; `pnpm bench --ledger` gives each case's brand that accepted evidence as its Fact Ledger. Results page in the app: **/app/bench**. |
+| 1 | **ASCI-Bench at full scale with evidence-aware scoring** | **Completed:** all **100** rulings, **3 runs each**, in both modes (majority verdict, run-to-run stability), a single-prompt baseline, Wilson 95% intervals, **per-ground** and per-category breakdowns. Grounds re-labelled from each ruling's full text (unsubstantiated, exaggeration, implication, omission, comparison, statutory). An **advertiser-evidence ledger** ([`data/asci-evidence.json`](data/asci-evidence.json)) records what each advertiser submitted and what the panel accepted; `pnpm bench --ledger` gives each case's brand that accepted evidence as its Fact Ledger. Results page in the app: **/app/bench**. |
 | 2 | **Cross-language consistency inside the review workflow** | A Hindi, Hinglish, Tamil or Marathi draft can be **linked to its English master**. Every check of every version compares the beliefs each leaves (one structured call), and anything the translation adds or makes stronger becomes a **finding** (clause G-13) that is accepted, edited or disputed and approved like any other, and recorded in the audit log. Suggested wording must pass a **re-comparison** with the master. **Tamil and Marathi native readers** join the panel for those languages. The master lists its translations and their open drift. |
 | 3 | **Live Fact Recall** | When a cited fact changes or expires, Readback **fetches each post's live URL** (SSRF-guarded), looks for the approved wording that relied on the fact, and **closes the recall automatically** when it is gone, with an audit entry. Checks run on demand, **when a fact is edited**, and **daily** (Vercel Cron). **Expiry alerts** list facts lapsing within 30 days and the posts that cite them; the daily job marks lapsed facts expired and records one alert per fact. A demo storefront stands in for real product pages so the whole loop can be tried. |
 
@@ -65,10 +65,23 @@ own free key from the **Free Gemini key** badge in the top bar; it stays in your
 
 ## ASCI-Bench: Round 3 results
 
-The full 100-case run (three runs per case, with and without the evidence ASCI accepted) is in progress; the final
-numbers will replace this note. On the first 36 upheld rulings with the final engine, Readback flagged 35 (97.2%)
-against 28 (77.8%) for the single-prompt baseline, and every case gave the same verdict on all three runs. Every case,
-with intervals and the per-ground breakdown, is on **/app/bench**.
+All 100 real ASCI rulings (66 upheld, 34 not upheld), each run three times through Readback (majority verdict) and once
+through a single-prompt baseline, free-tier Gemini, completed 30 October 2026. Every case is on **/app/bench**.
+
+| | Readback | Single-prompt baseline |
+|---|---|---|
+| Recall on upheld rulings, no evidence | **97.0%** (64/66) | 84.8% (56/66) |
+| False alarms on not-upheld rulings, no evidence | 97.1% (33/34) | 58.8% (20/34) |
+| Recall, with the evidence ASCI accepted | **95.5%** (63/66) | 84.8% (56/66) |
+| False alarms, with the evidence ASCI accepted | 67.6% (23/34) | **20.6%** (7/34) |
+| Precision, with evidence | 73.3% (63/86) | **88.9%** (56/63) |
+| Run-to-run stability (same verdict on all three runs) | **100%** (100/100) | not measured |
+
+What this says, honestly:
+- **Readback catches more of what the regulator ruled against** (95–97% against 85%), across every ground: unsubstantiated, exaggeration, omission, comparison and statutory claims. The one exception is misleading implication, where the two are level (about 85%), likely because the benchmark has only the claim text, not the ad's visuals.
+- **It over-flags.** With an empty Fact Ledger nearly every strong claim is "unsupported" by design. Even with the evidence ASCI accepted, two in three cleared ads are still flagged, against one in five for the baseline: Readback asks for the claim's exact wording to be backed by a fact, while ASCI often accepts substantiation that is close enough, or puffery.
+- **That is a deliberate trade-off for a pre-publication tool:** a false alarm costs a reviewer a minute and is cleared with "Dispute"; a miss can cost a regulator complaint. Reducing false alarms with evidence (a looser "supported" match and claim-level evidence matching) is the first item on the roadmap.
+- **Verdicts are stable:** after the grouping fix, every case gave the same verdict on all three runs (52% before).
 
 ---
 

@@ -5,13 +5,13 @@
   "runs": 3,
   "model": "gemini-3.8-flash",
   "started_at": "2026-10-29T17:30:56.820Z",
-  "generated_at": "2026-10-30T01:44:32.303Z",
+  "generated_at": "2026-10-30T12:14:03.256Z",
   "cases": 100,
   "metrics": {
-    "scored": 66,
+    "scored": 100,
     "upheld": 66,
-    "not_upheld": 0,
-    "errors": 34,
+    "not_upheld": 34,
+    "errors": 0,
     "readback": {
       "recall": {
         "k": 64,
@@ -21,25 +21,25 @@
         "hi": 0.9916502649240535
       },
       "false_alarm": {
-        "k": 0,
-        "n": 0,
-        "rate": null,
-        "lo": null,
-        "hi": null
+        "k": 33,
+        "n": 34,
+        "rate": 0.9705882352941176,
+        "lo": 0.8508409778365519,
+        "hi": 0.9947892280744034
       },
       "precision": {
         "k": 64,
-        "n": 64,
-        "rate": 1,
-        "lo": 0.9433739770288436,
-        "hi": 1
+        "n": 97,
+        "rate": 0.6597938144329897,
+        "lo": 0.561034006679396,
+        "hi": 0.7463788070800048
       },
       "stability": {
-        "k": 66,
-        "n": 66,
+        "k": 100,
+        "n": 100,
         "rate": 1,
-        "lo": 0.9449955327483907,
-        "hi": 1
+        "lo": 0.9630051925239981,
+        "hi": 0.9999999999999999
       }
     },
     "baseline": {
@@ -51,18 +51,18 @@
         "hi": 0.9155645361116449
       },
       "false_alarm": {
-        "k": 0,
-        "n": 0,
-        "rate": null,
-        "lo": null,
-        "hi": null
+        "k": 20,
+        "n": 34,
+        "rate": 0.5882352941176471,
+        "lo": 0.42221304146519273,
+        "hi": 0.7363426221431113
       },
       "precision": {
         "k": 56,
-        "n": 56,
-        "rate": 1,
-        "lo": 0.9358038555118846,
-        "hi": 1
+        "n": 76,
+        "rate": 0.7368421052631579,
+        "lo": 0.628185431389001,
+        "hi": 0.8227073362910053
       }
     },
     "byGround": [
@@ -179,7 +179,7 @@
       {
         "category": "electronics",
         "upheld": 8,
-        "not_upheld": 0,
+        "not_upheld": 5,
         "readback_recall": {
           "k": 8,
           "n": 8,
@@ -188,11 +188,11 @@
           "hi": 1
         },
         "readback_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 5,
+          "n": 5,
+          "rate": 1,
+          "lo": 0.5655085052479191,
+          "hi": 1
         },
         "baseline_recall": {
           "k": 6,
@@ -202,17 +202,17 @@
           "hi": 0.9285223111419724
         },
         "baseline_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 2,
+          "n": 5,
+          "rate": 0.4,
+          "lo": 0.1176182311592533,
+          "hi": 0.769280067791163
         }
       },
       {
         "category": "food",
         "upheld": 16,
-        "not_upheld": 0,
+        "not_upheld": 8,
         "readback_recall": {
           "k": 16,
           "n": 16,
@@ -221,11 +221,11 @@
           "hi": 1
         },
         "readback_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 8,
+          "n": 8,
+          "rate": 1,
+          "lo": 0.6755843804891231,
+          "hi": 1
         },
         "baseline_recall": {
           "k": 14,
@@ -235,17 +235,17 @@
           "hi": 0.9650232506629428
         },
         "baseline_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 4,
+          "n": 8,
+          "rate": 0.5,
+          "lo": 0.21521252682444186,
+          "hi": 0.7847874731755582
         }
       },
       {
         "category": "health",
         "upheld": 21,
-        "not_upheld": 0,
+        "not_upheld": 7,
         "readback_recall": {
           "k": 20,
           "n": 21,
@@ -254,11 +254,11 @@
           "hi": 0.9915442305280766
         },
         "readback_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 6,
+          "n": 7,
+          "rate": 0.8571428571428571,
+          "lo": 0.48686549668097007,
+          "hi": 0.9743210440510253
         },
         "baseline_recall": {
           "k": 20,
@@ -268,11 +268,11 @@
           "hi": 0.9915442305280766
         },
         "baseline_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 7,
+          "n": 7,
+          "rate": 1,
+          "lo": 0.6456611570247934,
+          "hi": 1
         }
       },
       {
@@ -311,7 +311,7 @@
       {
         "category": "skincare",
         "upheld": 20,
-        "not_upheld": 0,
+        "not_upheld": 14,
         "readback_recall": {
           "k": 19,
           "n": 20,
@@ -320,11 +320,11 @@
           "hi": 0.9911187805671268
         },
         "readback_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 14,
+          "n": 14,
+          "rate": 1,
+          "lo": 0.7846829880728186,
+          "hi": 1
         },
         "baseline_recall": {
           "k": 15,
@@ -334,11 +334,11 @@
           "hi": 0.888139947210597
         },
         "baseline_fa": {
-          "k": 0,
-          "n": 0,
-          "rate": null,
-          "lo": null,
-          "hi": null
+          "k": 7,
+          "n": 14,
+          "rate": 0.5,
+          "lo": 0.2679886791947528,
+          "hi": 0.7320113208052472
         }
       }
     ]
@@ -1373,345 +1373,535 @@
       "outcome": "not_upheld",
       "runs": [
         true,
+        true,
         true
       ],
       "readback": true,
-      "baseline": null,
+      "baseline": false,
       "beliefs": [
         "4/6 It is a healthy addition to a balanced lifestyle. [unsupported]"
       ],
-      "ms": 337208,
-      "error": "The AI readers did not finish: the free Gemini key reached its daily limit on every model. Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "ms": 131338
     },
     {
       "id": "ASCI-068",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 455051,
-      "error": "The AI readers did not finish: the free Gemini key reached its daily limit on every model. Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The product provides long-lasting odor control for up to 72 hours. [unsupported]"
+      ],
+      "ms": 113870
     },
     {
       "id": "ASCI-069",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 455074,
-      "error": "The AI readers did not finish: the free Gemini key reached its daily limit on every model. Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The product is a healthier alternative because it lacks refined sugar. [unsupported]",
+        "4/6 The product provides a significant portion of a child's daily iron needs. [unsupported]",
+        "2/6 The product helps eliminate parental anxiety regarding iron intake. [unsupported]"
+      ],
+      "ms": 77520
     },
     {
       "id": "ASCI-070",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product will make my underarms brighter in less than a week. [unsupported]"
+      ],
+      "ms": 121789
     },
     {
       "id": "ASCI-071",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is highly effective at removing tan. [unsupported]",
+        "2/6 The brand is implying a medical or expert level of expertise in skin care. [unsupported]"
+      ],
+      "ms": 62015
     },
     {
       "id": "ASCI-072",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is an effective meal replacement for losing weight. [unsupported]",
+        "4/6 The product contains L-Carnitine to help burn fat. [unsupported]",
+        "2/6 The product will help me lose weight fast. [unsupported]",
+        "2/6 The product uses chemical additives like L-Carnitine for fat burning. [unsupported]"
+      ],
+      "ms": 120068
     },
     {
       "id": "ASCI-073",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 The lotion provides hydration for three full days. [unsupported]",
+        "4/6 It works almost instantly to stop itching. [unsupported]",
+        "2/6 The lotion is safe for sensitive skin because it lacks fragrance. [unsupported]"
+      ],
+      "ms": 118791
     },
     {
       "id": "ASCI-074",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 This product is the top-selling or highest-rated whey protein in the world. [unsupported]"
+      ],
+      "ms": 27221
     },
     {
       "id": "ASCI-075",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 The hair mask significantly improves hair strength. [unsupported]",
+        "4/6 The product provides a noticeable increase in hair shine. [unsupported]"
+      ],
+      "ms": 106402
     },
     {
       "id": "ASCI-076",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
+      "runs": [
+        false,
+        false,
+        false
+      ],
+      "readback": false,
+      "baseline": true,
       "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "ms": 17216
     },
     {
       "id": "ASCI-077",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "4/6 This oil is healthier than other brands because it absorbs less oil. [unsupported]",
+        "2/6 The product is scientifically proven to be better than competitors. [unsupported]"
+      ],
+      "ms": 20265
     },
     {
       "id": "ASCI-078",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "6/6 Medical experts support the use of this product. [unsupported]"
+      ],
+      "ms": 21945
     },
     {
       "id": "ASCI-079",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product improves cognitive function in addition to physical growth. [unsupported]"
+      ],
+      "ms": 22943
     },
     {
       "id": "ASCI-080",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 This product is superior to other options on the market. [unsupported]",
+        "4/6 The product will provide noticeable health improvements. [unsupported]"
+      ],
+      "ms": 24616
     },
     {
       "id": "ASCI-081",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 This supplement is three times more effective or concentrated than others. [unsupported]"
+      ],
+      "ms": 36884
     },
     {
       "id": "ASCI-082",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The product provides 12 hours of freshness. [unsupported]",
+        "6/6 It fights germs responsible for odor. [unsupported]"
+      ],
+      "ms": 29594
     },
     {
       "id": "ASCI-083",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "4/6 The product will not cause skin breakouts. [unsupported]",
+        "2/6 The product is scientifically tested to be non-acnegenic. [unsupported]"
+      ],
+      "ms": 23639
     },
     {
       "id": "ASCI-084",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product is safe for diabetics or those avoiding sugar. [unsupported]"
+      ],
+      "ms": 20765
     },
     {
       "id": "ASCI-085",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product penetrates deep into the hair structure. [unsupported]",
+        "5/6 Using this will result in longer and stronger hair. [unsupported]"
+      ],
+      "ms": 21381
     },
     {
       "id": "ASCI-086",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 The product will fully restore damaged hair. [unsupported]",
+        "2/6 The product claims to be completely safe and damage-free. [unsupported]"
+      ],
+      "ms": 20125
     },
     {
       "id": "ASCI-087",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 Eating one gummy is nutritionally superior to eating 15 avocados for biotin intake. [unsupported]"
+      ],
+      "ms": 19507
     },
     {
       "id": "ASCI-088",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product is highly effective at reducing dark circles. [unsupported]"
+      ],
+      "ms": 22303
     },
     {
       "id": "ASCI-089",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The product will not wash off easily during exercise or swimming. [unsupported]"
+      ],
+      "ms": 49001
     },
     {
       "id": "ASCI-090",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 The product contains a very high concentration of active Vitamin C. [unsupported]"
+      ],
+      "ms": 19254
     },
     {
       "id": "ASCI-091",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The fan provides a specific level of air delivery. [unsupported]"
+      ],
+      "ms": 17082
     },
     {
       "id": "ASCI-092",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "2/6 The fan is highly energy efficient. [unsupported]",
+        "2/6 The fan provides a specific level of air circulation. [unsupported]"
+      ],
+      "ms": 19634
     },
     {
       "id": "ASCI-093",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The machine can clean clothes without needing water or detergent. [unsupported]",
+        "2/6 It is a very effective way to clean clothes without chemicals. [unsupported]",
+        "2/6 The sanitization process is safe for my family's health. [unsupported]"
+      ],
+      "ms": 17444
     },
     {
       "id": "ASCI-094",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The cooler works effectively during extreme heat waves. [unsupported]",
+        "4/6 This model provides better airflow than standard alternatives. [unsupported]"
+      ],
+      "ms": 17643
     },
     {
       "id": "ASCI-095",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "4/6 The product effectively removes viruses from the air. [unsupported]",
+        "2/6 The air will be healthier if I use this product. [unsupported]"
+      ],
+      "ms": 17987
     },
     {
       "id": "ASCI-096",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 The product is healthier because it lacks refined flour. [unsupported]",
+        "5/6 The product is made entirely from whole wheat. [unsupported]"
+      ],
+      "ms": 22009
     },
     {
       "id": "ASCI-097",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 1,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "6/6 The brand name is NutriChoice. [unsupported]"
+      ],
+      "ms": 21817
     },
     {
       "id": "ASCI-098",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "2/6 The pH 5.5 level is scientifically better for baby skin. [unsupported]",
+        "2/6 This product is the best choice for protecting a baby after birth. [unsupported]"
+      ],
+      "ms": 25378
     },
     {
       "id": "ASCI-099",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": false,
+      "beliefs": [
+        "5/6 The product provides odor protection for 48 hours. [unsupported]",
+        "2/6 The product is effective for a full day. [unsupported]",
+        "2/6 The product is safe for direct skin application. [unsupported]"
+      ],
+      "ms": 27825
     },
     {
       "id": "ASCI-100",
       "outcome": "not_upheld",
-      "runs": [],
-      "readback": null,
-      "baseline": null,
-      "beliefs": [],
-      "ms": 0,
-      "error": "The AI readers did not finish: the free Gemini key reached its per-minute limit (retry in 59s). Rule findings are saved; run the check again later, or add your own Gemini key from the top bar."
+      "runs": [
+        true,
+        true,
+        true
+      ],
+      "readback": true,
+      "baseline": true,
+      "beliefs": [
+        "5/6 This brand is the market leader in India. [unsupported]",
+        "2/6 The oil is free from harmful additives. [unsupported]",
+        "2/6 The product is rigorously tested for safety. [unsupported]",
+        "2/6 The product is guaranteed to be unadulterated. [unsupported]"
+      ],
+      "ms": 38134
     },
     {
       "id": "ASCI-027",

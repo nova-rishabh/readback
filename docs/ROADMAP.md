@@ -14,6 +14,7 @@ Where Readback stands after Round 3, and what comes next. Each item says what it
 
 | Item | What it changes | Notes |
 |---|---|---|
+| Fewer false alarms when evidence exists | ASCI-Bench shows Readback flags two in three cleared ads even with the accepted evidence (baseline: one in five). Match claims to evidence at claim level and accept close substantiation, so reviewers dismiss fewer flags. | Measured on ASCI-Bench with evidence; target below 30% false alarms at 90%+ recall. |
 | Real sign-in, invites and multiple brands | An agency can serve several brands; a brand can invite its own reviewers. | Supabase Auth invites; brand switcher; RLS already scopes everything by brand. |
 | Reviewer assignment and SLAs | Drafts stop waiting in a shared inbox; overdue reviews are visible. | Assignee column, due dates, an overdue filter. |
 | Slack and email alerts | Recall, expiry and “changes requested” reach people where they work. | The daily sweep already records alerts in the audit log; add delivery. |
